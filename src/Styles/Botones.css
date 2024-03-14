@@ -1,0 +1,211 @@
+/* Estilos para los botones */
+.BtnNav {
+  background-color: #007bff; /* Color de fondo azul */
+  color: white; /* Color del texto en blanco */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Borde redondeado */
+  padding: 10px 20px; /* Espaciado interno */
+  cursor: pointer; /* Cambia el cursor a una mano */
+  margin: 0;
+}
+
+.btnAddAdmin {
+  display: flex;
+  justify-content: flex-end; /* Mueve el botón hacia la derecha */
+  margin-top: 10px;
+}
+
+.loading {
+  background-color: #ffc107; /* Color de fondo amarillo */
+  color: #333; /* Color del texto en un tono más oscuro */
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: not-allowed; /* Cursor de no disponible */
+  margin-left: 250px;
+}
+
+.error {
+  background-color: #dc3545; /* Color de fondo rojo */
+  color: white; /* Color del texto en blanco */
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: not-allowed;
+  margin-left: 250px;
+}
+
+
+/* Estilo al pasar el mouse sobre los botones */
+.btnEliminar:hover,  .btnCancelar:hover {
+  background-color: #c0392b; /* Cambia el color de fondo al pasar el mouse */
+}
+
+.btnModificar:hover{
+  background-color: rgb(229, 255, 0);
+}
+
+/* 
+/* Estilos para los botones */
+.btnEliminar,
+.btnModificar {
+  display: inline-block; /* Hace que los botones se muestren en línea */
+  vertical-align: middle; /* Alinea verticalmente los botones */
+}
+
+
+/* Botón de guardar */
+.btnGuardar {
+  background-color: #28a745; /* Color de fondo verde */
+  color: white; /* Color del texto en blanco */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Borde redondeado */
+  padding: 10px 20px; /* Espaciado interno */
+  cursor: pointer; /* Cambia el cursor a una mano */
+}
+
+/* Estilo al pasar el mouse sobre el botón de guardar */
+.btnGuardar:hover {
+  background-color: #1e7e34; /* Cambia el color de fondo al pasar el mouse */
+}
+
+/* Botón de registro */
+.btnRegistrarAdmin {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Cambiar el color de fondo en el hover */
+.btnRegistrarAdmin:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para cuando se presiona el botón */
+.btnRegistrarAdmin:active {
+  background-color: #003c80;
+}
+
+/* Estilo para cuando el botón está deshabilitado */
+.btnRegistrarAdmin[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Estilo para el texto dentro del botón */
+.btnRegistrarAdmin span {
+  font-weight: bold;
+}
+
+
+
+.link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.link:hover {
+  background-color: #eee;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+
+.active {
+  background-color: #ddd;
+}
+
+.sidebar {
+  background-color: #fff;
+  color: #333;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  border-right: 1px solid #ddd;
+}
+
+.logoContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+.logo {
+  max-width: 100%;
+  height: auto;
+}
+
+.toggle-button {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #ddd;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin-bottom: 10px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+}
+
+.menu a:hover {
+  color: #007bff;
+}
+
+.hidden {
+  display: none;
+}
+
+.header {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.btnCerrarSesionContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.btnCerrarSesion {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btnCerrarSesion:hover {
+  background-color: #c82333;
+}

@@ -1,0 +1,45 @@
+/* Estilos para la tabla */
+.tableInteresSostenible {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Estilo para el encabezado de la tabla */
+.tableInteresSostenible th {
+  background-color:#3498db;
+  color: #fff;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Estilo para las filas pares */
+.tableInteresSostenible tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Estilo para las filas impares */
+.tableInteresSostenible tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+/* Estilo para las celdas */
+.tableInteresSostenible td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Estilo para la imagen en las celdas */
+.tableInteresSostenible img {
+  max-width: 100px;
+  height: auto;
+}
+
+
+.img-responsive {
+  max-width: 50%; /* Establece el ancho máximo al 100% del contenedor padre */
+  max-height: 150px; /* Establece la altura máxima en 300 píxeles */
+  width: auto; /* Permitir que la imagen se ajuste proporcionalmente al ancho máximo */
+  height: auto; /* Permitir que la imagen se ajuste proporcionalmente a la altura máxima */
+}

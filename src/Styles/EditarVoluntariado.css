@@ -1,0 +1,104 @@
+/* Contenedor principal del formulario */
+.edit-vol {
+    max-width: 700px;
+    margin: 8px auto 40px;
+    padding: 20px;
+    border: 2px solid #1758e694;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(36, 35, 35, 0.3);
+    cursor: default;
+    transition: all 400ms ease;
+  }
+  
+  /* Título del formulario */
+  .edit-vol h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Formulario */
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+  
+  /* Etiqueta de campo */
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Campo de entrada de texto y fecha */
+  input[type="text"],
+  input[type="date"] {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    background-color: #f9f9f9;
+    outline: none;
+  }
+  
+  /* Botón de guardar */
+  .edit-vol button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 3px;
+    font-size: 18px;
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-top: 20px; /* Ajusta el margen superior para que quede alineado */
+  }
+  
+  .center-buttonEv {
+    display: flex;
+    position: relative;
+    left: 50%;
+    justify-content: center;
+    margin-top: 20px; /* Cambia el margen superior a 0 para alinear el botón */
+  }
+  /* Estilo al pasar el mouse sobre el botón de guardar */
+  button.center-buttonn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para los mensajes emergentes (toast) */
+  .Toastify__toast {
+    font-size: 14px;
+    max-width: 300px;
+  }
+  
+  .Toastify__toast-body {
+    padding: 10px 20px;
+  }
+  
+  /* Estilos para mensajes emergentes de éxito */
+  .Toastify__toast--success {
+    background-color: #28a745;
+  }
+  
+  /* Estilos para mensajes emergentes de error */
+  .Toastify__toast--error {
+    background-color: #dc3545;
+  }
+  
+  /* Estilos para mensajes emergentes de advertencia */
+  .Toastify__toast--warning {
+    background-color: #ffc107;
+    
+  }
+
+
+
+

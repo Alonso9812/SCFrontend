@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;800&family=Rubik:wght@400;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif, "Rubik", sans-serif;
+  margin-top: 56px; /* Asegura que haya suficiente espacio para la barra de navegación */
+  transition: all 0.3s; /* Asegura que el contenido se desplace con suavidad al abrir/cerrar el Sidebar */
+}
+
+/* Estilos para la barra de navegación */
+.Navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 105, 40, 0.829);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e7e9eb; /* Cambiado a un color más genérico */
+  z-index: 1000;
+  transition: all 0.3s; /* Efecto de desplazamiento suave */
+}
+
+/* Estilos para el Sidebar */
+.sidebar {
+  width: 14rem;
+  height: calc(100vh - 56px); /* Resta la altura de la barra de navegación */
+  border-right: 1px solid #e7e9eb; /* Cambiado a un color más genérico */
+  position: fixed;
+  z-index: 10;
+  background-color: #fff; /* Color de fondo del Sidebar */
+  transition: all 0.3s; /* Efecto de desplazamiento suave */
+
+  @media only screen and (max-width: 768px) {
+    width: 100%; /* Cambia el ancho a 100% en dispositivos pequeños */
+    height: 100vh; /* Ajusta la altura para cubrir toda la pantalla */
+    border-right: none; /* Quita el borde derecho en dispositivos pequeños */
+    transform: translateX(-100%); /* Oculta el Sidebar por defecto en dispositivos pequeños */
+  }
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%); /* Mantiene el Sidebar oculto en dispositivos pequeños */
+}
+
+/* Estilos para el botón de alternar Sidebar */
+.toggle-button {
+  display: flex;
+  position: relative;
+  left: 83%; /* Ajusta la posición en dispositivos grandes */
+  padding: 0;
+
+  @media only screen and (max-width: 768px) {
+    left: initial; /* Restaura la posición por defecto en dispositivos pequeños */
+    margin-left: auto; /* Mueve el botón hacia la derecha en dispositivos pequeños */
+  }
+}
+
+/* Estilos para la lista de elementos del Sidebar */
+ul {
+  list-style: none;
+  padding: 200px 2rem; /* Ajusta el padding en dispositivos grandes */
+  margin-top: -140px; /* Ajusta el margen en dispositivos grandes */
+
+  @media only screen and (max-width: 768px) {
+    padding: 2rem; /* Ajusta el padding en dispositivos pequeños */
+    margin-top: 0; /* Elimina el margen en dispositivos pequeños */
+  }
+}
+
+/* Estilos para los elementos de la lista del Sidebar */
+ul li {
+  margin-bottom: 10px;
+
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 5px; /* Ajusta el margen en dispositivos pequeños */
+  }
+}
+
+/* Estilos para los enlaces del Sidebar */
+ul li a {
+  text-decoration: none;
+
+  &.active {
+    background-color: #e7e9eb; /* Cambiado a un color más genérico */
+  }
+}
+
+/* Estilos para el botón de alternar Sidebar */
+.burgerContainer {
+  position: absolute;
+  right: 0;
+  top: calc(9rem / 1.15);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  z-index: 1;
+
+  .trigger {
+    width: 100%;
+    height: 100%;
+    background-color: red; /* Cambiado a un color más genérico */
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0;
+  }
+
+    /* Styles for the 'Menu' icon */
+    /*
+    .Menu {
+      content: '';
+      background-color: $secondaryColor;
+      position: relative;
+      z-index: 1;
+      width: 20px;
+      height: 3px;
+      border-radius: 2rem;
+      bottom: calc(35px / 2);
+      left: 0.45rem;
+    }
+
+    .Menu::after {
+      content: '';
+      background-color: $secondaryColor;
+      position: absolute;
+      width: 20px;
+      height: 3px;
+      border-radius: 2rem;
+      top: 0.4rem;
+      transform: translatey(-0.4rem) rotate(45deg);
+    }
+
+    .Menu::before {
+      content: '';
+      background-color: $secondaryColor;
+      position: absolute;
+      width: 20px;
+      height: 3px;
+      border-radius: 2rem;
+      top: calc(-0.4rem);
+      transform: translatey(0.4rem) rotate(45deg);
+    }
+    */
+  }
+
+  .containerSidebar{
+        max-width: 1250px;
+  }
+
+  .burgerContainer::after {
+    content: "";
+    position: absolute;
+    right: 35px;
+    top: calc(50px / 30);
+    z-index: 0;
+    width: 3.5rem + 10.5rem;
+    background-color: gray;
+    height: 2px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 200px 2rem;
+    margin-top: -140px;
+
+    li {
+      margin-bottom: 10px;
+
+      a {
+        text-decoration: none;
+
+        &.active {
+          background-color: gray;
+        }
+      }
+    }
+  }
+

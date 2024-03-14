@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #a7a7a9;
+}
+
+main {
+  flex: 1; /* Toma el espacio restante */
+  /* padding: 20px;
+  margin-left: 200px; Ancho de la barra lateral */
+  /* margin-right: 200px; */
+  transition: margin-left 0.3s ease; /* Efecto de transición al expandir/colapsar */
+}
+h4 {
+  color: black;
+}
+
+.error,
+.loading {
+  color: white;
+}
+
+.Namelist{
+  padding-top: 20px
+}
+
+/* Si necesitas agregar estilos para la clase .sidebar, puedes descomentar esta sección */
+/*
+.sidebar {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  height: 50px;
+  background-color: #CD1719;
+}
+
+/* Si necesitas agregar estilos para la clase .main, puedes descomentar esta sección */
+/*
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: #f1f1f1;
+}
+*/
+
+/* Si necesitas agregar estilos para la clase .main-content, puedes descomentar esta sección */
+/*
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  flex-grow: 1;
+  background-color: #f1f1f1;
+}
+*/
+
+

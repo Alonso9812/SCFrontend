@@ -1,0 +1,90 @@
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.reservacioness {
+  max-width: 700px;
+  margin: 20px auto 40px;
+  padding: 20px;
+  border: 2px solid #1758e694;
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 30px rgba(36, 35, 35, 0.3);
+  cursor: default;
+  transition: all 400ms ease;
+  height: 300px; 
+}
+
+.reservacioness h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.reservacioness form {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  grid-gap: 20px; 
+}
+
+.reservacioness label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reservacioness input {
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: transparent;
+  font-size: 15px;
+  width: 90%;
+  height: 20px;
+  outline: none;
+}
+
+.reservacioness button {
+  background-color: rgb(46, 109, 247);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 18px;
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  left: 300px; 
+}
+
+.button-EditR {
+  position: relative;
+  margin-top: 50px;
+  right: 350px;
+}
+
+.reservacioness button:hover {
+  background-color: #0056b3;
+}
+
+.select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.label {
+    margin-bottom: 8px;
+    font-weight: bold;
+  }

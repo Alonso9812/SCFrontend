@@ -1,0 +1,80 @@
+/* Estilos para el cuadro de diálogo de confirmación */
+.delete-confirm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff; /* Color de fondo blanco */
+  padding: 20px;
+  border: 2px solid #ccc; /* Borde con color más definido */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  text-align: center;
+  border-radius: 5px; /* Borde redondeado */
+}
+
+.delete-confirm p {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.delete-confirm button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #ff4136; /* Color de fondo rojo */
+  color: white;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 3px; /* Borde redondeado */
+}
+
+.delete-confirm button:last-child {
+  background-color: #ccc; /* Color de fondo gris claro para el segundo botón */
+}
+
+/* Estilo de fondo oscurecido detrás del cuadro de diálogo de confirmación */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscurecido */
+  z-index: 999; /* Z-index menor que el cuadro de diálogo de confirmación */
+}
+
+
+.edit-confirm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff; /* Color de fondo blanco */
+  padding: 20px;
+  border: 2px solid #ccc; /* Borde con color más definido */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  text-align: center;
+  border-radius: 5px; /* Borde redondeado */
+}
+
+.edit-confirm p {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.edit-confirm button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #ff4136; /* Color de fondo rojo */
+  color: white;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 3px; /* Borde redondeado */
+}
+
+.edit-confirm button:last-child {
+  background-color: #ccc; /* Color de fondo gris claro para el segundo botón */
+}
