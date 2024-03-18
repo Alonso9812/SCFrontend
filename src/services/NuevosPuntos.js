@@ -6,6 +6,11 @@ export const getPuntosDIS = async () => {
     return data;
 };
 
+export const getContPuntos = async () => { 
+  let data = await api.get('ContadorPuntos').then(result => result.data);
+  return data;
+};
+
 export const eliminarPunto= async (id) => {
     try {
         const response = await api.delete(`delete-punto/${id}`);

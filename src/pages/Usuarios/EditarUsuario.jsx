@@ -1,11 +1,12 @@
-import { useParams } from 'react-router-dom';
 import { useRef, useEffect, useState } from 'react'; 
 import { useMutation, useQueryClient } from 'react-query';
+import { useParams, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import { updateUsuario, getUsuariosID } from '../../services/UsuariosServicios'; 
 import { toast, ToastContainer } from 'react-toastify';
 
 const EditUsuario = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // Utiliza useNavigate para la navegación
   const queryClient = useQueryClient();
   
   const UsuarioNombre = useRef(null);
@@ -16,17 +17,13 @@ const EditUsuario = () => {
   const UsuarioOcupacion = useRef(null);
   const UsuarioRol = useRef(null);
   const UsuarioEmail = useRef(null);
-  const UsuarioPassword = useRef(null);
 
-  const [selectedRol, setSelectedRol] = useState(''); // Estado para almacenar el rol seleccionado
-
+  const [selectedRol, setSelectedRol] = useState('');
+  
   const mutationKey = `user-update/${id}`;
   const mutation = useMutation(mutationKey, updateUsuario, {
     onSettled: () => queryClient.invalidateQueries(mutationKey),
   });
-
-
- 
 
   const handleRegistro = (event) => {
     event.preventDefault();
@@ -39,21 +36,22 @@ const EditUsuario = () => {
       cedula: UsuarioCedula.current.value,
       numero: UsuarioNumero.current.value,
       ocupacion: UsuarioOcupacion.current.value,
-      rol: selectedRol, // Usamos el valor seleccionado del estado
+      rol: selectedRol,
       email: UsuarioEmail.current.value,
-      password: UsuarioPassword.current.value,
     };
 
     console.log(newData);
-    // Enviar la solicitud de actualización al servidor
+
     mutation.mutateAsync(newData)
+      .then(() => {
+        toast.success('¡Guardado Exitosamente!', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        navigate("/listUsuarios"); // Utiliza navigate para la navegación
+      })
       .catch((error) => {
         console.error('Error en la solicitud Axios:', error);
       });
-
-    toast.success('¡Guardado Exitosamente!', {
-      position: toast.POSITION.TOP_RIGHT,
-    });
   };
 
   useEffect(() => {
@@ -66,9 +64,8 @@ const EditUsuario = () => {
         UsuarioCedula.current.value = datosUsuario.cedula;
         UsuarioNumero.current.value = datosUsuario.numero;
         UsuarioOcupacion.current.value = datosUsuario.ocupacion;
-        setSelectedRol(datosUsuario.rol); // Establecer el valor seleccionado en el estado
+        setSelectedRol(datosUsuario.rol);
         UsuarioEmail.current.value = datosUsuario.email;
-        UsuarioPassword.current.value = datosUsuario.password;
       } catch (error) {
         console.error(error);
       }
@@ -82,7 +79,7 @@ const EditUsuario = () => {
       <div className="registroEditar">
         <h2>Editar Usuario</h2>
         <form onSubmit={handleRegistro}>
-          <div>
+        <div>
             <label htmlFor="nombre">Nombre:</label>
             <input type="text" id="nombre" ref={UsuarioNombre} required />
           </div>
@@ -121,8 +118,8 @@ const EditUsuario = () => {
             required
             className="edit-input-field"
           >
-            <option value="Admin">Admin</option>
-            <option value="Voluntario">Voluntario</option>
+            <option value="admin">Admin</option>
+            <option value="voluntario">Voluntario</option>
           </select>
           </div>
 
@@ -130,18 +127,11 @@ const EditUsuario = () => {
             <label htmlFor="correo">Correo:</label>
             <input type="email" id="correo" ref={UsuarioEmail} required />
           </div>
-          <div className='edit-input'>
-            <label htmlFor="contrasena" className='edit-label'>Contraseña:</label>
-            <input
-              type="password"
-              id="contrasena"
-              ref={UsuarioPassword}
-              required
-              className='edit-input-field'
-            />
-            </div>
-          <div className="center-button">
+          <div className="center-button-editar-reservacion">
             <button type="submit">Editar</button>
+          </div>
+          <div className="center-button-volver-usuarios">
+            <button type="button" onClick={() => navigate("/dashboard/listUsuarios")}>Volver</button>
           </div>
         </form>
         <ToastContainer />
@@ -149,6 +139,5 @@ const EditUsuario = () => {
     </div>
   );
 };
-
 
 export default EditUsuario;

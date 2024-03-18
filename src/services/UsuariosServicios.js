@@ -62,7 +62,7 @@ export const ELiminarUsuario = async (id) => {
 export const login = async (email, password) => {
   try {
     // Realiza una solicitud POST para iniciar sesión con las credenciales proporcionadas
-    const response = await api.post('/login', { email, password });
+    const response = await api.post('/loginAdmin', { email, password });
 
     // Comprueba si la respuesta contiene un token de autenticación u otra información relevante.
     if (response.data.token) {

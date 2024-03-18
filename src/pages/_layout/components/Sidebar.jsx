@@ -7,29 +7,30 @@ import * as FaIconsc from 'react-icons/md';
 import * as FaIconscs from 'react-icons/ai';
 import * as FaIconsci from 'react-icons/md';
 import * as FaIconsce from 'react-icons/bs';
-import Icon from '../../../assets/img/SENDERO-CORNIZUELO.png';
-
-
+import Icon from '../../../assets/img/SENDERO-CORNIZUELO.webp';
 
 const Sidebar = ({ children }) => {
-  const [sidebarVisible] = useState(true);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  //const [selectedParticipacion, setSelectedParticipacion] = useState('');
-
 
   useEffect(() => {
     // Verificar si hay un token en el localStorage al cargar el componente
     const token = localStorage.getItem('token');
+    console.log("Token:", token);
     if (token) {
       setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
-  }, []);
+  }, []); // Se ejecuta solo cuando el componente se monta
 
- 
-
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+  
   const navLinks = [
-    { to: '/home', text: 'Inicio', icon: <FaIcons.ImHome className="icon" />, visible: isAuthenticated },
-    { to: '/listUsuarios', text: 'Usuarios', icon: <FaIconsd.FaUsers className="icon" />, visible: isAuthenticated },
+    { to: '/dashboard/home', text: 'Inicio', icon: <FaIcons.ImHome className="icon" />, visible: isAuthenticated },
+    { to: '/dashboard/listUsuarios', text: 'Usuarios', icon: <FaIconsd.FaUsers className="icon" />, visible: isAuthenticated },
     { to: '/listaCampanas', text: 'Campañas', icon: <FaIconsc.MdNewspaper className="icon" />, visible: isAuthenticated },
     { to: '/listaReservaciones', text: 'Reservaciones', icon: <FaIconscs.AiOutlineAudit className="icon" />, visible: isAuthenticated },
     { to: '/listaTipos', text: 'TipoVC', icon: <FaIconsci.MdVolunteerActivism className="icon" />, visible: isAuthenticated },
@@ -37,28 +38,24 @@ const Sidebar = ({ children }) => {
     { to: '/listaPuntos', text: 'Puntos De Interés', icon: <FaIconsce.BsFillFileEarmarkTextFill className="icon" />, visible: isAuthenticated },
     { to: '/listaSolicitudes', text: 'Solicitudes', icon: <FaIconsce.BsFillFileEarmarkTextFill className="me-2" />, visible: isAuthenticated },
     { to: '/login', text: 'Inicio de Sesión', icon: <FaIconsd.FaUsers className="me-2" />, visible: !isAuthenticated },
-    //{ to: '/logout', text: 'Cerrar Sesión', icon: <FaIconsd.FaUsers className="me-2" />, visible: isAuthenticated },
   ];
-
-  // const ParticipacionLinks = [
-  //   { to: 'ConsultarEnCampañas', text: 'En Campañas', visible: isAuthenticated },
-  //   { to: 'ConsultarEnVoluntariados', text: 'En Voluntariados', visible: isAuthenticated },
-  // ];
-
-  // const handleConsultaChange = (event) => {
-  //   setSelectedParticipacion(event.target.value);
-  // };
-
 
   return (
     <div className="containerSidebar">
-      <div style={{ width: sidebarVisible ? '224px' : '50px' }} className="sidebar">
+      <div className="sidebar" style={{ width: sidebarVisible ? '224px' : '40px', height: '780px' }}>
         <div className="top_section">
-          <div className="bars"></div>
+          <div className="bars" onClick={toggleSidebar}>
+            {sidebarVisible ? (
+              <FaIcons.ImCross className="icon" />
+            ) : (
+              <FaIcons.ImMenu className="icon" />
+            )}
+          </div>
         </div>
         <div className="logoContainer">
           <img src={Icon} alt="icon" className="logo" />
         </div>
+
         {navLinks
           .filter((link) => link.visible === undefined || link.visible)
           .map((item, index) => (
@@ -74,29 +71,21 @@ const Sidebar = ({ children }) => {
               </div>
             </NavLink>
           ))}
-          
-          
-          
-          <div style={{ fontWeight: 'bold', marginLeft: '20px',marginTop: '10px', marginBottom: '10px', color: 'black', }}>Participantes:</div>
-        
-        {isAuthenticated && (  
+
+        <div style={{ fontWeight: 'bold', marginLeft: '20px', marginTop: '10px', marginBottom: '10px', color: 'black', }}>Participantes:</div>
+
+        {isAuthenticated && (
           <NavLink to="ParticipantesEnCampañas" className="link" activeClassName="active">
-          
-            <div className="icon" style={{ color: 'red' }}>
-              {/* Puedes agregar un icono aquí si lo tienes */}
-            </div>
+            <div className="icon" style={{ color: 'red' }}></div>
             <div style={{ display: sidebarVisible ? 'block' : 'none', color: 'black' }} className="link_text">
               En campaña
             </div>
           </NavLink>
         )}
 
-          {isAuthenticated && (  
+        {isAuthenticated && (
           <NavLink to="ParticipantesEnVoluntariados" className="link" activeClassName="active">
-          
-            <div className="icon" style={{ color: 'red' }}>
-              {/* Puedes agregar un icono aquí si lo tienes */}
-            </div>
+            <div className="icon" style={{ color: 'red' }}></div>
             <div style={{ display: sidebarVisible ? 'block' : 'none', color: 'black' }} className="link_text">
               En Voluntariados
             </div>
@@ -105,10 +94,8 @@ const Sidebar = ({ children }) => {
 
         {isAuthenticated && (
           <NavLink to="logout" className="link" activeClassName="active">
-            <div className="icon" style={{ color: 'red' }}>
-              {/* Puedes agregar un icono aquí si lo tienes */}
-            </div>
-            <div style={{ display: sidebarVisible ? 'block' : 'none', color: 'darkred' }} className="link_text">
+            <div className="icon" style={{ color: 'red' }}></div>
+            <div style={{ display: sidebarVisible ? 'flex' : 'none', color: 'darkred', marginTop: "" }} className="link_text">
               Cerrar sesión
             </div>
           </NavLink>

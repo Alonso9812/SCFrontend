@@ -41,7 +41,7 @@
 /* Estilos para los botones de acción */
 .btnEliminar,
 .btnModificar {
-  background-color: #e74c3c;
+  
   color: #fff;
   border: none;
   padding: 0px 0px;
@@ -51,19 +51,12 @@
 }
 
 .btnModificar {
-  background-color: #fbff00;
+ 
   padding-left: 8px;
   padding-right: 8px;
 }
 
-.btnEliminar:hover {
-  background-color: #c0392b;
-}
 
-/* Estilos para el encabezado */
-.Namelist {
-  text-align: center;
-}
 
 /* Estilos para el contenedor principal */
 .user-registration,
@@ -167,17 +160,17 @@
   overflow-y: auto;
 }
 
-/* 
+ 
+.Namelist {
+  text-align: center;
+  font-size: 2.5rem; 
+  font-weight: bold; 
+  color: #333; 
+  text-transform: uppercase; 
+  margin-bottom: 20px; 
+  border-bottom: 2px solid #ccc; 
+}
 
 
 
-
-
-
-
-
-
-
-
-*/
 

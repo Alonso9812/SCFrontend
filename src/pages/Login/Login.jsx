@@ -4,65 +4,84 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState(null);
   const [loginMessage, setLoginMessage] = useState('');
-  const [showContent, setShowContent] = useState(true); // Estado para mostrar/ocultar contenido
+  const [showContent, setShowContent] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
-      setToken(JSON.parse(storedToken));
+      setToken(storedToken);
+      axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
+      axios.get('usuarios', {
+        headers: {
+          Authorization: `Bearer ${storedToken}`
+        }
+      })
+      .then(response => {
+        const { rol } = response.data;
+        if (rol === 'voluntario') {
+          navigate('/access-denied');
+        } else {
+          navigate('/', { replace: true, state: { logged: true, email } });
+        }
+      })
+      .catch(error => {
+        console.error("Error al obtener el rol del usuario:", error);
+      });
     }
-  }, []);
+  }, [email, navigate]);
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      //axios.defaults.baseURL = 'https://senderocornizuelo.xyz/api-rest/public/api/';
       axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
-
-      const response = await axios.post('login', {
+      const response = await axios.post('loginAdmin', {
         email,
         password,
       });
-
+  
       if (response.data.status === 'Success') {
-        // Extraer el token del objeto de respuesta
         const { token } = response.data;
-
-        // Almacenar solo el token en el localStorage sin comillas
         localStorage.setItem('token', token);
         setToken(token);
         toast.success('Logueado exitosamente');
-
-        // Establecer un temporizador para ocultar el contenido después de 1 segundo
+      
+        // Eliminar token del localStorage después de 1 minuto
+        setTimeout(() => {
+          localStorage.removeItem('token');
+          setToken(null);
+          toast.warning('Tu sesión ha expirado');
+        }, 60000); // 60000 milisegundos = 1 minuto
+      
         setTimeout(() => {
           setShowContent(false);
-          navigate('/', { replace: true, state: { logged: true, email } });
+          navigate('/home', { replace: true, state: { logged: true, email } });
         }, 1000);
-
+      
         setTimeout(() => {
           window.location.reload();
         }, 1000);
+      
+      
       } else {
         setLoginMessage('Credenciales incorrectas');
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
-
+  
       if (error.response) {
         const { status } = error.response;
-
+  
         if (status === 404) {
           // Usuario no encontrado
-          toast.error('Usuario no encontrado');
+          toast.error('¡Usuario no encontrado o no tiene rol de administrador!');
+          navigate('/access-denied'); // Redirigir a la página AccessDenied
         } else if (status === 401) {
           // Contraseña incorrecta
           toast.error('Contraseña incorrecta');
@@ -76,7 +95,6 @@ function Login() {
       }
     }
   };
-
   
   return (
     <div className="Login" style={styles.container}>

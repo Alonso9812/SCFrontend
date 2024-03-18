@@ -6,6 +6,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getTipos, eliminarTipo, actualizarEstadoTipo } from "../../services/TiposServicios";
 import ReactPaginate from "react-paginate";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const ListaTipos = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -119,18 +121,16 @@ const ListaTipos = () => {
                     </select>
                   </td>
                   <td>
-                    <button
-                      onClick={() => handleDeleteConfirmation(tipo.id)}
-                      className="btnEliminar"
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      onClick={() => handleEditTipo(tipo.id)}
-                      className="btnModificar"
-                    >
-                      Editar
-                    </button>
+                  <button onClick={() => handleDeleteConfirmation(tipo.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
+                  <button onClick={() =>  handleEditTipo(tipo.id)} className="btnModificar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
+                      <FontAwesomeIcon icon="edit" />
+                    </span>
+                  </button>
                   </td>
                 </tr>
               ))}

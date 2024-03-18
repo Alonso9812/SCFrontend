@@ -3,21 +3,19 @@ import { useRef, useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateReserva, getReservacionesID } from '../../services/ReservacionesServicios'; // Importamos funciones de servicio para las reservas
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
 
 const EditReservaciones = () => {
   const { id } = useParams(); // Obtener el ID de la reserva de la URL
 
   const queryClient = useQueryClient();
   const ReservacionesFechaReserva = useRef(null);
-  const ReservacionesCupo = useRef(null);
-  const Reservacionesstatus = useRef(null);
-
   const mutationKey = `reservaciones-update/${id}`;
   const mutation = useMutation(mutationKey, updateReserva, {
     onSettled: () => queryClient.invalidateQueries(mutationKey),
   });
 
-  const opcionesStatus = ["Nueva", "Terminada", "Cancelada"];
+  const navigate = useNavigate(); // Obtener la función navigate
 
   const handleRegistro = (event) => {
     event.preventDefault();
@@ -25,8 +23,6 @@ const EditReservaciones = () => {
     let newData = {
       id: id,
       fechaReserva: ReservacionesFechaReserva.current.value,
-      Cupo: ReservacionesCupo.current.value,
-      status: Reservacionesstatus.current.value,
     };
 
     console.log(newData);
@@ -47,8 +43,6 @@ const EditReservaciones = () => {
       try {
         const datosReserva = await getReservacionesID(id); // Utilizamos una función para obtener los datos de la reserva
         ReservacionesFechaReserva.current.value = datosReserva.fechaReserva;
-        ReservacionesCupo.current.value = datosReserva.Cupo;
-        Reservacionesstatus.current.value = datosReserva.status;
       } catch (error) {
         console.error(error);
       }
@@ -58,37 +52,20 @@ const EditReservaciones = () => {
   }, [id]);
 
   return (
-
-
-
-<div className="container">
+    <div className="container">
       <div className="reservacioness">
-      <h1>Editar Reserva</h1>
-      <p>ID de la reserva a editar: {id}</p>
+        <h1>Editar Reservación</h1>
+        <p>ID de la reserva a editar: {id}</p>
         <form onSubmit={handleRegistro}>
-        <div>
-          <label htmlFor="fechaReserva">Fecha de Reserva:</label>
-          <input type="date" id="fechaReserva" ref={ReservacionesFechaReserva} required />
-        </div>
-
-        <div>
-          <label htmlFor="Cupo">Cupo:</label>
-          <input type="number" id="Cupo" ref={ReservacionesCupo} required />
-        </div>
-
-        <div>
-          <label htmlFor="status">Estado:</label>
-          <select id="status" ref={Reservacionesstatus} required>
-            {opcionesStatus.map((opcion) => (
-              <option key={opcion} value={opcion}>
-                {opcion}
-              </option>
-            ))}
-          </select>
-        </div>
-
+          <div className='PosicionEditarReservacion'>
+            <label htmlFor="fechaReserva">Fecha de Reservación:</label>
+            <input type="date" id="fechaReserva" ref={ReservacionesFechaReserva} required />
+          </div>
           <div className="button-EditR">
             <button type="submit">Guardar</button>
+          </div>
+          <div className="center-button-volver">
+            <button type="button" onClick={() => navigate('/listaReservaciones')}>Volver</button>
           </div>
         </form>
         <ToastContainer />

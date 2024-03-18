@@ -30,6 +30,21 @@ export const eliminarReservacion= async (id) => {
     } 
 };
 
+export const actualizarEstadoReservacion = async (id, newStatus) => {
+    try {
+      // Realizar la solicitud PUT para actualizar el estado del usuario
+        const response = await api.put(`reservacion-status/${id}`, {
+            status: newStatus,
+        });
+    
+        // Devolver la respuesta del servidor
+        return response.data;
+        } catch (error) {
+        // Manejar errores
+        console.error(error);
+        }
+    }
+
 export const updateReserva = async (newData) => { 
     
     console.log(newData);    

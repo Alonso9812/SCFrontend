@@ -1,7 +1,7 @@
-//
 import { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { create } from "../../services/UsuariosServicios";
+import { useNavigate } from "react-router-dom"; // Cambiar la importación aquí
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,6 +17,7 @@ const Registro = () => {
   const UsuarioPassword = useRef(null);
 
   const [rol, setRol] = useState("voluntario");
+  const navigate = useNavigate(); // Usar useNavigate aquí
 
   const mutation = useMutation("create-usuario", create, {
     onSettled: () => queryClient.invalidateQueries("create-usuario"),
@@ -44,7 +45,9 @@ const Registro = () => {
       await mutation.mutateAsync(newUsuario);
       toast.success("¡Guardado Exitosamente!", {
         position: toast.POSITION.TOP_RIGHT,
+        
       });
+      navigate("/dashboard/listUsuarios");
     } catch (error) {
       toast.error(`Error al crear el usuario: ${error.message}`, {
         position: toast.POSITION.TOP_RIGHT,
@@ -52,12 +55,16 @@ const Registro = () => {
     }
   };
 
+  const handleVolver = () => {
+    navigate("/dashboard/listUsuarios");
+  };
+
   return (
     <div className="container">
       <div className="registro">
         <h2>Registro</h2>
         <form onSubmit={handleRegistro}>
-          <div>
+        <div>
             <label htmlFor="nombre">Nombre:</label>
             <input type="text" id="nombre" ref={UsuarioNombre} required />
           </div>
@@ -114,8 +121,11 @@ const Registro = () => {
               required
             />
           </div>
-          <div className="center-button">
-            <button type="submit">Registrar</button>
+          <div className="center-button-registrar">
+            <button type="submit" >Registrar</button>
+          </div>
+          <div className="center-button-volver-registro">
+            <button type="button" onClick={handleVolver}>Volver</button>
           </div>
         </form>
         <ToastContainer />

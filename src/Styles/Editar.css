@@ -19,7 +19,7 @@
   box-shadow: 0 0 30px rgba(36, 35, 35, 0.3);
   cursor: default;
   transition: all 400ms ease;
-  height: 600px; 
+  height: 500px; 
 }
 
 .container {
@@ -64,14 +64,16 @@
   cursor: pointer;
   position: absolute;
   top: -10px;
-  left: 300px;
 }
 
-.center-button {
+.center-button-volver-usuarios{
+
+  display: flex;
   position: relative;
-  margin-top: 110px;
-  right: 380px;
+  justify-content: center;
+  margin-top: 20px;
 }
+
 
 .registroEditar button:hover {
   background-color: #0056b3;

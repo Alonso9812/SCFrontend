@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateTipo, getTipoID } from '../../services/TiposServicios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
 
 const EditarTipo = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
-
   const NombreTipo = useRef(null);
+  const navigate = useNavigate(); // Obtén la función navigate
 
   const mutationKey = `update-tipo/${id}`;
   const mutation = useMutation(mutationKey, updateTipo, {
@@ -52,8 +53,8 @@ const EditarTipo = () => {
   return (
     <div className="container">
       <div className="EditarTipo">
-      <h1 className="edit-tipo">Editar Tipo</h1>
-      <p className="edit-id">ID del Tipo a editar: {id}</p>
+        <h1 className="edit-tipo">Editar Tipo</h1>
+        <p className="edit-id">ID del Tipo a editar: {id}</p>
         <form onSubmit={handleRegistro}>
           <div>
             <label htmlFor="nombreTipo">Nombre:</label>
@@ -61,6 +62,9 @@ const EditarTipo = () => {
           </div>
           <div className="center-buton">
             <button type="submit">Guardar</button>
+          </div>
+          <div className="center-button-volver">
+            <button type="button" onClick={() => navigate('/listaTipos')}>Volver</button>
           </div>
         </form>
         <ToastContainer />

@@ -66,12 +66,18 @@
 
 .button-EditR {
   position: relative;
-  margin-top: 50px;
-  right: 350px;
+  margin-top: 80px;
+  right: 175px;
 }
+
 
 .reservacioness button:hover {
   background-color: #0056b3;
+}
+
+
+.PosicionEditarReservacion{
+display:contents
 }
 
 .select {
@@ -88,3 +94,13 @@
     margin-bottom: 8px;
     font-weight: bold;
   }
+
+  .center-button-editar-reservacion{
+    display: flex;
+    position: relative;
+    
+    justify-content: center;
+    margin-top: 20px;
+
+  }
+ 

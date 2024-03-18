@@ -5,6 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { getUsuCamp, EliminarUsuCamp } from "../../services/ParticipantesServicios";
 import { getUsuarios } from "../../services/UsuariosServicios";
 import ReactPaginate from "react-paginate";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const ParticipantesCamp = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -74,26 +76,25 @@ const ParticipantesCamp = () => {
               </tr>
             </thead>
             <tbody>
-              {currentData.map((UsuVol) => (
-                <tr key={UsuVol.id}>
-                  <td>{UsuVol.id}</td>
-                  <td>{UsuVol.campaña_id}</td>
+              {currentData.map((UsuCamp) => (
+                <tr key={UsuCamp.id}>
+                  <td>{UsuCamp.id}</td>
+                  <td>{UsuCamp.campaña_id}</td>
                   <td>
                       {usuarios.length > 0 ? (
-                        usuarios.find((usuario) => usuario.id === UsuVol.usuario_id) ? (
-                          usuarios.find((usuario) => usuario.id === UsuVol.usuario_id).cedula
+                        usuarios.find((usuario) => usuario.id === UsuCamp.usuario_id) ? (
+                          usuarios.find((usuario) => usuario.id === UsuCamp.usuario_id).cedula
                         ) : (
                           "Cédula No Encontrada"
                         )) : "Loading..."
                       }
                   </td>
                   <td>
-                    <button
-                      onClick={() => handleDeleteConfirmation(UsuVol.id)}
-                      className="btnEliminar"
-                    >
-                      Eliminar
-                    </button>
+                  <button onClick={() => handleDeleteConfirmation(UsuCamp.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
                   </td>
                 </tr>
               ))}

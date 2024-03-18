@@ -7,6 +7,8 @@ import { useNavigate , Link} from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { getCampaña, eliminarCampana, actualizarEstadoCampana } from '../../services/CampanasServicios';
 import { getTipos } from '../../services/TiposServicios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const ListaCampanas = () => {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ const ListaCampanas = () => {
   const queryClient = useQueryClient();
   const [editConfirm, setEditConfirm] = useState(null);
   const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
-  
+
 
   const [Tipos, setTipo] = useState([]);
 
@@ -176,12 +178,16 @@ const ListaCampanas = () => {
                     </select>
                   </td>
                   <td>
-                    <button onClick={() => handleShowConfirmation(campanas.id)} className="btnEliminar">
-                      Eliminar
-                    </button>
-                    <button onClick={() => handleEditCampaña(campanas.id)} className="btnModificar">
-                      Editar
-                    </button>
+                  <button onClick={() => handleShowConfirmation(campanas.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
+                  <button onClick={() =>  handleEditCampaña(campanas.id)} className="btnModificar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
+                      <FontAwesomeIcon icon="edit" />
+                    </span>
+                  </button>
                   </td>
                 </tr>
               ))}

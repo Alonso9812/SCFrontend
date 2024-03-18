@@ -4,6 +4,8 @@ import { getPuntosDIS, eliminarPunto, actualizarEstadoPunto } from '../../servic
 import { useNavigate , Link, } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { toast, ToastContainer } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const ListaPuntos = () => {
   const queryClient = useQueryClient();
@@ -15,7 +17,7 @@ const ListaPuntos = () => {
     const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState(null);
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const itemsPerPage = 10;
+  const itemsPerPage = 4;
 
   // Define la función para eliminar un punto de interés
   const { mutate: eliminarPuntoMutation } = useMutation(eliminarPunto, {
@@ -82,7 +84,7 @@ const ListaPuntos = () => {
   };
 
 
-  if (isLoading) return <div className="loading">Cargando...</div>;
+  if (isLoading) return <div className="loading">loading...</div>;
 
   if (isError) return <div className="error">Error</div>;
   
@@ -160,11 +162,16 @@ const ListaPuntos = () => {
                     </select>
                   </td>
                   <td>
-                    <button className="btnEliminar" onClick={() => handleShowConfirmation(Puntos.id)}>
-                      Eliminar
-                    </button>
-                    <button onClick={() => handleEditPunto(Puntos.id)} className="btnModificar">Editar</button>
-                  </td>
+                  <button onClick={() => handleShowConfirmation(Puntos.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
+                  <button onClick={() =>  handleEditPunto(Puntos.id)} className="btnModificar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
+                      <FontAwesomeIcon icon="edit" />
+                    </span>
+                  </button></td>
                 </tr>
               ))}
             </tbody>
@@ -186,7 +193,7 @@ const ListaPuntos = () => {
       {isEditConfirmationOpen && (
               <div className="overlay">
                 <div className="edit-confirm">
-                  <p>¿Estás seguro de que deseas editar este voluntariado?</p>
+                  <p>¿Estás seguro de que deseas editar este punto de interes?</p>
                   <button onClick={() => {
                     handleHideEditConfirmation();
                     navigate(`/update-punto/${editConfirm}`);
@@ -197,8 +204,8 @@ const ListaPuntos = () => {
           )}
 
       <ReactPaginate
-        previousLabel={"Anterior"}
-        nextLabel={"Siguiente"}
+        previousLabel={"<"}
+        nextLabel={">"}
         breakLabel={"..."}
         pageCount={pageCount}
         marginPagesDisplayed={2}

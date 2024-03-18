@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { getUsuVol, EliminarUsuVol } from "../../services/ParticipantesServicios";
 import ReactPaginate from "react-paginate";
 import { getUsuarios } from '../../services/UsuariosServicios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const ParticipantesVol = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -101,12 +103,11 @@ const ParticipantesVol = () => {
 
                     </td> 
                   <td>
-                    <button
-                      onClick={() => handleDeleteConfirmation(UsuVol.id)}
-                      className="btnEliminar"
-                    >
-                      Eliminar
-                    </button>
+                  <button onClick={() => handleDeleteConfirmation(UsuVol.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
                   </td>
                 </tr>
               ))}

@@ -15,7 +15,8 @@ const Logout = () => {
       // Puedes redirigir al usuario a la página de inicio de sesión o realizar otras acciones necesarias
       window.location.href = '/login';
     };
-  
+
+        
     return (
       <div className='btnCerrarSesionContainer'>
         <button className='btnCerrarSesion' onClick={handleLogout}>

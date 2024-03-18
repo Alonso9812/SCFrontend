@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-//import Sidebar from './components/Navbar'
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
@@ -10,9 +9,9 @@ export const Layout = () => {
   };
 
   const queryClient = new QueryClient({ suspense: true });
+  
   return (
     <>
-      
       <main>
         <QueryClientProvider client={queryClient} config={queryConfig}>
           <Outlet />

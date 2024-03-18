@@ -6,12 +6,15 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   getReservaciones,
   eliminarReservacion,
+  actualizarEstadoReservacion,
 } from "../../services/ReservacionesServicios";
 import ReactPaginate from "react-paginate";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const ListaReservaciones = () => {
   const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     "reservaciones",
     getReservaciones,
     { enabled: true }
@@ -66,6 +69,18 @@ const ListaReservaciones = () => {
       handleShowEditConfirmation(id);
     };
 
+
+    const handleStatusChange = async (id, newStatus) => {
+      try {
+        await actualizarEstadoReservacion(id, newStatus);
+        await refetch();
+        queryClient.invalidateQueries('usuarios');
+        toast.success('¡Estado Actualizado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
   if (isLoading) return <div className="loading">Loading...</div>;
 
   if (isError) return <div className="error">Error</div>;
@@ -77,7 +92,7 @@ const ListaReservaciones = () => {
   return (
     <>
       <div className="user-reservations">
-        <h1 className="Namelist">Reservaciones</h1>
+        <h1 className="Namelist">Registro de Reservaciones</h1>
         <Link to="/crear-reservacion-admin">
           <button className="btnRegistrarAdmin">Crear Reservacion</button>
         </Link>
@@ -110,20 +125,31 @@ const ListaReservaciones = () => {
                   <td>{reservaciones.cupo}</td>
                   <td>{reservaciones.telefonoVis}</td>
                   <td>{reservaciones.email}</td>
-                  <td>{reservaciones.status}</td>
+                  <td><div className="select-container">
+                      <label htmlFor={`status-${reservaciones.id}`}>Estado:</label>
+                      <select
+                        id={`status-${reservaciones.id}`}
+                        value={reservaciones.status}
+                        onChange={(e) => handleStatusChange(reservaciones.id, e.target.value)}
+                        
+                      >
+                        <option value="Nueva">Nueva</option>
+                        <option value="Cancelada">Cancelada</option>
+                        <option value="En Proceso">En Proceso</option>
+                        <option value="Terminada">Terminada</option>
+                      </select>
+                    </div></td>
                   <td>
-                    <button
-                      onClick={() => handleShowConfirmation(reservaciones.id)}
-                      className="btnEliminar"
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      onClick={() => handleEditReservaciones(reservaciones.id)}
-                      className="btnModificar"
-                    >
-                      Editar
-                    </button>
+                  <button onClick={() => handleShowConfirmation(reservaciones.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
+                  <button onClick={() =>  handleEditReservaciones(reservaciones.id)} className="btnModificar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
+                      <FontAwesomeIcon icon="edit" />
+                    </span>
+                  </button>
                   </td>
                 </tr>
               ))}

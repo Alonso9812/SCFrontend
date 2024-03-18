@@ -2,6 +2,7 @@ import { useRef } from "react"; // Agregamos useEffect
 import { useMutation, useQueryClient } from "react-query";
 import { create } from "../../services/ReservacionesServicios"; // Agregamos getUser para obtener los datos del usuario
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom"; // Agregamos useNavigate
 
 const Reservacion = () => {
   const queryClient = useQueryClient();
@@ -13,6 +14,7 @@ const Reservacion = () => {
   const cupoRef = useRef(null);
   const telefonoRef = useRef(null);
   const emailRef = useRef(null);
+  const navigate = useNavigate(); // Obtén la función navigate
 
   const mutation = useMutation("create-reservacion", create, {
     onSettled: () => queryClient.invalidateQueries("create-reservacion"),
@@ -94,6 +96,9 @@ const Reservacion = () => {
             <button type="submit">Reservar</button>
           </div>
         </form>
+        <div className="center-button-volver">
+          <button type="button" onClick={() => navigate('/listaReservaciones')}>Volver</button>
+        </div>
         <ToastContainer />
       </div>
     </div>

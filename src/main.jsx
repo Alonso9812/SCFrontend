@@ -58,19 +58,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Logout from "./pages/Login/logout";
 import ParticipantesVol from "./pages/voluntariados/ParticipantesVol";
 import ParticipantesCamp from "./pages/campanas/ParticipantesCamp";
-//import Dashboard from "./pages/Dashboard/dashboard";
+import AccessDeniedPage from "./pages/Login/AccessDeniedPage";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
+
+library.add(faTrash);
+library.add(faEdit);
+
 
 export const ThemeContext = React.createContext(null);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Sidebar />
+    <Sidebar  />
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/home" element={<Home />} />
+     
+          <Route path="/" element={<Layout />}>
+          <Route path="/dashboard/home" element={<Home />} />
           <Route path="/campañas" element={<Campañas />} />
-          <Route path="/listUsuarios" element={<ListUsuarios />} />
+          <Route path="Dashboard/listUsuarios" element={<ListUsuarios />} />
           <Route path="/ListRoles" element={<ListaRoles />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
@@ -78,7 +87,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/listaCampanas" element={<ListaCampanas />} />
           <Route path="/campana-update/:id" element={<EditarCampaña />} />
           {/* <Route path="/AgregarUsuAdmin" element={<AgregarUsuAdmin/>} />  */}
-          <Route path="/user-update/:id" element={<EditarUsuario />} />
+          <Route path="/dashboard/user-update/:id" element={<EditarUsuario />} />
           <Route path="/reservaciones" element={<Reservacion />} />
           <Route path="/listaReservaciones" element={<ListaReservaciones />} />
           <Route  path="/reservaciones-update/:id"element={<EditReservaciones />}/>
@@ -87,7 +96,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/update-tipo/:id" element={<EditarTipo />} />
           <Route path="/listaPuntos" element={<ListaPuntos />} />
           <Route path="/nuevoPuntoForm" element={<NuevoPuntoForm />} />
-          <Route path="/agregar-usuario-admin" element={<AgregarUsuAdmin />} />
+          <Route path="/dashboard/agregar-usuario-admin" element={<AgregarUsuAdmin />} />
           <Route path="/agregar-tipo-admin" element={<CrearTipo />} />
           <Route path="/crear-campana-admin" element={<Campañas />} />
           <Route path="/update-punto/:id" element={<EditarPunto />} />
@@ -101,6 +110,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
           <Route path="ParticipantesEnVoluntariados" element={<ParticipantesVol />} />
           <Route path="ParticipantesEnCampañas" element={<ParticipantesCamp />} />
+          <Route path="/access-denied" element={<AccessDeniedPage />} />
             
         </Route>
       </Routes>

@@ -34,16 +34,14 @@
   cursor: not-allowed;
   margin-left: 250px;
 }
-
-
-/* Estilo al pasar el mouse sobre los botones */
-.btnEliminar:hover,  .btnCancelar:hover {
-  background-color: #c0392b; /* Cambia el color de fondo al pasar el mouse */
+@media only screen and (max-width: 768px) {
+  .loading,
+  .error {
+    margin-left: 0; /* Eliminar el margen izquierdo en dispositivos móviles */
+  }
 }
 
-.btnModificar:hover{
-  background-color: rgb(229, 255, 0);
-}
+
 
 /* 
 /* Estilos para los botones */
@@ -140,8 +138,8 @@
 }
 
 .logo {
-  max-width: 100%;
-  height: auto;
+  width: 150px ;
+  height: 40px;
 }
 
 .toggle-button {
@@ -208,4 +206,28 @@
 
 .btnCerrarSesion:hover {
   background-color: #c82333;
+}
+
+
+.center-button-volver{
+  position: relative;
+  left: 110px;
+}
+
+.center-button-volver-registro{
+  position: relative;
+  left: 475px;
+  margin-top: -66px;
+}
+
+@media (max-width: 600px) {
+  .center-button-volver-registro {
+    left: 180%; /* Centra horizontalmente en dispositivos móviles */
+    transform: translateX(-50%); /* Centra horizontalmente */
+  }
+}
+
+
+.btnAddVoluntariado{
+  position: relative;
 }

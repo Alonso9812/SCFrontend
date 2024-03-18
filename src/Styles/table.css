@@ -24,7 +24,7 @@
   list-style: none;
   padding: 0;
   margin-top: 20px;
-  margin-right: 811px;
+
 }
 
 .pagination li {
@@ -82,4 +82,19 @@
   border-radius: 5px;
   font-size: 16px;
   width: 250px; /* Ajusta el ancho según sea necesario */
+}
+
+@media only screen and (max-width: 600px) {
+  .custom-table {
+    margin-left: 40px; /* Ajusta el margen izquierdo según sea necesario para mover la tabla a la derecha */
+  }
+  .filter{
+    margin-left: 40px;
+  }
+  .btnRegistrarAdmin{
+    margin-left: 40px;
+  }
+  .pagination{
+    margin-left: 0;
+  }
 }

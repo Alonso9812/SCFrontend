@@ -6,13 +6,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ListUsuarios = () => {
-  const { data, isLoading, isError, refetch } = useQuery(
-    'usuarios',
-    getUsuarios,
-    { enabled: true }
-  );
+  const { data, isLoading, isError, refetch } = useQuery('usuarios', getUsuarios, { enabled: true });
   const navigate = useNavigate();
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -31,9 +28,7 @@ const ListUsuarios = () => {
       await ELiminarUsuario(id);
       await refetch();
       queryClient.invalidateQueries('usuarios');
-      toast.success('¡Eliminado Exitosamente!', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
     } catch (error) {
       console.error(error);
     }
@@ -44,61 +39,46 @@ const ListUsuarios = () => {
     setDeleteConfirm(id);
   };
 
-   const handleShowEditConfirmation = (id) => {
-      setEditConfirm(id);
-      setIsEditConfirmationOpen(true);
-    };
-    
-    const handleHideEditConfirmation = () => {
-      setIsEditConfirmationOpen(false);
-    };
+  const handleShowEditConfirmation = (id) => {
+    setEditConfirm(id);
+    setIsEditConfirmationOpen(true);
+  };
   
-    const handleEditUsuario = (id) => {
-      handleShowEditConfirmation(id);
-    };
+  const handleHideEditConfirmation = () => {
+    setIsEditConfirmationOpen(false);
+  };
+  
+  const handleEditUsuario = (id) => {
+    handleShowEditConfirmation(id);
+  };
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      // Llamada a la función que actualiza el estado del usuario
       await actualizarEstadoUsuario(id, newStatus);
-      // Recargar la lista de usuarios después de la actualización
       await refetch();
       queryClient.invalidateQueries('usuarios');
-      toast.success('¡Estado Actualizado Exitosamente!', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.success('¡Estado Actualizado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
     } catch (error) {
       console.error(error);
     }
   };
 
   if (isLoading) return <div className="loading">Loading...</div>;
-
   if (isError) return <div className="error">Error</div>;
 
   const offset = currentPage * itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
-  const filteredData = data.filter(user =>
-    user.cedula.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredData = data.filter(user => user.cedula.toLowerCase().includes(searchTerm.toLowerCase()));
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
 
   return (
     <>
       <div className="user-registration">
-        <h1 className="Namelist">Registro de Usuarios</h1>
-        <Link to="/agregar-usuario-admin" className="btnRegistrarAdmin">
-          Crear Usuario
-        </Link>
+        <h2 className="Namelist">Registro de Usuarios</h2>
+        <Link to="/dashboard/agregar-usuario-admin" className="btnRegistrarAdmin">Crear Usuario</Link>
 
         <div className="filter-container">
-          <input
-            type="text"
-            placeholder="Buscar por Cedula..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className='filter'
-          />
+          <input type="text" placeholder="Buscar por Cedula..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className='filter' />
         </div>
 
         <div className="Div-Table scrollable-table">
@@ -131,34 +111,34 @@ const ListUsuarios = () => {
                   <td>{usuario.rol}</td>
                   <td>{usuario.email}</td>
                   <td>
-                    {/* ComboBox para editar el estado */}
-                    <select
-                      value={usuario.status}
-                      onChange={(e) => handleStatusChange(usuario.id, e.target.value)}
-                      style={{
-                        backgroundColor: usuario.status === 'Activo' ? 'green' : 'lightgray',
-                        color: usuario.status === 'Activo' ? 'white' : 'black',
-                        borderRadius: '5px'
-                      }}
-                    >
-                      <option value="Activo">Activo</option>
-                      <option value="Inactivo">Inactivo</option>
-                    </select>
+                    <div className="select-container">
+                      <label htmlFor={`status-${usuario.id}`}>Estado:</label>
+                      <select
+                        id={`status-${usuario.id}`}
+                        value={usuario.status}
+                        onChange={(e) => handleStatusChange(usuario.id, e.target.value)}
+                        style={{
+                          backgroundColor: usuario.status === 'Activo' ? 'green' : 'lightgray',
+                          color: usuario.status === 'Activo' ? 'white' : 'black',
+                          borderRadius: '5px'
+                        }}
+                      >
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                      </select>
+                    </div>
                   </td>
                   <td>
-                    <button
-                      onClick={() => handleDeleteConfirmation(usuario.id)}
-                      className="btnEliminar"
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      onClick={() => handleEditUsuario(usuario.id)}
-                      className="btnModificar"
-                    >
-                      Editar
-                    </button>
-                  </td>
+                  <button onClick={() => handleDeleteConfirmation(usuario.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
+                  <button onClick={() =>  handleEditUsuario(usuario.id)} className="btnModificar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
+                      <FontAwesomeIcon icon="edit" />
+                    </span>
+                  </button></td>
                 </tr>
               ))}
             </tbody>
@@ -178,17 +158,17 @@ const ListUsuarios = () => {
       )}
 
       {isEditConfirmationOpen && (
-            <div className="overlay">
-              <div className="edit-confirm">
-                <p>¿Estás seguro de que deseas editar este usuario?</p>
-                <button onClick={() => {
-                  handleHideEditConfirmation();
-                  navigate(`/user-update/${editConfirm}`);
-                }} className="btn-confirm btn-yes">Sí</button>
-                <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
-              </div>
-            </div>
-          )}
+        <div className="overlay">
+          <div className="edit-confirm">
+            <p>¿Estás seguro de que deseas editar este usuario?</p>
+            <button onClick={() => {
+              handleHideEditConfirmation();
+              navigate(`/dashboard/user-update/${editConfirm}`);
+            }} className="btn-confirm btn-yes">Sí</button>
+            <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
+          </div>
+        </div>
+      )}
 
       <ReactPaginate
         previousLabel={'Anterior'}
@@ -206,4 +186,3 @@ const ListUsuarios = () => {
 };
 
 export default ListUsuarios;
-

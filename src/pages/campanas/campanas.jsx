@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { create } from '../../services/CampanasServicios';
 import { toast, ToastContainer } from 'react-toastify';
 import { getTipos } from '../../services/TiposServicios';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 const Campanas = () => {
   const queryClient = useQueryClient();
@@ -14,6 +15,8 @@ const Campanas = () => {
   const capacidadRef = useRef(null);
   const tipoRef = useRef(null);
   const [inOex, setInOex] = useState('interno'); // Estado para rastrear la selección
+  const navigate = useNavigate(); // Obtén la función navigate
+
 
   const mutation = useMutation("create-campana", create, {
     onSettled: () => queryClient.invalidateQueries("create-campana"),
@@ -153,6 +156,9 @@ const Campanas = () => {
         </div>
         <div className="center-buttonn">
           <button type="submit">Crear</button>
+        </div>
+        <div className="center-button-volver">
+          <button type="button" onClick={() => navigate('/listaCampanas')}>Volver</button>
         </div>
       </form>
       <ToastContainer />

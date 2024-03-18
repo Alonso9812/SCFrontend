@@ -2,10 +2,12 @@ import { useRef } from "react"; // Agregamos useEffect
 import { useMutation, useQueryClient } from "react-query";
 import { create } from "../../services/TiposServicios"; // Agregamos getUser para obtener los datos del usuario
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
 
 const CrearTipo = () => {
   const queryClient = useQueryClient();
   const nombreTipoRef = useRef(null);
+  const navigate = useNavigate(); // Obtén la función navigate
 
   const mutation = useMutation("create-tipoVolCamp", create, {
     onSettled: () => queryClient.invalidateQueries("create-tipoVolCamp"),
@@ -44,6 +46,9 @@ const CrearTipo = () => {
           </div>
           <div className="center-buton">
             <button type="submit">Registrarse</button>
+          </div>
+          <div className="center-button-volver">
+            <button type="button" onClick={() => navigate('/listaTipos')}>Volver</button>
           </div>
         </form>
         <ToastContainer />

@@ -5,6 +5,7 @@ import { useNavigate , Link} from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { getVOluntariado, eliminarVOluntariado, actualizarEstadoVoluntariado } from '../../services/VOluntariadosServicios';
 import { getTipos } from '../../services/TiposServicios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ListaVoluntariados = () => {
   const navigate = useNavigate();
@@ -172,12 +173,16 @@ const ListaVoluntariados = () => {
                     </select>
                   </td>
                   <td>
-                    <button onClick={() => handleShowConfirmation(voluntariados.id)} className="btnEliminar">
-                      Eliminar
-                    </button>
-                    <button onClick={() => handleEditVOluntariado(voluntariados.id)} className="btnModificar">
-                       Editar
-                    </button>
+                  <button onClick={() => handleShowConfirmation(voluntariados.id)} className="btnEliminar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+                      <FontAwesomeIcon icon="trash" />
+                    </span>
+                  </button>
+                  <button onClick={() =>  handleEditVOluntariado(voluntariados.id)} className="btnModificar">
+                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
+                      <FontAwesomeIcon icon="edit" />
+                    </span>
+                  </button>
                   </td>
                 </tr>
               ))}
