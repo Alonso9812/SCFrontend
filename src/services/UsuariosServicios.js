@@ -1,32 +1,32 @@
 import api from "../api/config";
 
 export const getUsuarios = async () => { 
-    let data = await api.get('usuarios').then(result => result.data);
-    
-    return data;
+  try {
+      const response = await api.get('showU');
+      return response.data; // Devuelve directamente los datos de la respuesta
+  } catch (error) {
+      console.error('Error al obtener usuarios:', error);
+      throw new Error('No se pudieron obtener los usuarios');
+  }
 };
-
 
 export const getUsuariosID = async (id) => { 
     let data = await api.get(`usuarios/${id}`).then(result => result.data);
     return data;
 };
-// export const update = async (id) => { 
-//     let data = await api.put(`user-update/${id}`).then(result => result.data);
-//     return data;
-// };
+
 
 export const updateUsuario = async (newData) => { 
     
-    console.log(newData);    
+        
     // En este punto, `newData` debe ser un objeto con los datos del usuario a actualizar
     let data = await api.put(`user-update/${newData.id}`, newData).then(result => result.data);
     return data;
 };
 
-export const create = async (usuarios) => { 
-    console.log(usuarios)
-    let data = await api.post('create-usuario', usuarios).then(result => result.data);
+export const create = async (user) => { 
+    console.log(user)
+    let data = await api.post('register', user).then(result => result.data);
     return data;
 };
 
@@ -34,7 +34,7 @@ export const create = async (usuarios) => {
 
 export const ELiminarUsuario = async (id) => {
         try {
-            const response = await api.delete(`user-delete/${id}`);
+            const response = await api.delete(`deleteUser/${id}`);
             console.log(response.data);
         } catch (error) {
         

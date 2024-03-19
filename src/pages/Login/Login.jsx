@@ -1,192 +1,96 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState(null);
-  const [loginMessage, setLoginMessage] = useState('');
-  const [showContent, setShowContent] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      setToken(storedToken);
-      axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
-      axios.get('usuarios', {
-        headers: {
-          Authorization: `Bearer ${storedToken}`
-        }
-      })
-      .then(response => {
-        const { rol } = response.data;
-        if (rol === 'voluntario') {
+    // Verificar si hay un token en el localStorage al cargar el componente
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard/home'); // Redirigir al usuario a /dashboard/home si hay un token
+    }
+  }, [navigate]); // Se ejecuta solo cuando el componente se monta o cuando navigate cambia
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8000/api/login', { email, password });
+      const { status, user, authorisation } = response.data;
+      if (status === 'success') {
+        console.log('Usuario autenticado:', user);
+        console.log('Token de autorización:', authorisation.token);
+        
+        // Verificar si el usuario es voluntario
+        if (user.rol === 'voluntario') {
+          // Si es voluntario, redirigir a la página de acceso denegado sin recargar la página
           navigate('/access-denied');
         } else {
-          navigate('/', { replace: true, state: { logged: true, email } });
-        }
-      })
-      .catch(error => {
-        console.error("Error al obtener el rol del usuario:", error);
-      });
-    }
-  }, [email, navigate]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    try {
-      axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
-      const response = await axios.post('loginAdmin', {
-        email,
-        password,
-      });
-  
-      if (response.data.status === 'Success') {
-        const { token } = response.data;
-        localStorage.setItem('token', token);
-        setToken(token);
-        toast.success('Logueado exitosamente');
-      
-        // Eliminar token del localStorage después de 1 minuto
-        setTimeout(() => {
-          localStorage.removeItem('token');
-          setToken(null);
-          toast.warning('Tu sesión ha expirado');
-        }, 60000); // 60000 milisegundos = 1 minuto
-      
-        setTimeout(() => {
-          setShowContent(false);
-          navigate('/home', { replace: true, state: { logged: true, email } });
-        }, 1000);
-      
-        setTimeout(() => {
+          // Si no es voluntario, guardar el token y redirigir a la página de inicio
+          localStorage.setItem('token', authorisation.token);
+          toast.success('Inicio de sesión exitoso');
+          // Redirigir al usuario a la página de inicio después de un inicio de sesión exitoso
+          navigate('/dashboard/home', { replace: true });
+          // Recargar la página después de un inicio de sesión exitoso
           window.location.reload();
-        }, 1000);
-      
-      
+        }
       } else {
-        setLoginMessage('Credenciales incorrectas');
+        setError('Correo electrónico o contraseña incorrectos.');
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error);
-  
-      if (error.response) {
-        const { status } = error.response;
-  
-        if (status === 404) {
-          // Usuario no encontrado
-          toast.error('¡Usuario no encontrado o no tiene rol de administrador!');
-          navigate('/access-denied'); // Redirigir a la página AccessDenied
-        } else if (status === 401) {
-          // Contraseña incorrecta
-          toast.error('Contraseña incorrecta');
-        } else {
-          // Otro error
-          toast.error('Error en la solicitud. Por favor, inténtalo de nuevo.');
-        }
-      } else {
-        // Otro tipo de error
-        toast.error('Error en la solicitud. Por favor, inténtalo de nuevo.');
-      }
+      console.error('Error al iniciar sesión:', error);
+      setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
     }
   };
-  
+
   return (
-    <div className="Login" style={styles.container}>
-      {showContent && token === null ? (
-        <>
-          <h2 style={styles.title}>Iniciar Sesión</h2>
-          {loginMessage && (
-            <p
-              style={{
-                color: loginMessage === 'Logueado exitosamente' ? 'green' : 'red',
-                marginBottom: '10px',
-              }}
-            >
-              {loginMessage}
-            </p>
-          )}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group" style={styles.formGroup}>
-              <label style={styles.label}>Correo Electrónico</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                style={styles.input}
-              />
+    <body>
+      <div className="login-background"> {/* Aplica la clase de estilos al contenedor principal */}
+        <div className="wrapper"> 
+          <form onSubmit={handleLogin} action=''>
+            <h2>Iniciar Sesión</h2>
+            <div className='input-box'>
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+              placeholder='Correo Electronico'
+              required />
+              <span className='i'>
+                <FontAwesomeIcon icon="user" />
+              </span>
             </div>
-            <div className="form-group" style={styles.formGroup}>
-              <label style={styles.label}>Contraseña</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                style={styles.input}
-              />
-              <div>
-                <button type="submit" style={styles.button}>
-                  Iniciar Sesión
-                </button>
-              </div>
+            <div className='input-box'>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} 
+              placeholder='Contraseña'
+              required />
+              <span className='i'>
+                <FontAwesomeIcon icon="lock" />
+              </span>
+            </div>
+            <div className='remember-forgot'>
+              <label>
+                <input type="checkbox"/>
+                Recordarme
+              </label>
+            </div>
+            <button type="submit" className='btn'>Iniciar Sesión</button>
+            <div className='register-link'>
+              <p>Inicio de Sesion para la
+                <a href="#"> Gestion de Modulos</a>
+              </p>
             </div>
           </form>
-          <ToastContainer />
-        </>
-      ) : null}
-    </div>
+          {error && <div className="error-message">{error}</div>}
+        </div>
+      </div>
+    </body>
   );
-}
-
-const styles = {
-  container: {
-    maxWidth: '400px',
-    margin: '0 auto',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)',
-    backgroundColor: '#fff',
-    padding: '20px',
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: '20px',
-  },
-  formGroup: {
-    marginBottom: '15px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '5px',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-  },
-  button: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
 };
 
 export default Login;

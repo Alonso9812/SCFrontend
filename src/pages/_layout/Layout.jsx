@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import Sidebar from "./components/Sidebar";
 
 export const Layout = () => {
   const queryConfig = {
@@ -12,6 +13,7 @@ export const Layout = () => {
   
   return (
     <>
+    <Sidebar/>
       <main>
         <QueryClientProvider client={queryClient} config={queryConfig}>
           <Outlet />

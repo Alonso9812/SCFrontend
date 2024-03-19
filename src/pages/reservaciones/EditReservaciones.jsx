@@ -65,7 +65,7 @@ const EditReservaciones = () => {
             <button type="submit">Guardar</button>
           </div>
           <div className="center-button-volver">
-            <button type="button" onClick={() => navigate('/listaReservaciones')}>Volver</button>
+            <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
           </div>
         </form>
         <ToastContainer />

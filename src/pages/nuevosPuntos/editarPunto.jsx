@@ -12,7 +12,6 @@ const EditarPunto = () => {
   const NombrePunto = useRef(null);
   const DescripcionPunto = useRef(null);
   const UbicacionPunto = useRef(null);
-  const Galeria = useRef(null);
 
   const mutationKey = `update-punto/${id}`;
   const mutation = useMutation(mutationKey, updatePunto, {
@@ -21,22 +20,16 @@ const EditarPunto = () => {
 
   const handleRegistro = async (event) => {
     event.preventDefault();
-
-    // Verificar si se ha adjuntado un archivo de imagen
-    if (!Galeria.current.files[0]) {
-      toast.error('Por favor, adjunta una imagen.', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      return;
-    }
-
+  
+  
     let newData = {
       id: id,
       nombrePunto: NombrePunto.current.value,
       descripcionPunto: DescripcionPunto.current.value,
       ubicacionPunto: UbicacionPunto.current.value,
-      galeria: Galeria.current.files[0],
+  
     };
+
 
     try {
       // Enviar la solicitud de actualización al servidor
@@ -51,7 +44,8 @@ const EditarPunto = () => {
       });
     }
   };
-
+  
+  
   useEffect(() => {
     async function cargarDatosTipo() {
       try {
@@ -59,6 +53,7 @@ const EditarPunto = () => {
         NombrePunto.current.value = datosPunto.nombrePunto;
         DescripcionPunto.current.value = datosPunto.descripcionPunto;
         UbicacionPunto.current.value = datosPunto.ubicacionPunto;
+      
       } catch (error) {
         console.error(error);
       }
@@ -71,7 +66,7 @@ const EditarPunto = () => {
     <div className="edit-container-punto">
       <h1 className="edit-punto">Editar Punto</h1>
       <p className="edit-id">ID del Punto a editar: {id}</p>
-      <form onSubmit={handleRegistro} className="edit-form">
+      <form onSubmit={handleRegistro} className="edit-form"  encType="multipart/form-data">
         <div className="edit-input">
           <label htmlFor="nombrePunto" className="edit-label">
             Nombre:
@@ -108,18 +103,6 @@ const EditarPunto = () => {
             className="edit-input-field"
           />
         </div>
-        <div className="edit-input">
-          <label htmlFor="galeria" className="edit-label">
-            Imagen:
-          </label>
-          <input
-            type="file"
-            id="galeria"
-            ref={Galeria}
-            accept="image/*"
-            className="edit-input-field"
-          />
-        </div>
         <div className="divBotonPunto">
           <button className="btnGuardarPunto" type="submit">
             Guardar
@@ -127,7 +110,7 @@ const EditarPunto = () => {
           
         </div>
         <div className="center-button-volver-usuarios">
-        <button type="button" onClick={() => navigate('/listaPuntos')}>
+        <button type="button" onClick={() => navigate('/dashboard/listaPuntos')}>
             Volver
           </button>
         </div>

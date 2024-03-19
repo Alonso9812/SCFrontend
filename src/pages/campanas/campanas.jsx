@@ -158,7 +158,7 @@ const Campanas = () => {
           <button type="submit">Crear</button>
         </div>
         <div className="center-button-volver">
-          <button type="button" onClick={() => navigate('/listaCampanas')}>Volver</button>
+          <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
         </div>
       </form>
       <ToastContainer />

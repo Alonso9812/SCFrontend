@@ -105,7 +105,7 @@ const ListaPuntos = () => {
     <>
       <div className="type-registration">
         <h1 className="Namelist">Lista Puntos De Interés Sostenible</h1>
-        <Link to='/nuevo-punto-admin'>
+        <Link to='/dashboard/nuevo-punto-admin'>
         <button className='btnRegistrarAdmin'>Crear Punto</button></Link>
 
         <div className="filter-container">
@@ -196,7 +196,7 @@ const ListaPuntos = () => {
                   <p>¿Estás seguro de que deseas editar este punto de interes?</p>
                   <button onClick={() => {
                     handleHideEditConfirmation();
-                    navigate(`/update-punto/${editConfirm}`);
+                    navigate(`/dashboard/update-punto/${editConfirm}`);
                   }} className="btn-confirm btn-yes">Sí</button>
                   <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
                 </div>

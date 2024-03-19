@@ -114,7 +114,7 @@ const ListaCampanas = () => {
     <>
       <div className="campaign-registration">
         <h1 className="Namelist">Registro de Campañas</h1>
-        <Link to='/crear-campana-admin'>
+        <Link to='/dashboard/crear-campana-admin'>
         <button className="btnRegistrarAdmin">Crear Campaña</button>
         </Link>
 
@@ -229,7 +229,7 @@ const ListaCampanas = () => {
               <p>¿Estás seguro de que deseas editar esta campaña?</p>
               <button onClick={() => {
                 handleHideEditConfirmation();
-                navigate(`/campana-update/${editConfirm}`);
+                navigate(`/dashboard/campana-update/${editConfirm}`);
               }} className="btn-confirm btn-yes">Sí</button>
               <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
             </div>

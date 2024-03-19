@@ -97,7 +97,7 @@ const Reservacion = () => {
           </div>
         </form>
         <div className="center-button-volver">
-          <button type="button" onClick={() => navigate('/listaReservaciones')}>Volver</button>
+          <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
         </div>
         <ToastContainer />
       </div>

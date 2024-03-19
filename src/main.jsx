@@ -24,6 +24,7 @@ import "./Styles/CrearTipo.css";
 import "./Styles/Puntos.css";
 import "./Styles/Reservaciones.css";
 import './Styles/table.css';
+import './Styles/loginJWT.css';
 //Rutas
 import { Layout } from "./pages/_layout/Layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -44,7 +45,7 @@ import EditReservaciones from "./pages/reservaciones/EditReservaciones";
 import ListaTipos from "./pages/tipoVC/listaTipo";
 import EditarTipo from "./pages/tipoVC/EditarTipo";
 import CrearTipo from "./pages/tipoVC/CrearTipo";
-import Sidebar from "./pages/_layout/components/Sidebar";
+
 import ListaPuntos from "./pages/nuevosPuntos/listaPuntos";
 import NuevoPuntoForm from "./pages/nuevosPuntos/NuevoPuntoForm";
 import EditarPunto from "./pages/nuevosPuntos/EditarPunto";
@@ -60,12 +61,14 @@ import ParticipantesVol from "./pages/voluntariados/ParticipantesVol";
 import ParticipantesCamp from "./pages/campanas/ParticipantesCamp";
 import AccessDeniedPage from "./pages/Login/AccessDeniedPage";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
+import {faTrash , faEdit, faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
 
 library.add(faTrash);
 library.add(faEdit);
+library.add(faUser);
+library.add(faLock);
 
 
 export const ThemeContext = React.createContext(null);
@@ -73,47 +76,45 @@ export const ThemeContext = React.createContext(null);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-    <Sidebar  />
-      <Routes>
-     
-          <Route path="/" element={<Layout />}>
-          <Route path="/dashboard/home" element={<Home />} />
-          <Route path="/campañas" element={<Campañas />} />
-          <Route path="Dashboard/listUsuarios" element={<ListUsuarios />} />
-          <Route path="/ListRoles" element={<ListaRoles />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/Registro" element={<Registro />} />
-          <Route path="/listaCampanas" element={<ListaCampanas />} />
-          <Route path="/campana-update/:id" element={<EditarCampaña />} />
-          {/* <Route path="/AgregarUsuAdmin" element={<AgregarUsuAdmin/>} />  */}
-          <Route path="/dashboard/user-update/:id" element={<EditarUsuario />} />
-          <Route path="/reservaciones" element={<Reservacion />} />
-          <Route path="/listaReservaciones" element={<ListaReservaciones />} />
-          <Route  path="/reservaciones-update/:id"element={<EditReservaciones />}/>
-          <Route path="/CrearTipo" element={<CrearTipo />} />
-          <Route path="/listaTipos" element={<ListaTipos />} />
-          <Route path="/update-tipo/:id" element={<EditarTipo />} />
-          <Route path="/listaPuntos" element={<ListaPuntos />} />
-          <Route path="/nuevoPuntoForm" element={<NuevoPuntoForm />} />
-          <Route path="/dashboard/agregar-usuario-admin" element={<AgregarUsuAdmin />} />
-          <Route path="/agregar-tipo-admin" element={<CrearTipo />} />
-          <Route path="/crear-campana-admin" element={<Campañas />} />
-          <Route path="/update-punto/:id" element={<EditarPunto />} />
-          <Route path="/crear-reservacion-admin" element={<Reservacion />} />
-          <Route path="/nuevo-punto-admin" element={<NuevoPuntoForm />} />
-          <Route path="/listaVOluntariados" element={<ListaVOluntariados />} />
-          <Route path="/listaSolicitudes" element={<ListaSolicitudes/>}/>
-          <Route path="/voluntariado-update/:id" element={<EditarVOluntariado />}/>
-          <Route path="/voluntariados" element={<VOluntariados />} />
-          <Route path="/nuevo-voluntariados-admin" element={<VOluntariados/>}/>
+    
+    <Routes>
+  <Route path="/" element={<Login />} />
+  <Route path="/logout" element={<Logout />} />
+  <Route path="/Registro" element={<Registro />} />
+  <Route path="/access-denied" element={<AccessDeniedPage />} />
+  
+  <Route path="/dashboard/*" element={<Layout />}>
+    <Route index element={<Home />} />
+    <Route path="campañas" element={<Campañas />} />
+    <Route path="listUsuarios" element={<ListUsuarios />} />
+    <Route path="ListRoles" element={<ListaRoles />} />
+    {/* Agrega las demás rutas aquí sin el prefijo inicial */}
+    <Route path="user-update/:id" element={<EditarUsuario />} />
+    <Route path="reservaciones" element={<Reservacion />} />
+    <Route path="listaReservaciones" element={<ListaReservaciones />} />
+    <Route path="reservaciones-update/:id" element={<EditReservaciones />} />
+    <Route path="agregar-tipo-admin" element={<CrearTipo />} />
+    <Route path="listaTipos" element={<ListaTipos />} />
+    <Route path="update-tipo/:id" element={<EditarTipo />} />
+    <Route path="listaPuntos" element={<ListaPuntos />} />
+    <Route path="nuevoPuntoForm" element={<NuevoPuntoForm />} />
+    <Route path="agregar-usuario-admin" element={<AgregarUsuAdmin />} />
+    <Route path="listaCampanas" element={<ListaCampanas />} />
+    <Route path="campana-update/:id" element={<EditarCampaña />} />
+    <Route path="crear-campana-admin" element={<Campañas />} />
+    <Route path="update-punto/:id" element={<EditarPunto />} />
+    <Route path="crear-reservacion-admin" element={<Reservacion />} />
+    <Route path="nuevo-punto-admin" element={<NuevoPuntoForm />} />
+    <Route path="listaVOluntariados" element={<ListaVOluntariados />} />
+    <Route path="listaSolicitudes" element={<ListaSolicitudes />} />
+    <Route path="voluntariado-update/:id" element={<EditarVOluntariado />} />
+    <Route path="voluntariados" element={<VOluntariados />} />
+    <Route path="nuevo-voluntariados-admin" element={<VOluntariados />} />
+    <Route path="ParticipantesEnVoluntariados" element={<ParticipantesVol />} />
+    <Route path="ParticipantesEnCampañas" element={<ParticipantesCamp />} />
+  </Route>
+</Routes>
 
-          <Route path="ParticipantesEnVoluntariados" element={<ParticipantesVol />} />
-          <Route path="ParticipantesEnCampañas" element={<ParticipantesCamp />} />
-          <Route path="/access-denied" element={<AccessDeniedPage />} />
-            
-        </Route>
-      </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );

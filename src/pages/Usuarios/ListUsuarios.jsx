@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ListUsuarios = () => {
-  const { data, isLoading, isError, refetch } = useQuery('usuarios', getUsuarios, { enabled: true });
+  const { data = [], isLoading, isError, refetch } = useQuery('showU', getUsuarios, { enabled: true });
   const navigate = useNavigate();
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -27,7 +27,7 @@ const ListUsuarios = () => {
     try {
       await ELiminarUsuario(id);
       await refetch();
-      queryClient.invalidateQueries('usuarios');
+      queryClient.invalidateQueries('deleteUSer');
       toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
     } catch (error) {
       console.error(error);
@@ -56,7 +56,7 @@ const ListUsuarios = () => {
     try {
       await actualizarEstadoUsuario(id, newStatus);
       await refetch();
-      queryClient.invalidateQueries('usuarios');
+      queryClient.invalidateQueries('showU');
       toast.success('¡Estado Actualizado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
     } catch (error) {
       console.error(error);
@@ -68,9 +68,9 @@ const ListUsuarios = () => {
 
   const offset = currentPage * itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
-  const filteredData = data.filter(user => user.cedula.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredData = Array.isArray(data) ? data.filter(user => user.cedula.toLowerCase().includes(searchTerm.toLowerCase())) : [];
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
-
+  
   return (
     <>
       <div className="user-registration">
@@ -102,7 +102,7 @@ const ListUsuarios = () => {
               {currentData.map((usuario) => (
                 <tr key={usuario.id}>
                   <td>{usuario.id}</td>
-                  <td>{usuario.nombre}</td>
+                  <td>{usuario.name}</td>
                   <td>{usuario.apell1}</td>
                   <td>{usuario.apell2}</td>
                   <td>{usuario.cedula}</td>

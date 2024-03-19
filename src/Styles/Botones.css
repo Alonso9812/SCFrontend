@@ -231,3 +231,7 @@
 .btnAddVoluntariado{
   position: relative;
 }
+
+.btnPrint{
+  margin-top: 20px;
+}

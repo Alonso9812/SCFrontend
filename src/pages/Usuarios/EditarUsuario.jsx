@@ -16,7 +16,6 @@ const EditUsuario = () => {
   const UsuarioNumero = useRef(null);
   const UsuarioOcupacion = useRef(null);
   const UsuarioRol = useRef(null);
-  const UsuarioEmail = useRef(null);
 
   const [selectedRol, setSelectedRol] = useState('');
   
@@ -30,24 +29,23 @@ const EditUsuario = () => {
     
     let newData = {
       id: id,
-      nombre: UsuarioNombre.current.value,
+      name: UsuarioNombre.current.value,
       apell1: UsuarioApe1.current.value,
       apell2: UsuarioApe2.current.value,
       cedula: UsuarioCedula.current.value,
       numero: UsuarioNumero.current.value,
       ocupacion: UsuarioOcupacion.current.value,
       rol: selectedRol,
-      email: UsuarioEmail.current.value,
     };
 
-    console.log(newData);
+    
 
     mutation.mutateAsync(newData)
       .then(() => {
         toast.success('¡Guardado Exitosamente!', {
           position: toast.POSITION.TOP_RIGHT,
         });
-        navigate("/listUsuarios"); // Utiliza navigate para la navegación
+        navigate("/dashboard/listUsuarios"); // Utiliza navigate para la navegación
       })
       .catch((error) => {
         console.error('Error en la solicitud Axios:', error);
@@ -58,14 +56,13 @@ const EditUsuario = () => {
     async function cargarDatosUsuario() {
       try {
         const datosUsuario = await getUsuariosID(id);
-        UsuarioNombre.current.value = datosUsuario.nombre;
+        UsuarioNombre.current.value = datosUsuario.name;
         UsuarioApe1.current.value = datosUsuario.apell1;
         UsuarioApe2.current.value = datosUsuario.apell2;
         UsuarioCedula.current.value = datosUsuario.cedula;
         UsuarioNumero.current.value = datosUsuario.numero;
         UsuarioOcupacion.current.value = datosUsuario.ocupacion;
         setSelectedRol(datosUsuario.rol);
-        UsuarioEmail.current.value = datosUsuario.email;
       } catch (error) {
         console.error(error);
       }
@@ -123,10 +120,7 @@ const EditUsuario = () => {
           </select>
           </div>
 
-          <div>
-            <label htmlFor="correo">Correo:</label>
-            <input type="email" id="correo" ref={UsuarioEmail} required />
-          </div>
+    
           <div className="center-button-editar-reservacion">
             <button type="submit">Editar</button>
           </div>

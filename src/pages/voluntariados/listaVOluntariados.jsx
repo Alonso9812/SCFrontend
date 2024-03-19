@@ -112,7 +112,7 @@ const ListaVoluntariados = () => {
       <div className="campaign-registration">
         <h1 className="Namelist">Registro de Voluntariados</h1>
        
-          <Link to="/nuevo-voluntariados-admin"><button className="btnRegistrarAdmin">Crear Voluntariado</button></Link>
+          <Link to="/dashboard/nuevo-voluntariados-admin"><button className="btnRegistrarAdmin">Crear Voluntariado</button></Link>
 
           
         <div className="filter-container">
@@ -222,7 +222,7 @@ const ListaVoluntariados = () => {
             <p>¿Estás seguro de que deseas editar este voluntariado?</p>
             <button onClick={() => {
               handleHideEditConfirmation();
-              navigate(`/voluntariado-update/${editConfirm}`);
+              navigate(`/dashboard/voluntariado-update/${editConfirm}`);
             }} className="btn-confirm btn-yes">Sí</button>
             <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
           </div>

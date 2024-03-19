@@ -12,7 +12,7 @@ const styles = {
   container: {
     maxWidth: '400px',
     margin: '0 auto',
-    marginTop: '50px',
+    
     textAlign: 'center',
   },
   title: {

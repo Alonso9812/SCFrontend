@@ -19,15 +19,15 @@ const Registro = () => {
   const [rol, setRol] = useState("voluntario");
   const navigate = useNavigate(); // Usar useNavigate aquí
 
-  const mutation = useMutation("create-usuario", create, {
-    onSettled: () => queryClient.invalidateQueries("create-usuario"),
+  const mutation = useMutation("register", create, {
+    onSettled: () => queryClient.invalidateQueries("register"),
   });
 
   const handleRegistro = async (e) => {
     e.preventDefault();
 
     const newUsuario = {
-      nombre: UsuarioNombre.current.value,
+      name: UsuarioNombre.current.value,
       apell1: UsuarioApe1.current.value,
       apell2: UsuarioApe2.current.value,
       cedula: UsuarioCedula.current.value,

@@ -120,7 +120,7 @@ const NuevoPuntoForm = () => {
             <button type="submit">Crear</button>
           </div>
         </form>
-        <button onClick={() => navigate('/listaPuntos')}>Volver</button>
+        <button onClick={() => navigate('/dashboard/listaPuntos')}>Volver</button>
       <ToastContainer />
     </div>
   );

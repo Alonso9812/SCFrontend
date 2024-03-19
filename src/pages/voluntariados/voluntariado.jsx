@@ -155,7 +155,7 @@ const VOluntariados = () => {
         </div>
       </form>
       <div className="center-buttonEv">
-        <button onClick={() => navigate('/listaVoluntariados')}>Volver</button>
+        <button onClick={() => navigate('/dashboard/listaVoluntariados')}>Volver</button>
       </div>
       <ToastContainer />
     </div>

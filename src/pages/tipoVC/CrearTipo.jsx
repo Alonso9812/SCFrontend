@@ -48,7 +48,7 @@ const CrearTipo = () => {
             <button type="submit">Registrarse</button>
           </div>
           <div className="center-button-volver">
-            <button type="button" onClick={() => navigate('/listaTipos')}>Volver</button>
+            <button type="button" onClick={() => navigate('/dashboard/listaTipos')}>Volver</button>
           </div>
         </form>
         <ToastContainer />

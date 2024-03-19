@@ -1,14 +1,11 @@
-
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUsuVol, EliminarUsuVol } from "../../services/ParticipantesServicios";
 import ReactPaginate from "react-paginate";
 import { getUsuarios } from '../../services/UsuariosServicios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 
 const ParticipantesVol = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -19,10 +16,9 @@ const ParticipantesVol = () => {
 
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 10;
-
   const [usuarios, setUsuarios] = useState([]);
-  
 
   useEffect(() => {
     const fetchUsuarios = async () => {
@@ -35,8 +31,6 @@ const ParticipantesVol = () => {
     };
     fetchUsuarios();
   }, []);
-
-
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
@@ -59,55 +53,60 @@ const ParticipantesVol = () => {
     setDeleteConfirm(id);
   };
 
-
-
   if (isLoading) return <div className="loading">Loading...</div>;
 
   if (isError) return <div className="error">Error</div>;
 
+  const filteredData = searchTerm
+    ? data.filter((UsuVol) => UsuVol.voluntariado_id.toString().includes(searchTerm))
+    : data;
+
   const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(data.length / itemsPerPage);
-  const currentData = data.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+  const currentData = filteredData.slice(offset, offset + itemsPerPage);
 
   return (
     <>
       <div className="type-registration">
-        
-        
         <h1 className="Namelist">Registro de Participantes</h1>
-        
+        <div>
+          <input
+            type="text"
+            placeholder="Filtrar por el ID del voluntariado"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         <div className="Div-Table">
           <table className="Table custom-table">
             <thead>
               <tr>
-                <th>ID UsuVol</th>
+                
                 <th>ID Voluntariado</th>
                 <th>Cedula Participante</th>
-                
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {currentData.map((UsuVol) => (
                 <tr key={UsuVol.id}>
-                  <td>{UsuVol.id}</td>
+                  
                   <td>{UsuVol.voluntariado_id}</td>
                   <td>
-                 {usuarios.length > 0 ? (
-                   usuarios.find((usuario) => usuario.id === UsuVol.usuario_id) ? (
-                     usuarios.find((usuario) => usuario.id === UsuVol.usuario_id).cedula
-                   ) : (
-                     "Cédula No Encontrada"
-                   )) : "Loading..."
-                 }
-
-                    </td> 
+                    {usuarios.length > 0 ? (
+                      usuarios.find((user) => user.id === UsuVol.users_id) ? (
+                        usuarios.find((user) => user.id === UsuVol.users_id).cedula
+                      ) : (
+                        "Cédula No Encontrada"
+                      )
+                    ) : "Loading..."}
+                  </td>
                   <td>
-                  <button onClick={() => handleDeleteConfirmation(UsuVol.id)} className="btnEliminar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
-                      <FontAwesomeIcon icon="trash" />
-                    </span>
-                  </button>
+                    <button onClick={() => handleDeleteConfirmation(UsuVol.id)} className="btnEliminar">
+                      <span style={{ color: 'black' }}>
+                        <FontAwesomeIcon icon="trash" />
+                      </span>
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -121,9 +120,7 @@ const ParticipantesVol = () => {
         <div className="overlay">
           <div className="delete-confirm">
             <p>¿Estás seguro de que quieres eliminar este tipo?</p>
-            <button onClick={() => handleDeleteCandidate(deleteConfirm)}>
-              Sí
-            </button>
+            <button onClick={() => handleDeleteCandidate(deleteConfirm)}>Sí</button>
             <button onClick={() => setDeleteConfirm(null)}>No</button>
           </div>
         </div>

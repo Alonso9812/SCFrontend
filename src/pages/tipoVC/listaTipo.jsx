@@ -86,8 +86,8 @@ const ListaTipos = () => {
       <div className="type-registration">
         
         
-        <h1 className="Namelist">Registro de Tipos</h1>
-        <Link to="/agregar-tipo-admin">
+        <h1 className="Namelist">Registro de tipos para campañas y voluntariados</h1>
+        <Link to="/dashboard/agregar-tipo-admin">
         <button className="btnRegistrarAdmin" >Crear Tipo</button>
         </Link>
         <div className="Div-Table scrollable-table">
@@ -157,7 +157,7 @@ const ListaTipos = () => {
           <p>¿Estás seguro de que deseas editar este tipo?</p>
           <button onClick={() => {
             handleHideEditConfirmation();
-            navigate(`/update-tipo/${editConfirm}`);
+            navigate(`/dashboard/update-tipo/${editConfirm}`);
           }} className="btn-confirm btn-yes">Sí</button>
           <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
         </div>

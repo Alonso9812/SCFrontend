@@ -17,6 +17,7 @@ const ParticipantesCamp = () => {
 
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 10;
   const [usuarios, setUsuarios] = useState([]);
 
@@ -57,19 +58,30 @@ const ParticipantesCamp = () => {
 
   if (isError) return <div className="error">Error</div>;
 
+  const filteredData = searchTerm
+    ? data.filter((UsuCamp) => UsuCamp.campaña_id.toString().includes(searchTerm))
+    : data;
+
   const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(data.length / itemsPerPage);
-  const currentData = data.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+  const currentData = filteredData.slice(offset, offset + itemsPerPage);
 
   return (
     <>
       <div className="type-registration">
         <h1 className="Namelist">Registro de Participantes</h1>
+        <div>
+          <input
+            type="text"
+            placeholder="Filtrar por el ID de la campaña"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         <div className="Div-Table">
           <table className="Table custom-table">
             <thead>
               <tr>
-                <th>ID UsuCamp</th>
                 <th>ID Campaña</th>
                 <th>Cedula Participante</th>
                 <th>Acciones</th>
@@ -78,7 +90,7 @@ const ParticipantesCamp = () => {
             <tbody>
               {currentData.map((UsuCamp) => (
                 <tr key={UsuCamp.id}>
-                  <td>{UsuCamp.id}</td>
+                
                   <td>{UsuCamp.campaña_id}</td>
                   <td>
                       {usuarios.length > 0 ? (
@@ -90,11 +102,11 @@ const ParticipantesCamp = () => {
                       }
                   </td>
                   <td>
-                  <button onClick={() => handleDeleteConfirmation(UsuCamp.id)} className="btnEliminar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
-                      <FontAwesomeIcon icon="trash" />
-                    </span>
-                  </button>
+                    <button onClick={() => handleDeleteConfirmation(UsuCamp.id)} className="btnEliminar">
+                      <span style={{ color: 'black' }}>
+                        <FontAwesomeIcon icon="trash" />
+                      </span>
+                    </button>
                   </td>
                 </tr>
               ))}
