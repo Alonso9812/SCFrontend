@@ -1,0 +1,89 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .Voluntariado {
+    max-width: 700px;
+    margin: 20px auto 40px;
+    padding: 20px;
+    border: 2px solid #1758e694;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(36, 35, 35, 0.3);
+    cursor: default;
+    transition: all 400ms ease;
+    height: 550px; 
+  }
+  
+  .container {
+    display: flex;
+  }
+  
+  .Voluntariado h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .Voluntariado form {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-gap: 20px; 
+  }
+  
+  .Voluntariado label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .Voluntariado button {
+    background-color: rgb(46, 109, 247);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .centerr {
+    position: relative;
+    left: 140px;
+    margin-top: 17px;
+  }
+
+  .center-buttonvol{
+    position: relative;
+    display: flex;
+    
+    left: 50px;
+    margin-top: 17px;
+  }
+  
+  .Voluntariado button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos CSS para los combobox */
+  .select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s;
+  }
+  
+  /* Estilos CSS para las etiquetas de los combobox */
+  .label {
+    margin-bottom: 8px;
+    font-weight: bold;
+  }

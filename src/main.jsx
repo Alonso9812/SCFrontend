@@ -12,7 +12,7 @@ import "./Styles/EditarEstilos.css";
 import "./Styles/EditarReservacion.css";
 import "./Styles/EditarVoluntariado.css";
 import "./Styles/nuevosPuntos.css";
-// import './Styles/SidebarC.css'
+import './Styles/Voluntariado.css'
 import "./Styles/Botones.css";
 import "./Styles/Campanas.css";
 import "./Styles/Tablas.css";

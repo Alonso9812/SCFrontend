@@ -106,10 +106,9 @@ const EditarPunto = () => {
         <div className="divBotonPunto">
           <button className="btnGuardarPunto" type="submit">
             Guardar
-          </button>
-          
+          </button> 
         </div>
-        <div className="center-button-volver-usuarios">
+        <div className="center-button-EditPuntos">
         <button type="button" onClick={() => navigate('/dashboard/listaPuntos')}>
             Volver
           </button>

@@ -36,7 +36,7 @@ label {
 
 /* Campo de entrada de texto y fecha */
 input[type="text"],
-input[type="date"] {
+input[type="datetime-local"] {
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 4px;
@@ -64,9 +64,15 @@ input[type="date"] {
 .center-buttonCamp {
   display: flex;
   position: relative;
-  left: 50%;
+  left: 1%;
   justify-content: center;
-  margin-top: 20px; /* Cambia el margen superior a 0 para alinear el botón */
+  margin-top: 10px; /* Cambia el margen superior a 0 para alinear el botón */
+}
+
+.camp-button-volver{
+  position: relative;
+  left: 25%;
+  margin-top: 10px;
 }
 /* Estilo al pasar el mouse sobre el botón de guardar */
 button.center-buttonn:hover {

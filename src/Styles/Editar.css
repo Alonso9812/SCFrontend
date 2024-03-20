@@ -19,7 +19,7 @@
   box-shadow: 0 0 30px rgba(36, 35, 35, 0.3);
   cursor: default;
   transition: all 400ms ease;
-  height: 500px; 
+  height: 480px; 
 }
 
 .container {
@@ -43,17 +43,6 @@
   margin-bottom: 5px;
 }
 
-.registroEditar input {
-  padding: 0;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  background: transparent;
-  font-size: 15px;
-  width: 90%;
-  height: 20px;
-  outline: none;
-}
-
 .registroEditar button {
   background-color: rgb(46, 109, 247);
   color: #fff;
@@ -62,18 +51,19 @@
   border-radius: 3px;
   font-size: 18px;
   cursor: pointer;
-  position: absolute;
-  top: -10px;
 }
 
-.center-button-volver-usuarios{
-
-  display: flex;
+.center-editar-usuarios{
   position: relative;
-  justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
+  left: 100px;
 }
 
+.center-volver-usuarios{
+  position: relative;
+  margin-top: 30px;
+  left: 110px;
+}
 
 .registroEditar button:hover {
   background-color: #0056b3;
@@ -89,8 +79,7 @@
   background-color: #fff;
   transition: border-color 0.3s;
 }
-
-/ Estilos CSS para las etiquetas de los combobox */
+ */
 .label {
   margin-bottom: 8px;
   font-weight: bold;

@@ -66,7 +66,7 @@ const VOluntariados = () => {
   };
 
   return (
-    <div className="registro">
+    <div className="Voluntariado">
       <h2>Nuevo Voluntariado</h2>
       <form onSubmit={handleRegistro}>
         <div>
@@ -150,13 +150,14 @@ const VOluntariados = () => {
             <option value="Externo">Externo</option>
           </select>
         </div>
-        <div  className="centerr-button">
+        <div  className="centerr">
           <button className='btnAddVoluntariado' type="submit">Crear</button>
         </div>
-      </form>
-      <div className="center-buttonEv">
+        <div className="center-buttonvol">
         <button onClick={() => navigate('/dashboard/listaVoluntariados')}>Volver</button>
       </div>
+      </form>
+      
       <ToastContainer />
     </div>
   );

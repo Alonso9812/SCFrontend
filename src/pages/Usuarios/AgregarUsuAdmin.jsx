@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { create } from "../../services/UsuariosServicios";
 import { useNavigate } from "react-router-dom"; // Cambiar la importación aquí
@@ -16,7 +16,7 @@ const Registro = () => {
   const UsuarioEmail = useRef(null);
   const UsuarioPassword = useRef(null);
 
-  const [rol, setRol] = useState("voluntario");
+
   const navigate = useNavigate(); // Usar useNavigate aquí
 
   const mutation = useMutation("register", create, {
@@ -33,7 +33,6 @@ const Registro = () => {
       cedula: UsuarioCedula.current.value,
       numero: UsuarioNumero.current.value,
       ocupacion: UsuarioOcupacion.current.value,
-      rol,
       status: "activo",
       email: UsuarioEmail.current.value,
       password: UsuarioPassword.current.value,
@@ -64,7 +63,7 @@ const Registro = () => {
       <div className="registro">
         <h2>Registro</h2>
         <form onSubmit={handleRegistro}>
-        <div>
+          <div>
             <label htmlFor="nombre">Nombre:</label>
             <input type="text" id="nombre" ref={UsuarioNombre} required />
           </div>
@@ -94,27 +93,16 @@ const Registro = () => {
             <input type="text" id="ocupacion" ref={UsuarioOcupacion} required />
           </div>
           <div>
-            <label htmlFor="rol" className="label-rol">
-              Seleccione el rol:
-            </label>
-            <select
-              id="rol"
-              className="select" // Agrega una clase para el combobox
-              onChange={(e) => setRol(e.target.value)}
-              value={rol}
-              required
-            >
-              <option value="voluntario">voluntario</option>
-              <option value="admin">admin</option>
-            </select>
+            <div className="lblCorreo">
+               <label htmlFor="correo">Correo:</label>
+            </div>
+            <input className="iptCorreo" type="email" id="correo" ref={UsuarioEmail} required />
           </div>
           <div>
-            <label htmlFor="correo">Correo:</label>
-            <input type="email" id="correo" ref={UsuarioEmail} required />
-          </div>
-          <div>
-            <label htmlFor="contrasena">Contraseña:</label>
-            <input
+            <div className="labelPass">
+              <label htmlFor="contrasena">Contraseña:</label>
+            </div> 
+            <input className="pswdUsuario"
               type="password"
               id="contrasena"
               ref={UsuarioPassword}
@@ -124,13 +112,14 @@ const Registro = () => {
           <div className="center-button-registrar">
             <button type="submit" >Registrar</button>
           </div>
-          <div className="center-button-volver-registro">
+          <div className="center-button-registro">
             <button type="button" onClick={handleVolver}>Volver</button>
           </div>
         </form>
         <ToastContainer />
       </div>
     </div>
+
   );
 };
 

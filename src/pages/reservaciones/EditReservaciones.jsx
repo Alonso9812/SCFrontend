@@ -1,23 +1,21 @@
 import { useParams } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { updateReserva, getReservacionesID } from '../../services/ReservacionesServicios'; // Importamos funciones de servicio para las reservas
+import { updateReserva, getReservacionesID } from '../../services/ReservacionesServicios';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const EditReservaciones = () => {
-  const { id } = useParams(); // Obtener el ID de la reserva de la URL
-
+  const { id } = useParams();
   const queryClient = useQueryClient();
   const ReservacionesFechaReserva = useRef(null);
   const mutationKey = `reservaciones-update/${id}`;
   const mutation = useMutation(mutationKey, updateReserva, {
     onSettled: () => queryClient.invalidateQueries(mutationKey),
   });
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // Obtener la función navigate
-
-  const handleRegistro = (event) => {
+  const handleRegistro = async (event) => {
     event.preventDefault();
 
     let newData = {
@@ -25,23 +23,26 @@ const EditReservaciones = () => {
       fechaReserva: ReservacionesFechaReserva.current.value,
     };
 
-    console.log(newData);
-    // Enviar la solicitud de actualización al servidor
-    mutation.mutateAsync(newData)
-      .catch((error) => {
-        console.error('Error en la solicitud Axios:', error);
+    try {
+      // Enviar la solicitud de actualización al servidor
+      await mutation.mutateAsync(newData);
+      // Mostrar el toast después de editar correctamente
+      toast.success('¡Guardado Exitosamente!', {
+        position: toast.POSITION.TOP_RIGHT,
       });
-
-    toast.success('¡Guardado Exitosamente!', {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+      // Esperar un breve período de tiempo antes de redirigir
+      setTimeout(() => {
+        navigate("/dashboard/listaReservaciones");
+      }, 2000); // Redirigir después de 2 segundos (ajusta este valor según sea necesario)
+    } catch (error) {
+      console.error('Error en la solicitud Axios:', error);
+    }
   };
 
   useEffect(() => {
-    // Cargamos los datos de la reserva al montar el componente
     async function cargarDatosReserva() {
       try {
-        const datosReserva = await getReservacionesID(id); // Utilizamos una función para obtener los datos de la reserva
+        const datosReserva = await getReservacionesID(id);
         ReservacionesFechaReserva.current.value = datosReserva.fechaReserva;
       } catch (error) {
         console.error(error);
@@ -59,12 +60,12 @@ const EditReservaciones = () => {
         <form onSubmit={handleRegistro}>
           <div className='PosicionEditarReservacion'>
             <label htmlFor="fechaReserva">Fecha de Reservación:</label>
-            <input type="date" id="fechaReserva" ref={ReservacionesFechaReserva} required />
+            <input type="datetime-local" id="fechaReserva" ref={ReservacionesFechaReserva} required />
           </div>
           <div className="button-EditR">
             <button type="submit">Guardar</button>
           </div>
-          <div className="center-button-volver">
+          <div className="center-button-editar-reservacion">
             <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
           </div>
         </form>

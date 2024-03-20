@@ -1,91 +1,92 @@
-/* Estilos generales */
 
 .nuevoPunto {
-    max-width: 700px;
-    margin: 8px auto 40px;
-    padding: 20px;
-    border: 2px solid #1758e694;
-    border-radius: 5px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 0 30px rgba(36, 35, 35, 0.3);
-    cursor: default;
-    transition: all 400ms ease;
-    
-  }
+  max-width: 700px;
+  margin: 8px auto 40px;
+  padding: 20px;
+  border: 2px solid #1758e694;
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 30px rgba(36, 35, 35, 0.3);
+  cursor: default;
+  transition: all 400ms ease;
   
-  .nuevoPunto h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Estilos para el formulario */
-  .nuevoPunto form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-  }
-  
-  .nuevoPunto label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  /* Estilos para los campos de entrada */
-  .nuevoPunto input {
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 100%;
-    background-color: #f9f9f9;
-    outline: none;
-  }
-  
-  /* Estilos para el botón "Reservar" */
-  .nuevoPunto button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 3px;
-    font-size: 18px;
-    cursor: pointer;
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-top: 20px; /* Ajusta el margen superior para que quede alineado */
-  }
-  
-  .center-buttonn {
-    display: flex;
-    position: relative;
-    left: 50%;
-    justify-content: center;
-    margin-top: 20px; /* Cambia el margen superior a 0 para alinear el botón */
-  }
-  
-  /* Estilos al hacer hover en el botón */
-  .nuevoPunto button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Estilos CSS para los combobox */
-  .select {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s;
-  }
-  
-  /* Estilos CSS para las etiquetas de los combobox */
-  .label {
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
+}
+
+.nuevoPunto h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Estilos para el formulario */
+.nuevoPunto form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.nuevoPunto label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Estilos para los campos de entrada */
+.nuevoPunto input {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+  background-color: #f9f9f9;
+  outline: none;
+}
+
+/* Estilos para el botÃ³n "Reservar" */
+.nuevoPunto button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 3px;
+  font-size: 18px;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-top: 20px;
+}
+.center-buttonn {
+  display: flex;
+  position: relative;
+  left: 50%;
+  justify-content: center;
+  margin-top: 20px; 
+}
+ .regresar{
+  position: relative;
+  left: 80px;
+ }
+
+.nuevoPunto button:hover {
+  background-color: #0056b3;
+}
+
+
+.select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+/* Estilos CSS para las etiquetas de los combobox */
+.label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
