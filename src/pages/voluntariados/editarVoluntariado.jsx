@@ -172,13 +172,13 @@ const EditarVOluntariado = () => {
             <option value="Externo">Externo</option>
           </select>
         </div>
-        <div className="center-buttonEv">
+        <div className="center-butt">
           <button type="submit">Modificar</button>
-        </div>
-      </form>
-      <div className="center-buttonEv">
+        </div><div className="center-but">
         <button onClick={() => navigate('/dashboard/listaVoluntariados')}>Volver</button>
       </div>
+      </form>
+      
       <ToastContainer />
     </div>
   );

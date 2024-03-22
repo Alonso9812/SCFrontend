@@ -15,7 +15,7 @@ const EditUsuario = () => {
   const UsuarioCedula = useRef(null);
   const UsuarioNumero = useRef(null);
   const UsuarioOcupacion = useRef(null);
-  const UsuarioRol = useRef(null);
+
 
   const [selectedRol, setSelectedRol] = useState('');
   
@@ -105,32 +105,17 @@ const EditUsuario = () => {
             <label htmlFor="ocupacion">Ocupación:</label>
             <input type="text" id="ocupacion" ref={UsuarioOcupacion} required />
           </div>
-          <div className="edit-input">
-          <label htmlFor="rol" className="edit-label">Rol:</label>
-          <select
-            id="rol"
-            ref={UsuarioRol}
-            value={selectedRol}
-            onChange={(e) => setSelectedRol(e.target.value)}
-            required
-            className="edit-input-field"
-          >
-            <option value="admin">Admin</option>
-            <option value="voluntario">Voluntario</option>
-          </select>
-          </div>
-
-    
-          <div className="center-button-editar-reservacion">
+          <div className="center-editar-usuarios">
             <button type="submit">Editar</button>
           </div>
-          <div className="center-button-volver-usuarios">
+          <div className="center-volver-usuarios">
             <button type="button" onClick={() => navigate("/dashboard/listUsuarios")}>Volver</button>
           </div>
         </form>
         <ToastContainer />
       </div>
     </div>
+
   );
 };
 

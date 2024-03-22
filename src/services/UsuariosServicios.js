@@ -59,6 +59,21 @@ export const ELiminarUsuario = async (id) => {
       }
     }
 
+
+    export const actualizarRolUsuario = async (id, newStatus) => {
+      try {
+        // Realizar la solicitud PUT para actualizar el estado del usuario
+        const response = await api.put(`Rol-update/${id}`, {
+          rol: newStatus,
+        });
+        // Devolver la respuesta del servidor
+        return response.data;
+      } catch (error) {
+        // Manejar errores
+        console.error(error);
+      }
+    }
+
 export const login = async (email, password) => {
   try {
     // Realiza una solicitud POST para iniciar sesión con las credenciales proporcionadas

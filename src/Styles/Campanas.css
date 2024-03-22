@@ -45,7 +45,7 @@
   outline: none;
 }
 
-/* Estilos para el botón "Reservar" */
+/* Estilos para el botÃ³n "Reservar" */
 .campanas button {
   background-color: #007bff;
   color: #fff;
@@ -63,12 +63,15 @@
 .center-buttonn {
   display: flex;
   position: relative;
-  left: 50%;
+  left: 10px;
   justify-content: center;
-  margin-top: 20px; /* Cambia el margen superior a 0 para alinear el botón */
+  margin-top: 1px;
 }
 
-/* Estilos al hacer hover en el botón */
+.button-volver{
+  right: 10px;
+}
+
 .campanas button:hover {
   background-color: #0056b3;
 }
@@ -89,3 +92,13 @@
   margin-bottom: 8px;
   font-weight: bold;
 }
+
+@media (max-width: 600px) {
+
+  .button-volver {
+   
+   top: 8px;
+  right: 150px;
+  
+  }
+  }

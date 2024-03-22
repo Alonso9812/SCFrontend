@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {getReservaciones, eliminarReservacion} from "../../services/ReservacionesServicios";
+import {getReservaciones, eliminarReservacion, actualizarEstadoReservacion} from "../../services/ReservacionesServicios";
 import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import jsPDF from "jspdf";
@@ -12,7 +12,7 @@ import { FaFilePdf } from "react-icons/fa6";
 
 const ListaReservaciones = () => {
   const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     "reservaciones",
     getReservaciones,
     { enabled: true }
@@ -65,6 +65,20 @@ const ListaReservaciones = () => {
 
   const handleEditReservaciones = (id) => {
     handleShowEditConfirmation(id);
+  };
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      // Llamada a la función que actualiza el estado del usuario
+      await actualizarEstadoReservacion(id, newStatus);
+      // Recargar la lista de usuarios después de la actualización
+      await refetch();
+      queryClient.invalidateQueries('reservacion');
+      toast.success('¡Estado Actualizado Exitosamente!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handlePrintReport = () => {
@@ -208,7 +222,16 @@ const ListaReservaciones = () => {
                   <td>{reservaciones.cupo}</td>
                   <td>{reservaciones.telefonoVis}</td>
                   <td>{reservaciones.email}</td>
-                  <td>{reservaciones.status}</td>
+                  <td> {/* ComboBox para editar el estado */}
+                    <select
+                      value={reservaciones.status}
+                      onChange={(e) => handleStatusChange(reservaciones.id, e.target.value)}
+                    >
+                      <option value="Nueva">Nueva</option>
+                      <option value="En Proceso">En Proceso</option>
+                      <option value="Cancelada">Cancelada</option>
+                      <option value="Terminada">Terminada</option>
+                    </select></td>
                   <td>
                   <button onClick={() => handleShowConfirmation(reservaciones.id)} className="btnEliminar">
                     <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}

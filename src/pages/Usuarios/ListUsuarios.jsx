@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
-import { getUsuarios, ELiminarUsuario, actualizarEstadoUsuario } from '../../services/UsuariosServicios';
+import { getUsuarios, ELiminarUsuario, actualizarEstadoUsuario, actualizarRolUsuario  } from '../../services/UsuariosServicios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -50,6 +50,17 @@ const ListUsuarios = () => {
   
   const handleEditUsuario = (id) => {
     handleShowEditConfirmation(id);
+  };
+
+  const handleRolChange = async (id, newStatus) => {
+    try {
+      await actualizarRolUsuario(id, newStatus);
+      await refetch();
+      queryClient.invalidateQueries('showU');
+      toast.success('¡Estado Actualizado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleStatusChange = async (id, newStatus) => {
@@ -108,7 +119,18 @@ const ListUsuarios = () => {
                   <td>{usuario.cedula}</td>
                   <td>{usuario.numero}</td>
                   <td>{usuario.ocupacion}</td>
-                  <td>{usuario.rol}</td>
+                  <td> <div className="select-container">
+                      <label htmlFor={`rol-${usuario.id}`}>Rol:</label>
+                      <select
+                        id={`rol-${usuario.id}`}
+                        value={usuario.rol}
+                        onChange={(e) => handleRolChange(usuario.id, e.target.value)}
+                      >
+                        <option value="admin">Admin</option>
+                        <option value="voluntario">Voluntario</option>
+                      </select>
+                      </div>
+                      </td>
                   <td>{usuario.email}</td>
                   <td>
                     <div className="select-container">

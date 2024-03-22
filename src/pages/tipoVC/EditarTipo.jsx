@@ -56,14 +56,14 @@ const EditarTipo = () => {
         <h1 className="edit-tipo">Editar Tipo</h1>
         <p className="edit-id">ID del Tipo a editar: {id}</p>
         <form onSubmit={handleRegistro}>
-          <div>
+        <div className='inpEdit'>
             <label htmlFor="nombreTipo">Nombre:</label>
             <input type="text" id="nombreTipo" ref={NombreTipo} required />
           </div>
-          <div className="center-buton">
+          <div className="center-bu">
             <button type="submit">Guardar</button>
           </div>
-          <div className="center-button-volver">
+          <div className="Editar-button-volver">
             <button type="button" onClick={() => navigate('/dashboard/listaTipos')}>Volver</button>
           </div>
         </form>

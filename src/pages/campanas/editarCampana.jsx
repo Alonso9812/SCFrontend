@@ -62,6 +62,11 @@ const EditarCampaña = () => {
     toast.success('¡Guardada Exitosamente!', {
       position: toast.POSITION.TOP_RIGHT,
     });
+
+    setTimeout(() => {
+      navigate("/dashboard/listaCampanas");
+    }, 2000);
+    
   };
 
   useEffect(() => {
@@ -119,7 +124,7 @@ const EditarCampaña = () => {
         <div>
           <label htmlFor="fecha" className='Feccamp'>Fecha:</label>
           <input
-            type="Date"
+            type="datetime-local"
             id="fecha"
             ref={Campanafecha}
             required
@@ -173,10 +178,11 @@ const EditarCampaña = () => {
         <div className="center-buttonCamp">
           <button type="submit">Modificar</button>
         </div>
-      </form>
-      <div className="center-button-volver">
+        <div className="camp-button-volver">
         <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
       </div>
+      </form>
+      
       <ToastContainer />
     </div>
   );

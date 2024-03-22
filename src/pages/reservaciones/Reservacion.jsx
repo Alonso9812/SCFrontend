@@ -47,6 +47,7 @@ const Reservacion = () => {
     toast.success("¡Guardado Exitosamente!", {
       position: toast.POSITION.TOP_RIGHT,
     });
+    navigate("/dashboard/listaReservaciones");
   };
 
   return (
@@ -73,7 +74,7 @@ const Reservacion = () => {
           <div>
             <label htmlFor="fechaReserva">Fecha Reservacion:</label>
             <input
-              type="Date"
+              type="datetime-local"
               id="fechaReserva"
               ref={fechaReservaRef}
               required
@@ -95,10 +96,11 @@ const Reservacion = () => {
           <div className="centerr-button">
             <button type="submit">Reservar</button>
           </div>
-        </form>
-        <div className="center-button-volver">
+          <div className="center-volver">
           <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
         </div>
+        </form>
+        
         <ToastContainer />
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 .form-container {
   display: flex;
   justify-content: center;
@@ -38,18 +37,9 @@
 .reservacioness label {
   font-weight: bold;
   margin-bottom: 5px;
+  margin-top: 10px;
 }
 
-.reservacioness input {
-  padding: 0;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  background: transparent;
-  font-size: 15px;
-  width: 90%;
-  height: 20px;
-  outline: none;
-}
 
 .reservacioness button {
   background-color: rgb(46, 109, 247);
@@ -66,8 +56,8 @@
 
 .button-EditR {
   position: relative;
-  margin-top: 80px;
-  right: 175px;
+  margin-top: 50px;
+  right: 292px;
 }
 
 
@@ -93,14 +83,12 @@ display:contents
 .label {
     margin-bottom: 8px;
     font-weight: bold;
+    
   }
 
   .center-button-editar-reservacion{
-    display: flex;
     position: relative;
-    
-    justify-content: center;
-    margin-top: 20px;
-
+    margin-top: 50px;
+    right: 220px;
   }
  
