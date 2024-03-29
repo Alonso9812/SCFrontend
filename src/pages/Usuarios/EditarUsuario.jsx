@@ -45,7 +45,9 @@ const EditUsuario = () => {
         toast.success('¡Guardado Exitosamente!', {
           position: toast.POSITION.TOP_RIGHT,
         });
-        navigate("/dashboard/listUsuarios"); // Utiliza navigate para la navegación
+        setTimeout(() => {
+          navigate("/dashboard/listUsuarios");
+        }, 2000);
       })
       .catch((error) => {
         console.error('Error en la solicitud Axios:', error);

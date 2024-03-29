@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getSolicitudes, eliminarSolicitud } from "../../services/SolicitudServicio";
-import ReactPaginate from "react-paginate";
+import { DataGrid } from '@mui/x-data-grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { FaFilePdf } from "react-icons/fa6";
+import { generatePdfReport } from"../../pages/solicitudes/pdfSolicitudes";
 
 const ListaSolicitudes = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -16,12 +18,7 @@ const ListaSolicitudes = () => {
   );
   const navigate = useNavigate();
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
-
-  const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
-  };
 
   const handleDeleteSolicitud = async (id) => {
     try {
@@ -44,74 +41,72 @@ const ListaSolicitudes = () => {
     navigate(`/update-tipo/${id}`);
   };
 
+  const handlePrintReport = () => {
+    generatePdfReport(data); // Llamar al método de generación de PDF
+};
+
   if (isLoading) return <div className="loading">Loading...</div>;
 
   if (isError) return <div className="error">Error</div>;
 
-  const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(data.length / itemsPerPage);
-  const currentData = data.slice(offset, offset + itemsPerPage);
+  const columns = [
+    { field: 'id', headerName: 'ID Solicitud', width: 150 },
+    { field: 'nomSoli', headerName: 'Nombre Solicitante', width: 200 },
+    { field: 'apellSoli1', headerName: 'Primer Apellido', width: 200 },
+    { field: 'apellSoli2', headerName: 'Segundo Apellido', width: 200 },
+    { field: 'numSoli', headerName: 'Numero', width: 150 },
+    { field: 'email', headerName: 'Correo', width: 200 },
+    { field: 'tituloVC', headerName: 'Titulo Solicitud', width: 200 },
+    { field: 'descripVC', headerName: 'Descripción', width: 200 },
+    { field: 'lugarVC', headerName: 'Lugar', width: 200 },
+    { field: 'alimentacion', headerName: 'Alimentación', width: 200 },
+    { field: 'tipoSoli', headerName: 'Tipo Solicitud', width: 200 },
+    { field: 'fechaSoli', headerName: 'Fecha solicitada', width: 200 },
+    { field: 'statusSoli', headerName: 'Estado', width: 150 },
+    {
+      field: 'acciones',
+      headerName: 'Acciones',
+      width: 200,
+      renderCell: (params) => (
+        <div>
+          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminar">
+            <FontAwesomeIcon icon="trash" />
+          </button>
+          <button onClick={() =>  handleEditTipo(params.row.id)} className="btnModificar">
+            <FontAwesomeIcon icon="edit" />
+          </button>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
       <div className="type-registration">
         <h1 className="Namelist">Registro de solicitudes</h1>
-        <div className="Div-Table scrollable-table">
-          <table className="Table custom-table">
-            <thead>
-              <tr>
-                <th>ID Solicitud</th>
-                <th>Nombre Solicitante</th>
-                <th>Primer Apellido</th>
-                <th>Segundo apellido</th>
-                <th>Numero</th>
-                <th>Correo</th>
-                <th>Titulo Solicitud</th>
-                <th>Descripcion</th>
-                <th>Lugar</th>
-                <th>Alimentacion</th>
-                <th>Tipo Solicitud</th>
-                <th>Fecha solicitada</th>
-                <th>Estado</th>
-                <th>acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((solicitudes) => (
-                <tr key={solicitudes.id}>
-                  <td>{solicitudes.id}</td>
-                  <td>{solicitudes.nomSoli}</td>
-                  <td>{solicitudes.apellSoli1}</td>
-                  <td>{solicitudes.apellSoli2}</td>
-                  <td>{solicitudes.numSoli}</td>
-                  <td>{solicitudes.email}</td>
-                  <td>{solicitudes.tituloVC}</td>
-                  <td>{solicitudes.descripVC}</td>
-                  <td>{solicitudes.lugarVC}</td>
-                  <td>{solicitudes.alimentacion}</td>
-                  <td>{solicitudes.tipoSoli}</td>
-                  <td>{solicitudes.fechaSoli}</td>
-                  <td>{solicitudes.statusSoli}</td>
-                  <td>
-                  <button onClick={() => handleDeleteConfirmation(solicitudes.id)} className="btnEliminar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
-                      <FontAwesomeIcon icon="trash" />
-                    </span>
-                  </button>
-                  <button onClick={() =>  handleEditTipo(solicitudes.id)} className="btnModificar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
-                      <FontAwesomeIcon icon="edit" />
-                    </span>
-                  </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            rowsPerPageOptions={[itemsPerPage]}
+            checkboxSelection
+            pagination
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+
         </div>
         <ToastContainer />
       </div>
-
+      <div className="button-container">
+          <button onClick={handlePrintReport} className="btn-pdf">
+            <FaFilePdf /> Imprimir Reporte
+          </button>
+        </div>
       {deleteConfirm !== null && (
         <div className="overlay">
           <div className="delete-confirm">
@@ -123,18 +118,6 @@ const ListaSolicitudes = () => {
           </div>
         </div>
       )}
-
-      <ReactPaginate
-        previousLabel={"Anterior"}
-        nextLabel={"Siguiente"}
-        breakLabel={"..."}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
     </>
   );
 };

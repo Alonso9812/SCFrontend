@@ -1,11 +1,12 @@
-import { useState , useEffect} from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import  { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate , Link} from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
+import { useNavigate, Link } from 'react-router-dom';
 import { getVOluntariado, eliminarVOluntariado, actualizarEstadoVoluntariado } from '../../services/VOluntariadosServicios';
 import { getTipos } from '../../services/TiposServicios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DataGrid } from '@mui/x-data-grid';
+import TextField from "@mui/material/TextField";
 
 const ListaVoluntariados = () => {
   const navigate = useNavigate();
@@ -16,12 +17,28 @@ const ListaVoluntariados = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const itemsPerPage = 10;
+  const itemsPerPage = 25;
   const queryClient = useQueryClient();
+  const [tipos, setTipos] = useState([]);
 
+  const { mutate: eliminarVOluntariadoMutation } = useMutation(eliminarVOluntariado, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('Voluntariado');
+    },
+  });
 
-  const [Tipos, setTipo] = useState([]);
+  useEffect(() => {
+    const fetchTipos = async () => {
+      try {
+        const tiposData = await getTipos();
+        setTipos(tiposData);
+      } catch (error) {
+        console.error('Error al obtener la lista de tipos:', error);
+      }
+    };
 
+    fetchTipos();
+  }, []);
 
   const handleShowConfirmation = (id) => {
     setDeleteConfirm(id);
@@ -32,24 +49,9 @@ const ListaVoluntariados = () => {
     setIsConfirmationOpen(false);
   };
 
-  useEffect(() => {
-    const fetchTipos = async () => {
-      try {
-        const TiposData = await getTipos();
-        setTipo(TiposData);
-      } catch (error) {
-        console.error('Error al obtener la lista de tipos:', error);
-      }
-    };
-
-    fetchTipos();
-  }, []);
-
   const handleStatusChange = async (id, newStatus) => {
     try {
-      // Llamada a la función que actualiza el estado del usuario
       await actualizarEstadoVoluntariado(id, newStatus);
-      // Recargar la lista de usuarios después de la actualización
       await refetch();
       queryClient.invalidateQueries('campana');
       toast.success('¡Estado Actualizado Exitosamente!', {
@@ -62,7 +64,7 @@ const ListaVoluntariados = () => {
 
   const handleDeleteVOluntariado = async () => {
     try {
-      await eliminarVOluntariado(deleteConfirm);
+      await eliminarVOluntariadoMutation(deleteConfirm);
       await refetch();
       toast.success('¡Eliminada Exitosamente!', {
         position: toast.POSITION.TOP_RIGHT,
@@ -77,27 +79,19 @@ const ListaVoluntariados = () => {
   };
 
   const handleShowEditConfirmation = (id) => {
-          setEditConfirm(id);
-          setIsEditConfirmationOpen(true);
-        };
-        
-        const handleHideEditConfirmation = () => {
-          setIsEditConfirmationOpen(false);
-        };
-      
-        const handleEditVOluntariado = (id) => {
-          handleShowEditConfirmation(id);
-        };
-
-  const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+    setEditConfirm(id);
+    setIsEditConfirmationOpen(true);
   };
 
-    // Filtrar tipos activos
-  
+  const handleHideEditConfirmation = () => {
+    setIsEditConfirmationOpen(false);
+  };
+
+  const handlePageChange = (params) => {
+    setCurrentPage(params.page);
+  };
 
   if (isLoading) return <div className="loading">Loading...</div>;
-
   if (isError) return <div className="error">Error</div>;
 
   const offset = currentPage * itemsPerPage;
@@ -107,104 +101,83 @@ const ListaVoluntariados = () => {
   );
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
 
+  const columns = [
+    { field: 'id', headerName: 'ID Voluntariado', width: 150 },
+    { field: 'nombre', headerName: 'Nombre', width: 200 },
+    { field: 'descripcion', headerName: 'Descripción', width: 200 },
+    { field: 'ubicacion', headerName: 'Ubicación', width: 200 },
+    { field: 'fecha', headerName: 'Fecha', width: 150 },
+    { field: 'alimentacion', headerName: 'Alimentación', width: 150 },
+    { field: 'capacidad', headerName: 'Capacidad', width: 150 },
+    { field: 'tipo', headerName: 'Tipo', width: 150, renderCell: params => (
+      tipos.length > 0 ? 
+        (tipos.find(tipo => tipo.id === params.value)?.nombreTipo || "NombreTipoNoEncontrado")
+        : "Loading..."
+    )
+  },
+    { field: 'inOex', headerName: 'Interna o Externa', width: 200 },
+    { field: 'status', headerName: 'Estado', width: 150, renderCell: params => (
+        <select
+          value={params.value}
+          onChange={(e) => handleStatusChange(params.row.id, e.target.value)}
+          style={{
+            backgroundColor: params.value === 'Activo' ? 'green' : 'lightgray',
+            color: params.value === 'Activo' ? 'white' : 'black',
+            borderRadius: '5px'
+          }}
+        >
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+      )
+    },
+    { field: 'actions', headerName: 'Acciones', width: 150, renderCell: params => (
+        <div>
+          <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminar">
+            <FontAwesomeIcon icon="trash" />
+          </button>
+          <button onClick={() => handleShowEditConfirmation(params.row.id)} className="btnModificar">
+            <FontAwesomeIcon icon="edit" />
+          </button>
+        </div>
+      )
+    },
+  ];
+
   return (
     <>
       <div className="campaign-registration">
         <h1 className="Namelist">Registro de Voluntariados</h1>
-       
-          <Link to="/dashboard/nuevo-voluntariados-admin"><button className="btnRegistrarAdmin">Crear Voluntariado</button></Link>
-
-          
+        <Link to="/dashboard/nuevo-voluntariados-admin"><button className="btnRegistrarAdmin">Crear Voluntariado</button></Link>
         <div className="filter-container">
-          <input
-            type="text"
-            placeholder="Buscar por nombre..."
+        <TextField
+            id="filled-search"
+            label="Buscar por Nombre..."
+            type="search"
+            variant="filled"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className='filter'
           />
         </div>
-        <div className="Div-Table scrollable-table">
-          <table className="Table custom-table">
-            <thead>
-              <tr>
-                <th>ID Voluntariado</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Ubicación</th>
-                <th>Fecha</th>
-                <th>Alimentación</th>
-                <th>Capacidad</th>
-                <th>Tipo</th>
-                <th>Interna o Externa</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((voluntariados) => (
-                <tr key={voluntariados.id}>
-                  <td>{voluntariados.id}</td>
-                  <td>{voluntariados.nombre}</td>
-                  <td>{voluntariados.descripcion}</td>
-                  <td>{voluntariados.ubicacion}</td>
-                  <td>{voluntariados.fecha}</td>
-                  <td>{voluntariados.alimentacion}</td>
-                  <td>{voluntariados.capacidad}</td>
-                  <td>
-                    {Tipos.length > 0 ? 
-                      (Tipos.find((tipos) => tipos.id === voluntariados.tipo)?.nombreTipo || "NombreTipoNoEncontrado")
-                      : "Loading..."}
-                  </td>
-                  <td>{voluntariados.inOex}</td>
-                  <td>
-                    {/* ComboBox para editar el estado */}
-                    <select
-                      value={voluntariados.status}
-                      onChange={(e) => handleStatusChange(voluntariados.id, e.target.value)}
-                      style={{
-                        backgroundColor: voluntariados.status === 'Activo' ? 'green' : 'lightgray',
-                        color: voluntariados.status === 'Activo' ? 'white' : 'black',
-                        borderRadius: '5px'
-                      }}
-                    >
-                      <option value="Activo">Activo</option>
-                      <option value="Inactivo">Inactivo</option>
-                    </select>
-                  </td>
-                  <td>
-                  <button onClick={() => handleShowConfirmation(voluntariados.id)} className="btnEliminar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
-                      <FontAwesomeIcon icon="trash" />
-                    </span>
-                  </button>
-                  <button onClick={() =>  handleEditVOluntariado(voluntariados.id)} className="btnModificar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
-                      <FontAwesomeIcon icon="edit" />
-                    </span>
-                  </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+            rows={currentData}
+            columns={columns}
+            page={currentPage}
+            pagination
+            onPageChange={handlePageChange}
+            checkboxSelection
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+          />
         </div>
         <ToastContainer />
       </div>
-
       {/* Paginación */}
-      <ReactPaginate
-        previousLabel={"Anterior"}
-        nextLabel={"Siguiente"}
-        breakLabel={"..."}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
-
       {/* Modal de confirmación */}
       {isConfirmationOpen && (
         <div className="overlay">

@@ -37,11 +37,15 @@ const EditarPunto = () => {
       toast.success('¡Guardado Exitosamente!', {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setTimeout(() => {
+        navigate("/dashboard/listaPuntos");
+      }, 2000);
     } catch (error) {
       console.error('Error en la solicitud Axios:', error);
       toast.error('Error al actualizar el punto.', {
         position: toast.POSITION.TOP_RIGHT,
       });
+
     }
   };
   

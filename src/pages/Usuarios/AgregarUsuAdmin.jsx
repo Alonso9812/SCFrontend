@@ -46,7 +46,10 @@ const Registro = () => {
         position: toast.POSITION.TOP_RIGHT,
         
       });
-      navigate("/dashboard/listUsuarios");
+      setTimeout(() => {
+        navigate("/dashboard/listUsuarios");
+      }, 2000);
+      
     } catch (error) {
       toast.error(`Error al crear el usuario: ${error.message}`, {
         position: toast.POSITION.TOP_RIGHT,

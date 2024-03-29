@@ -1,13 +1,14 @@
-
-import { useState } from "react";
+import  { useState } from "react";
 import { useQuery, useQueryClient } from 'react-query';
-import { useNavigate , Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getTipos, eliminarTipo, actualizarEstadoTipo } from "../../services/TiposServicios";
-import ReactPaginate from "react-paginate";
+import { eliminarTipo, actualizarEstadoTipo, getTipos } from "../../services/TiposServicios";
+import { DataGrid } from '@mui/x-data-grid';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import TextField from "@mui/material/TextField";
 
 const ListaTipos = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -18,13 +19,14 @@ const ListaTipos = () => {
   const navigate = useNavigate();
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
+  const [searchTerm, setSearchTerm] = useState('');
+  const itemsPerPage = 30;
   const queryClient = useQueryClient();
   const [editConfirm, setEditConfirm] = useState(null);
   const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
 
-  const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value - 1);
   };
 
   const handleDeleteCandidate = async (id) => {
@@ -45,18 +47,18 @@ const ListaTipos = () => {
   };
 
   const handleShowEditConfirmation = (id) => {
-        setEditConfirm(id);
-        setIsEditConfirmationOpen(true);
-      };
-      
-      const handleHideEditConfirmation = () => {
-        setIsEditConfirmationOpen(false);
-      };
-    
-      const handleEditTipo = (id) => {
-        handleShowEditConfirmation(id);
-      };
-  
+    setEditConfirm(id);
+    setIsEditConfirmationOpen(true);
+  };
+
+  const handleHideEditConfirmation = () => {
+    setIsEditConfirmationOpen(false);
+  };
+
+  const handleEditTipo = (id) => {
+    handleShowEditConfirmation(id);
+  };
+
   const handleStatusChange = async (id, newStatus) => {
     try {
       // Llamada a la función que actualiza el estado del usuario
@@ -72,70 +74,91 @@ const ListaTipos = () => {
     }
   };
 
-
   if (isLoading) return <div className="loading">Loading...</div>;
 
   if (isError) return <div className="error">Error</div>;
 
   const offset = currentPage * itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
-  const currentData = data.slice(offset, offset + itemsPerPage);
+  const filteredData = data.filter(tipo =>
+    tipo.nombreTipo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+
+  // Definir las columnas para la tabla DataGrid
+  const columns = [
+    { field: 'id', headerName: 'ID Tipo', width: 150 },
+    { field: 'nombreTipo', headerName: 'Nombre', width: 200 },
+    { field: 'statusVC', headerName: 'Estado', width: 150, renderCell: params => (
+        <select
+          value={params.value}
+          onChange={(e) => handleStatusChange(params.row.id, e.target.value)}
+          style={{
+            backgroundColor: params.value === 'Activo' ? 'green' : 'lightgray',
+            color: params.value === 'Activo' ? 'white' : 'black',
+            borderRadius: '5px'
+          }}
+        >
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+      )
+    },
+    {
+      field: 'actions',
+      headerName: 'Acciones',
+      width: 150,
+      renderCell: params => (
+        <div>
+          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminar">
+            <span style={{ color: 'black' }}>
+              <FontAwesomeIcon icon="trash" />
+            </span>
+          </button>
+          <button onClick={() =>  handleEditTipo(params.row.id)} className="btnModificar">
+            <span style={{ color: 'black' }}>
+              <FontAwesomeIcon icon="edit" />
+            </span>
+          </button>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
       <div className="type-registration">
-        
-        
         <h1 className="Namelist">Registro de tipos para campañas y voluntariados</h1>
         <Link to="/dashboard/agregar-tipo-admin">
-        <button className="btnRegistrarAdmin" >Crear Tipo</button>
+          <button className="btnRegistrarAdmin">Crear Tipo</button>
         </Link>
-        <div className="Div-Table scrollable-table">
-          <table className="Table custom-table">
-            <thead>
-              <tr>
-                <th>ID Tipo</th>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((tipo) => (
-                <tr key={tipo.id}>
-                  <td>{tipo.id}</td>
-                  <td>{tipo.nombreTipo}</td>
-                  <td>
-                    {/* ComboBox para editar el estado */}
-                    <select
-                      value={tipo.statusVC}
-                      onChange={(e) => handleStatusChange(tipo.id, e.target.value)}
-                      style={{
-                        backgroundColor: tipo.statusVC === 'Activo' ? 'green' : 'lightgray',
-                        color: tipo.statusVC === 'Activo' ? 'white' : 'black',
-                        borderRadius: '5px'
-                      }}
-                    >
-                      <option value="Activo">Activo</option>
-                      <option value="Inactivo">Inactivo</option>
-                    </select>
-                  </td>
-                  <td>
-                  <button onClick={() => handleDeleteConfirmation(tipo.id)} className="btnEliminar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
-                      <FontAwesomeIcon icon="trash" />
-                    </span>
-                  </button>
-                  <button onClick={() =>  handleEditTipo(tipo.id)} className="btnModificar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
-                      <FontAwesomeIcon icon="edit" />
-                    </span>
-                  </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="filter-container">
+        <TextField
+            id="filled-search"
+            label="Buscar por Nombre..."
+            type="search"
+            variant="filled"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+
+        </div>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+           rows={currentData}
+           columns={columns}
+           page={currentPage}
+           pagination
+           onPageChange={handlePageChange}
+           checkboxSelection
+
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+          />
         </div>
         <ToastContainer />
       </div>
@@ -144,14 +167,13 @@ const ListaTipos = () => {
         <div className="overlay">
           <div className="delete-confirm">
             <p>¿Estás seguro de que quieres eliminar este tipo?</p>
-            <button onClick={() => handleDeleteCandidate(deleteConfirm)}>
-              Sí
-            </button>
+            <button onClick={() => handleDeleteCandidate(deleteConfirm)}>Sí</button>
             <button onClick={() => setDeleteConfirm(null)}>No</button>
           </div>
         </div>
       )}
-    {isEditConfirmationOpen && (
+
+      {isEditConfirmationOpen && (
       <div className="overlay">
         <div className="edit-confirm">
           <p>¿Estás seguro de que deseas editar este tipo?</p>
@@ -164,17 +186,11 @@ const ListaTipos = () => {
       </div>
     )}
 
-      <ReactPaginate
-        previousLabel={"Anterior"}
-        nextLabel={"Siguiente"}
-        breakLabel={"..."}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
+    <div className="pagination-container">
+      <Stack spacing={2}>
+        <Pagination count={pageCount} page={currentPage + 1} onChange={handlePageChange} />
+      </Stack>
+    </div>
     </>
   );
 };

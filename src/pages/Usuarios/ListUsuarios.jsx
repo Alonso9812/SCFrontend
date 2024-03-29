@@ -4,9 +4,10 @@ import { getUsuarios, ELiminarUsuario, actualizarEstadoUsuario, actualizarRolUsu
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ReactPaginate from 'react-paginate';
+import TextField from "@mui/material/TextField";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DataGrid } from '@mui/x-data-grid'; // Importar DataGrid y DataGridColumns de Material-UI
 
 const ListUsuarios = () => {
   const { data = [], isLoading, isError, refetch } = useQuery('showU', getUsuarios, { enabled: true });
@@ -14,7 +15,7 @@ const ListUsuarios = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const itemsPerPage = 10;
+  const itemsPerPage = 25;
   const queryClient = useQueryClient();
   const [editConfirm, setEditConfirm] = useState(null);
   const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
@@ -78,93 +79,101 @@ const ListUsuarios = () => {
   if (isError) return <div className="error">Error</div>;
 
   const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(data.length / itemsPerPage);
   const filteredData = Array.isArray(data) ? data.filter(user => user.cedula.toLowerCase().includes(searchTerm.toLowerCase())) : [];
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
   
+  // Definir las columnas para la tabla DataGrid
+  const columns = [
+    { field: 'id', headerName: 'ID Usuario', width: 150 },
+    { field: 'name', headerName: 'Nombre', width: 150 },
+    { field: 'apell1', headerName: 'Primer Apellido', width: 150 },
+    { field: 'apell2', headerName: 'Segundo Apellido', width: 150 },
+    { field: 'cedula', headerName: 'Cédula', width: 150 },
+    { field: 'numero', headerName: 'Número', width: 150 },
+    { field: 'ocupacion', headerName: 'Ocupación', width: 150 },
+    { field: 'rol', headerName: 'Rol', width: 150, editable: true, renderCell: params => (
+        <select
+          value={params.value}
+          onChange={(e) => handleRolChange(params.id, e.target.value)}
+          style={{
+            borderRadius: '5px'
+          }}
+        >
+          <option value="admin">Admin</option>
+          <option value="voluntario">Voluntario</option>
+        </select>
+      )
+    },
+    { field: 'email', headerName: 'Correo', width: 150 },
+    { field: 'status', headerName: 'Estado', width: 150, editable: true, renderCell: params => (
+        <select
+          value={params.value}
+          onChange={(e) => handleStatusChange(params.id, e.target.value)}
+          style={{
+            backgroundColor: params.value === 'Activo' ? 'green' : 'lightgray',
+            color: params.value === 'Activo' ? 'white' : 'black',
+            borderRadius: '5px'
+          }}
+        >
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+      )
+    },
+    {
+      field: 'actions',
+      headerName: 'Acciones',
+      width: 150,
+      renderCell: (params) => (
+        <div>
+          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
+            <span style={{ color: 'black', alignItems: 'center', height: '50px', width: '50px'  }}>
+              <FontAwesomeIcon icon="trash" />
+            </span>
+          </button>
+          <button onClick={() => handleEditUsuario(params.row.id)} className="btnModificarPrueba">
+            <span style={{ color: 'black', textAlign: 'center', height: '50px', width: '50px' }}>
+              <FontAwesomeIcon icon="edit" />
+            </span>
+          </button>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <>
       <div className="user-registration">
-        <h2 className="Namelist">Registro de Usuarios</h2>
+        <h4 className="Namelist">Registro de Usuarios</h4>
         <Link to="/dashboard/agregar-usuario-admin" className="btnRegistrarAdmin">Crear Usuario</Link>
 
         <div className="filter-container">
-          <input type="text" placeholder="Buscar por Cedula..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className='filter' />
+          <TextField
+            id="filled-search"
+            label="Buscar por Cedula..."
+            type="search"
+            variant="filled"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+
         </div>
 
-        <div className="Div-Table scrollable-table">
-          <table className="Table custom-table">
-            <thead>
-              <tr>
-                <th>ID Usuario</th>
-                <th>Nombre</th>
-                <th>Primer Apellido</th>
-                <th>Segundo Apellido</th>
-                <th>Cédula</th>
-                <th>Número</th>
-                <th>Ocupación</th>
-                <th>Rol</th>
-                <th>Correo</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((usuario) => (
-                <tr key={usuario.id}>
-                  <td>{usuario.id}</td>
-                  <td>{usuario.name}</td>
-                  <td>{usuario.apell1}</td>
-                  <td>{usuario.apell2}</td>
-                  <td>{usuario.cedula}</td>
-                  <td>{usuario.numero}</td>
-                  <td>{usuario.ocupacion}</td>
-                  <td> <div className="select-container">
-                      <label htmlFor={`rol-${usuario.id}`}>Rol:</label>
-                      <select
-                        id={`rol-${usuario.id}`}
-                        value={usuario.rol}
-                        onChange={(e) => handleRolChange(usuario.id, e.target.value)}
-                      >
-                        <option value="admin">Admin</option>
-                        <option value="voluntario">Voluntario</option>
-                      </select>
-                      </div>
-                      </td>
-                  <td>{usuario.email}</td>
-                  <td>
-                    <div className="select-container">
-                      <label htmlFor={`status-${usuario.id}`}>Estado:</label>
-                      <select
-                        id={`status-${usuario.id}`}
-                        value={usuario.status}
-                        onChange={(e) => handleStatusChange(usuario.id, e.target.value)}
-                        style={{
-                          backgroundColor: usuario.status === 'Activo' ? 'green' : 'lightgray',
-                          color: usuario.status === 'Activo' ? 'white' : 'black',
-                          borderRadius: '5px'
-                        }}
-                      >
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                      </select>
-                    </div>
-                  </td>
-                  <td>
-                  <button onClick={() => handleDeleteConfirmation(usuario.id)} className="btnEliminar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
-                      <FontAwesomeIcon icon="trash" />
-                    </span>
-                  </button>
-                  <button onClick={() =>  handleEditUsuario(usuario.id)} className="btnModificar">
-                    <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
-                      <FontAwesomeIcon icon="edit" />
-                    </span>
-                  </button></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+            rows={currentData}
+            columns={columns}
+            page={currentPage}
+            pagination
+            onPageChange={handlePageChange}
+            checkboxSelection
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+          />
         </div>
         <ToastContainer />
       </div>
@@ -191,18 +200,6 @@ const ListUsuarios = () => {
           </div>
         </div>
       )}
-
-      <ReactPaginate
-        previousLabel={'Anterior'}
-        nextLabel={'Siguiente'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={'pagination'}
-        activeClassName={'active'}
-      />
     </>
   );
 };

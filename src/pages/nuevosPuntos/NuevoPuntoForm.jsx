@@ -26,7 +26,7 @@ const NuevoPuntoForm = () => {
         throw new Error("Token no encontrado. El usuario no está autenticado.");
       }
 
-      axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
+      axios.defaults.baseURL = 'https://senderocornizuelo.xyz/api/';
 
       const response = await axios.post("nuevo-punto", formData, {
         headers: {
@@ -44,6 +44,9 @@ const NuevoPuntoForm = () => {
           pauseOnHover: true,
           draggable: true,
         });
+        setTimeout(() => {
+          navigate("/dashboard/listaPuntos");
+        }, 2000);
       } else {
         toast.error("Error al crear el punto de interés", {
           position: "top-right",

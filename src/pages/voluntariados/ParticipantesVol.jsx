@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUsuVol, EliminarUsuVol } from "../../services/ParticipantesServicios";
-import ReactPaginate from "react-paginate";
 import { getUsuarios } from '../../services/UsuariosServicios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DataGrid } from '@mui/x-data-grid';
+import TextField from "@mui/material/TextField";
+
+import { generatePdfReport } from "../../pages/voluntariados/pdfVoluntariados";
+import { FaFilePdf } from "react-icons/fa6";
 
 const ParticipantesVol = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -18,7 +22,7 @@ const ParticipantesVol = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 10;
-  const [usuarios, setUsuarios] = useState([]);
+  const [users, setUsuarios] = useState([]);
 
   useEffect(() => {
     const fetchUsuarios = async () => {
@@ -26,9 +30,10 @@ const ParticipantesVol = () => {
         const usuariosData = await getUsuarios();
         setUsuarios(usuariosData);
       } catch (error) {
-        console.error("Error al obtener la lista de usuarios:", error);
+        console.error('Error al obtener la lista de usuarios:', error);
       }
     };
+
     fetchUsuarios();
   }, []);
 
@@ -45,6 +50,9 @@ const ParticipantesVol = () => {
       });
     } catch (error) {
       console.error("Error en la solicitud Axios:", error);
+      toast.error("Error al eliminar el participante", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
     setDeleteConfirm(null);
   };
@@ -53,65 +61,75 @@ const ParticipantesVol = () => {
     setDeleteConfirm(id);
   };
 
+  const handlePrintReport = () => {
+    generatePdfReport(data, searchTerm, users); 
+  };
+
   if (isLoading) return <div className="loading">Loading...</div>;
 
   if (isError) return <div className="error">Error</div>;
 
   const filteredData = searchTerm
-    ? data.filter((UsuVol) => UsuVol.voluntariado_id.toString().includes(searchTerm))
+    ? data.filter((usuVol) => usuVol.voluntariado_id.toString().includes(searchTerm))
     : data;
 
   const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
 
+  const columns = [
+    { field: 'voluntariado_id', headerName: 'ID Voluntariado', flex: 1 },
+    { field: 'cedula', headerName: 'Cedula', width: 150, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.users_id);
+      return usuario ? usuario.cedula : "CedulaNoEncontrada";
+    }},
+    {
+      field: 'acciones',
+      headerName: 'Acciones',
+      flex: 1,
+      renderCell: (params) => (
+        <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminar">
+          <span style={{ color: 'black' }}>
+            <FontAwesomeIcon icon="trash" />
+          </span>
+        </button>
+      )
+    }
+  ];
+  
   return (
     <>
       <div className="type-registration">
         <h1 className="Namelist">Registro de Participantes</h1>
-        <div>
-          <input
-            type="text"
-            placeholder="Filtrar por el ID del voluntariado"
+        <div className="filter-container">
+          <TextField
+            id="filled-search"
+            label="Buscar por ID voluntariado..."
+            type="search"
+            variant="filled"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="Div-Table">
-          <table className="Table custom-table">
-            <thead>
-              <tr>
-                
-                <th>ID Voluntariado</th>
-                <th>Cedula Participante</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((UsuVol) => (
-                <tr key={UsuVol.id}>
-                  
-                  <td>{UsuVol.voluntariado_id}</td>
-                  <td>
-                    {usuarios.length > 0 ? (
-                      usuarios.find((user) => user.id === UsuVol.users_id) ? (
-                        usuarios.find((user) => user.id === UsuVol.users_id).cedula
-                      ) : (
-                        "Cédula No Encontrada"
-                      )
-                    ) : "Loading..."}
-                  </td>
-                  <td>
-                    <button onClick={() => handleDeleteConfirmation(UsuVol.id)} className="btnEliminar">
-                      <span style={{ color: 'black' }}>
-                        <FontAwesomeIcon icon="trash" />
-                      </span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="button-container">
+          <button onClick={handlePrintReport} className="btnPrint">
+            <FaFilePdf /> Imprimir Reporte
+          </button>
+        </div>
+        <div style={{ height: 400, width: '100%' }}>
+          {users.length > 0 && (
+            <DataGrid
+              rows={currentData}
+              columns={columns}
+              page={currentPage}
+              pagination
+              onPageChange={handlePageChange}
+              pageSize={itemsPerPage}
+              rowCount={filteredData.length}
+              pageSizeOptions={[5, 10]}
+              key={currentData.id}
+              checkboxSelection
+            />
+          )}
         </div>
         <ToastContainer />
       </div>
@@ -125,18 +143,6 @@ const ParticipantesVol = () => {
           </div>
         </div>
       )}
-
-      <ReactPaginate
-        previousLabel={"Anterior"}
-        nextLabel={"Siguiente"}
-        breakLabel={"..."}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
     </>
   );
 };

@@ -34,6 +34,9 @@ const EditarTipo = () => {
     toast.success('¡Guardado Exitosamente!', {
       position: toast.POSITION.TOP_RIGHT,
     });
+    setTimeout(() => {
+      navigate("/dashboard/listaTipos");
+    }, 2000);
   };
 
   useEffect(() => {

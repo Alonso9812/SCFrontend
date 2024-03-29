@@ -65,7 +65,9 @@ const Campanas = () => {
     toast.success('¡Guardado Exitosamente!', {
       position: toast.POSITION.TOP_RIGHT
     });
-    navigate("/dashboard/listaCampanas");
+    setTimeout(() => {
+      navigate("/dashboard/listaCampanas");
+    }, 2000);
   };
 
   return (

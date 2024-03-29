@@ -47,7 +47,10 @@ const Reservacion = () => {
     toast.success("¡Guardado Exitosamente!", {
       position: toast.POSITION.TOP_RIGHT,
     });
-    navigate("/dashboard/listaReservaciones");
+    setTimeout(() => {
+      navigate("/dashboard/listaReservaciones");
+    }, 2000);
+    
   };
 
   return (

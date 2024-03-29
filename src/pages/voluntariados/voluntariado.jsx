@@ -63,6 +63,9 @@ const VOluntariados = () => {
     toast.success('¡Guardado Exitosamente!', {
       position: toast.POSITION.TOP_RIGHT
     });
+    setTimeout(() => {
+      navigate("/dashboard/listaVoluntariados");
+    }, 2000);
   };
 
   return (

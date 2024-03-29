@@ -64,6 +64,9 @@ const EditarVOluntariado = () => {
     toast.success('¡Guardada Exitosamente!', {
       position: toast.POSITION.TOP_RIGHT,
     });
+    setTimeout(() => {
+      navigate("/dashboard/listaVoluntariados");
+    }, 2000);
   };
 
   useEffect(() => {

@@ -23,7 +23,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/login', { email, password });
+      const response = await axios.post('https://senderocornizuelo.xyz/api/login', { email, password });
       const { status, user, authorisation } = response.data;
       if (status === 'success') {
         console.log('Usuario autenticado:', user);
