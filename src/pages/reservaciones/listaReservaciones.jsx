@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { FaFilePdf } from "react-icons/fa6";
-import { generatePdfReport } from "../../pages/reservaciones/pdfReservaciones"; // Importar el método de generación de PDF
+import { generatePdfReport } from "../../pages/reservaciones/pdfReservaciones";
 import TextField from "@mui/material/TextField";
 
 const ListaReservaciones = () => {
@@ -88,7 +88,7 @@ const ListaReservaciones = () => {
   };
 
   const handlePrintReport = () => {
-    generatePdfReport(data);
+    generatePdfReport(filteredData);
 };
 
   if (isLoading) return <div className="loading">Loading...</div>;
@@ -129,12 +129,12 @@ const ListaReservaciones = () => {
     },
     { field: 'actions', headerName: 'Acciones', width: 150, renderCell: params => (
         <div>
-        <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminar">
+        <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminarPrueba">
           <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
             <FontAwesomeIcon icon="trash" />
           </span>
         </button>
-        <button onClick={() =>  handleEditReservaciones(params.row.id)} className="btnModificar">
+        <button onClick={() =>  handleEditReservaciones(params.row.id)} className="btnModificarPrueba">
           <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
             <FontAwesomeIcon icon="edit" />
           </span>
@@ -151,6 +151,11 @@ const ListaReservaciones = () => {
         <Link to="/dashboard/crear-reservacion-admin">
           <button className="btnRegistrarAdmin">Crear Reservacion</button>
         </Link>
+        <div className="button-container">
+                    <button onClick={handlePrintReport} className="btnPrint">
+                        <FaFilePdf /> Imprimir Reporte
+                    </button>
+                </div>
         <div className="filter-container">
         <TextField
             id="filled-search"
@@ -178,11 +183,6 @@ const ListaReservaciones = () => {
             pageSizeOptions={[5, 10]}
           />
         </div>
-        <div className="button-container">
-                    <button onClick={handlePrintReport} className="btnPrint">
-                        <FaFilePdf /> Imprimir Reporte
-                    </button>
-                </div>
         <ToastContainer />
       </div>
 

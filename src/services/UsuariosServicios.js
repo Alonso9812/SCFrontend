@@ -31,17 +31,20 @@ export const create = async (user) => {
 };
 
 
-
 export const ELiminarUsuario = async (id) => {
-        try {
-            const response = await api.delete(`deleteUser/${id}`);
-            console.log(response.data);
-        } catch (error) {
-        
-            console.error(error);
-        } 
-    };
-    
+  try {
+      const response = await api.delete(`deleteUser/${id}`);
+      console.log(response.data);
+  } catch (error) {
+      if (error.response && error.response.status === 500) {
+          throw new Error('Error: Usuario está ligado a otra tabla');
+      } else {
+          console.error(error);
+      }
+  } 
+};
+
+
 
 
     export const actualizarEstadoUsuario = async (id, newStatus) => {

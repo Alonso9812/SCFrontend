@@ -5,7 +5,6 @@ export const getCampaña = async () => {
     return data;
 };
 
-
 export const getCampañaID = async (id) => { 
     let data = await api.get(`campana/${id}`).then(result => result.data);
     return data;
@@ -26,14 +25,17 @@ export const create = async (campaña) => {
 };
 
 export const eliminarCampana = async (id) => {
-        try {
-            const response = await api.delete(`campana-delete/${id}`);
-            console.log(response.data);
-        } catch (error) {
-        
-            console.error(error);
-        } 
-    };
+  try {
+      const response = await api.delete(`campana-delete/${id}`);
+      console.log(response.data);
+  } catch (error) {
+      if (error.response && error.response.status === 500) {
+          throw new Error('Error: La campaña está ligada a otra tabla');
+      } else {
+          console.error(error);
+      }
+  } 
+};
 
     export const actualizarEstadoCampana = async (id, newStatus) => {
         try {

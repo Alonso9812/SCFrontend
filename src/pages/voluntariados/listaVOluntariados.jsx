@@ -62,6 +62,7 @@ const ListaVoluntariados = () => {
     }
   };
 
+  /*
   const handleDeleteVOluntariado = async () => {
     try {
       await eliminarVOluntariadoMutation(deleteConfirm);
@@ -77,6 +78,23 @@ const ListaVoluntariados = () => {
     }
     setIsConfirmationOpen(false);
   };
+  */
+
+  const handleDeleteVOluntariado = async () => {
+    try {
+        await eliminarVOluntariadoMutation(deleteConfirm);
+        await refetch();
+        queryClient.invalidateQueries('deleteVolun');
+        toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
+    } catch (error) {
+        if (error.message === 'Error: Usuario está ligado a otra tabla') {
+        toast.error('¡Usuario está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
+        } else {
+            console.error(error);
+        }
+    }
+    setIsConfirmationOpen(false);
+};
 
   const handleShowEditConfirmation = (id) => {
     setEditConfirm(id);
@@ -90,12 +108,13 @@ const ListaVoluntariados = () => {
   const handlePageChange = (params) => {
     setCurrentPage(params.page);
   };
+  
 
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div className="error">Error</div>;
 
   const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(data.length / itemsPerPage);
+  //const pageCount = Math.ceil(data.length / itemsPerPage);
   const filteredData = data.filter(camp =>
     camp.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -133,10 +152,10 @@ const ListaVoluntariados = () => {
     },
     { field: 'actions', headerName: 'Acciones', width: 150, renderCell: params => (
         <div>
-          <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminar">
+          <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminarPrueba">
             <FontAwesomeIcon icon="trash" />
           </button>
-          <button onClick={() => handleShowEditConfirmation(params.row.id)} className="btnModificar">
+          <button onClick={() => handleShowEditConfirmation(params.row.id)} className="btnModificarPrueba">
             <FontAwesomeIcon icon="edit" />
           </button>
         </div>
@@ -145,6 +164,7 @@ const ListaVoluntariados = () => {
   ];
 
   return (
+    
     <>
       <div className="campaign-registration">
         <h1 className="Namelist">Registro de Voluntariados</h1>
@@ -201,7 +221,6 @@ const ListaVoluntariados = () => {
           </div>
         </div>
     )}
-      
     </>
   );
 };

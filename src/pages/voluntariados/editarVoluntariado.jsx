@@ -124,7 +124,7 @@ const EditarVOluntariado = () => {
         <div>
           <label htmlFor="fecha" className='Feccamp'>Fecha:</label>
           <input
-            type="Date"
+            type="datetime-local"
             id="fecha"
             ref={VOluntariadofecha}
             required
@@ -176,9 +176,9 @@ const EditarVOluntariado = () => {
           </select>
         </div>
         <div className="center-butt">
-          <button type="submit">Modificar</button>
-        </div><div className="center-but">
         <button onClick={() => navigate('/dashboard/listaVoluntariados')}>Volver</button>
+        </div><div className="center-but">
+        <button type="submit">Modificar</button>
       </div>
       </form>
       

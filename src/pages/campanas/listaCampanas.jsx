@@ -12,7 +12,7 @@ const ListaCampanas = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError, refetch } = useQuery('campana', getCampaña, { enabled: true });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [ setIsConfirmationOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 25;
@@ -38,11 +38,11 @@ const ListaCampanas = () => {
     setCurrentPage(selectedPage.selected);
   };
 
-  const handleShowConfirmation = (id) => {
+  /*const handleShowConfirmation = (id) => {
     setDeleteConfirm(id);
     setIsConfirmationOpen(true);
   };
-
+*/
   const handleHideConfirmation = () => {
     setIsConfirmationOpen(false);
   };
@@ -56,17 +56,27 @@ const ListaCampanas = () => {
     setIsEditConfirmationOpen(false);
   };
 
-  const handleDeleteCampaña = async () => {
-    try {
-      await eliminarCampana(deleteConfirm);
+const handleDeleteCampaña = async (id) => {
+  try {
+      await  eliminarCampana(id);
       await refetch();
-      toast.success('¡Eliminada Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
-    } catch (error) {
-      console.error(error);
-      toast.error('Error al eliminar: ' + error.message, { position: toast.POSITION.TOP_RIGHT });
-    }
-    setIsConfirmationOpen(false);
-  };
+      queryClient.invalidateQueries('deleteCampana');
+      toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
+  } catch (error) {
+      if (error.message === 'Error: Usuario está ligado a otra tabla') {
+      toast.error('¡Usuario está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
+      } else {
+          console.error(error);
+      }
+  }
+  setDeleteConfirm(null);
+};
+
+const handleDeleteConfirmation = (id) => {
+  setDeleteConfirm(id);
+  setIsConfirmationOpen(true);
+};
+
 
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -123,12 +133,12 @@ const ListaCampanas = () => {
       width: 150,
       renderCell: params => (
         <div>
-          <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminar">
+          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
             <span style={{ color: 'black' }}>
               <FontAwesomeIcon icon="trash" />
             </span>
           </button>
-          <button onClick={() => handleShowEditConfirmation(params.row.id)} className="btnModificar">
+          <button onClick={() => handleShowEditConfirmation(params.row.id)} className="btnModificarPrueba">
             <span style={{ color: 'black' }}>
               <FontAwesomeIcon icon="edit" />
             </span>
@@ -179,7 +189,7 @@ const ListaCampanas = () => {
 
 
       {/* Modal de confirmación */}
-      {isConfirmationOpen && (
+      {deleteConfirm !== null && (
         <div className="overlay">
           <div className="delete-confirm">
             <p>¿Estás seguro de que deseas eliminar esta campaña?</p>

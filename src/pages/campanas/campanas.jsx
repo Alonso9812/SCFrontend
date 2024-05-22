@@ -158,10 +158,10 @@ const Campanas = () => {
           </select>
         </div>
         <div className="center-buttonn">
-          <button type="submit">Crear</button>
+        <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
         </div>
         <div className="center-button-volver">
-          <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
+        <button type="submit">Crear</button>
         </div>
       </form>
       <ToastContainer />

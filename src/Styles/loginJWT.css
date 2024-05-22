@@ -127,9 +127,9 @@ body{
   }
 
   .login-background {
-    background-image: url('../assets/img/Imagen-Final.webp');
+    background-image: url('./assets/Imagen-Final-db077213.webp');
     background-size: cover;
     background-position: center;
-    min-height: 100vh; /* Ajusta la altura según sea necesario */
+    min-height: 100vh; 
   }
   

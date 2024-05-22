@@ -7,9 +7,12 @@ import {
   Nav,
   NavItem,
   NavLink,
- } from 'reactstrap';
+} from 'reactstrap';
+import Logout from '../../Login/logout';
+
 
 export default class NavbarNav extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -23,15 +26,19 @@ export default class NavbarNav extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  
   render() {
     return (
       <div>
-        <body>
-           <Navbar color="light" light expand="md">
-          <NavbarBrand href="/home">Sendero Cornezuelo</NavbarBrand>
+        <Navbar color="lbg-light" light expand="md" className="mb-3" style={{ height: '60px', boxShadow:  '2px 2px 5px rgba(0, 0, 0, 0.2)'}}>
+          <Nav className='Nameli' href="/home" style={{ marginLeft: "275px"}}>Sendero El Cornizuelo</Nav>  
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ms-auto" navbar>
+              <NavItem>
+                <NavLink className='comp' href="https://senderocornizuelo.xyz/info/">Inicio</NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink className='comp' href="/components/">Components</NavLink>
               </NavItem>
@@ -39,14 +46,14 @@ export default class NavbarNav extends React.Component {
                 <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href= "/login">Login</NavLink>
+                <NavLink href="/login">naadaaa</NavLink>
               </NavItem>
-             
             </Nav>
+            <NavItem>
+              <Logout />
+            </NavItem>
           </Collapse>
         </Navbar>
-        </body>
-       
       </div>
     );
   }

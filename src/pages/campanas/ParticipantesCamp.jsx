@@ -4,7 +4,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUsuCamp, EliminarUsuCamp } from "../../services/ParticipantesServicios";
 import { getUsuarios } from "../../services/UsuariosServicios";
-import ReactPaginate from "react-paginate";
+import TextField from "@mui/material/TextField";
+import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -19,7 +20,7 @@ const ParticipantesCamp = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 10;
-  const [usuarios, setUsuarios] = useState([]);
+  const [users, setUsuarios] = useState([]);
 
   useEffect(() => {
     const fetchUsuarios = async () => {
@@ -27,9 +28,10 @@ const ParticipantesCamp = () => {
         const usuariosData = await getUsuarios();
         setUsuarios(usuariosData);
       } catch (error) {
-        console.error("Error al obtener la lista de usuarios:", error);
+        console.error('Error al obtener la lista de usuarios:', error);
       }
     };
+
     fetchUsuarios();
   }, []);
 
@@ -63,55 +65,69 @@ const ParticipantesCamp = () => {
     : data;
 
   const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
+
+  const columns = [
+    { field: 'campaña_id', headerName: 'ID Campaña', flex: 1 },
+    { field: 'cedula', headerName: 'Cedula', width: 150, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.usuario_id);
+      return usuario ? usuario.cedula : "CedulaNoEncontrada";
+    }},
+    { field: 'nombre', headerName: 'Nombre', width: 150, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.usuario_id);
+      return usuario ? usuario.name : "CedulaNoEncontrada";
+    }},
+    { field: 'apellido', headerName: 'Apellido', width: 150, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.usuario_id);
+      return usuario ? usuario.apell1 : "CedulaNoEncontrada";
+    }},
+    {
+      field: 'acciones',
+      headerName: 'Acciones',
+      flex: 1,
+      renderCell: (params) => (
+        <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
+          <span style={{ color: 'black' }}>
+            <FontAwesomeIcon icon="trash" />
+          </span>
+        </button>
+      )
+    }
+  ];
 
   return (
     <>
       <div className="type-registration">
         <h1 className="Namelist">Registro de Participantes</h1>
-        <div>
-          <input
-            type="text"
-            placeholder="Filtrar por el ID de la campaña"
+        <div className="filter-container">
+          <TextField
+            id="filled-search"
+            label="Buscar por ID Campaña..."
+            type="search"
+            variant="filled"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
           />
+
         </div>
-        <div className="Div-Table">
-          <table className="Table custom-table">
-            <thead>
-              <tr>
-                <th>ID Campaña</th>
-                <th>Cedula Participante</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((UsuCamp) => (
-                <tr key={UsuCamp.id}>
-                
-                  <td>{UsuCamp.campaña_id}</td>
-                  <td>
-                      {usuarios.length > 0 ? (
-                        usuarios.find((usuario) => usuario.id === UsuCamp.usuario_id) ? (
-                          usuarios.find((usuario) => usuario.id === UsuCamp.usuario_id).cedula
-                        ) : (
-                          "Cédula No Encontrada"
-                        )) : "Loading..."
-                      }
-                  </td>
-                  <td>
-                    <button onClick={() => handleDeleteConfirmation(UsuCamp.id)} className="btnEliminar">
-                      <span style={{ color: 'black' }}>
-                        <FontAwesomeIcon icon="trash" />
-                      </span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div style={{ height: 400, width: '100%' }}>
+          {users.length > 0 && (
+            <DataGrid
+            rows={currentData}
+            columns={columns}
+            page={currentPage}
+            pagination
+            onPageChange={handlePageChange}
+            checkboxSelection
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 20 },
+              },
+            }}
+            pageSizeOptions={[20, 25]}
+          />
+          )}
         </div>
         <ToastContainer />
       </div>
@@ -119,24 +135,12 @@ const ParticipantesCamp = () => {
       {deleteConfirm !== null && (
         <div className="overlay">
           <div className="delete-confirm">
-            <p>¿Estás seguro de que quieres eliminar este tipo?</p>
+            <p>¿Estás seguro de que quieres eliminar este participante?</p>
             <button onClick={() => handleDeleteCandidate(deleteConfirm)}>Sí</button>
             <button onClick={() => setDeleteConfirm(null)}>No</button>
           </div>
         </div>
       )}
-
-      <ReactPaginate
-        previousLabel={"Anterior"}
-        nextLabel={"Siguiente"}
-        breakLabel={"..."}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
     </>
   );
 };

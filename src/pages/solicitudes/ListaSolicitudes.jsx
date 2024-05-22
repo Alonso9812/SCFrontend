@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getSolicitudes, eliminarSolicitud } from "../../services/SolicitudServicio";
+import { getSolicitudes, eliminarSolicitud, actualizarEstadoSolicitud } from "../../services/SolicitudServicio";
 import { DataGrid } from '@mui/x-data-grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { FaFilePdf } from "react-icons/fa6";
-import { generatePdfReport } from"../../pages/solicitudes/pdfSolicitudes";
+import { generatePdfReport } from "../../pages/reservaciones/pdfReservaciones"; 
 
 const ListaSolicitudes = () => {
+  const queryClient = useQueryClient();
   const { data, isLoading, isError, refetch } = useQuery(
     "mostrar-solicitudes",
     getSolicitudes,
@@ -32,7 +33,18 @@ const ListaSolicitudes = () => {
     }
     setDeleteConfirm(null);
   };
-
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await actualizarEstadoSolicitud(id, newStatus);
+      await refetch();
+      queryClient.invalidateQueries('solicitud');
+      toast.success('¡Estado Actualizado Exitosamente!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleDeleteConfirmation = (id) => {
     setDeleteConfirm(id);
   };
@@ -41,9 +53,9 @@ const ListaSolicitudes = () => {
     navigate(`/update-tipo/${id}`);
   };
 
-  const handlePrintReport = () => {
+	const handlePrintReport = () => {
     generatePdfReport(data); // Llamar al método de generación de PDF
-};
+  };
 
   if (isLoading) return <div className="loading">Loading...</div>;
 
@@ -62,18 +74,32 @@ const ListaSolicitudes = () => {
     { field: 'alimentacion', headerName: 'Alimentación', width: 200 },
     { field: 'tipoSoli', headerName: 'Tipo Solicitud', width: 200 },
     { field: 'fechaSoli', headerName: 'Fecha solicitada', width: 200 },
-    { field: 'statusSoli', headerName: 'Estado', width: 150 },
+    {
+      field: 'statusSoli',
+      headerName: 'Estado',
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <select
+          value={params.value}
+          onChange={(e) => handleStatusChange(params.id, e.target.value)}
+        >
+          <option value="Nueva">Nueva</option>
+          <option value="Aprobada">Aprobada</option>
+          <option value="Rechazada">Rechazada</option>
+
+          
+        </select>
+      ),
+    },
     {
       field: 'acciones',
       headerName: 'Acciones',
       width: 200,
       renderCell: (params) => (
         <div>
-          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminar">
+          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
             <FontAwesomeIcon icon="trash" />
-          </button>
-          <button onClick={() =>  handleEditTipo(params.row.id)} className="btnModificar">
-            <FontAwesomeIcon icon="edit" />
           </button>
         </div>
       ),
@@ -84,6 +110,11 @@ const ListaSolicitudes = () => {
     <>
       <div className="type-registration">
         <h1 className="Namelist">Registro de solicitudes</h1>
+	<div className="button-container">
+                    <button onClick={handlePrintReport} className="btnPrint">
+                        <FaFilePdf /> Imprimir Reporte
+                    </button>
+                </div>
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={data}
@@ -98,15 +129,10 @@ const ListaSolicitudes = () => {
             }}
             pageSizeOptions={[5, 10]}
           />
-
         </div>
         <ToastContainer />
       </div>
-      <div className="button-container">
-          <button onClick={handlePrintReport} className="btn-pdf">
-            <FaFilePdf /> Imprimir Reporte
-          </button>
-        </div>
+
       {deleteConfirm !== null && (
         <div className="overlay">
           <div className="delete-confirm">

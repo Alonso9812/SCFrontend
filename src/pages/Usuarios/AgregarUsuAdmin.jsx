@@ -113,10 +113,10 @@ const Registro = () => {
             />
           </div>
           <div className="center-button-registrar">
-            <button type="submit" >Registrar</button>
+            <button type="button" onClick={handleVolver}>Volver</button>
           </div>
           <div className="center-button-registro">
-            <button type="button" onClick={handleVolver}>Volver</button>
+          <button type="submit" >Registrar</button>
           </div>
         </form>
         <ToastContainer />

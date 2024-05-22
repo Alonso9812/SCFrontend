@@ -48,10 +48,10 @@ const CrearTipo = () => {
             <input type="text" id="nombreTipo" ref={nombreTipoRef} required />
           </div>
           <div className="center-buton">
-            <button type="submit">Registrarse</button>
+          <button type="button" onClick={() => navigate('/dashboard/listaTipos')}>Volver</button>
           </div>
           <div className="volver">
-            <button type="button" onClick={() => navigate('/dashboard/listaTipos')}>Volver</button>
+          <button type="submit">Registrarse</button>
           </div>
         </form>
         <ToastContainer />

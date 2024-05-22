@@ -108,10 +108,10 @@ const EditUsuario = () => {
             <input type="text" id="ocupacion" ref={UsuarioOcupacion} required />
           </div>
           <div className="center-editar-usuarios">
-            <button type="submit">Editar</button>
+          <button type="button" onClick={() => navigate("/dashboard/listUsuarios")}>Volver</button>
           </div>
-          <div className="center-volver-usuarios">
-            <button type="button" onClick={() => navigate("/dashboard/listUsuarios")}>Volver</button>
+          <div className="center-volver-usuarios ">
+          <button type="submit">Editar</button>
           </div>
         </form>
         <ToastContainer />

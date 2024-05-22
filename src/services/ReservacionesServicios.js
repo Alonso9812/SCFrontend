@@ -5,6 +5,18 @@ export const getReservaciones = async () => {
     return data;
 };
 
+export const getTotalReservaciones = async () => {
+    try {
+        const reservaciones = await getReservaciones();
+        const reservacionesNuevas = reservaciones.filter(reservacion => reservacion.status === 'Nueva');
+        const total = reservacionesNuevas.length;
+        return total;
+    } catch (error) {
+        console.error(error);
+        return 0; 
+    }
+}
+
 export const getReservacionesID = async (id) => { 
     let data = await api.get(`reservaciones/${id}`).then(result => result.data);
     return data;

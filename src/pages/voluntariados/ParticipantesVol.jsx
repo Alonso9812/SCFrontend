@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -81,6 +81,14 @@ const ParticipantesVol = () => {
     { field: 'cedula', headerName: 'Cedula', width: 150, renderCell: params => {
       const usuario = users.find(user => user.id === params.row.users_id);
       return usuario ? usuario.cedula : "CedulaNoEncontrada";
+    }},
+    { field: 'nombre', headerName: 'Nombre', width: 150, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.users_id);
+      return usuario ? usuario.name : "CedulaNoEncontrada";
+    }},
+    { field: 'apellido', headerName: 'Apellido', width: 150, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.users_id);
+      return usuario ? usuario.apell1 : "CedulaNoEncontrada";
     }},
     {
       field: 'acciones',

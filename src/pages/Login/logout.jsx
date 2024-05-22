@@ -12,7 +12,7 @@ const Logout = () => {
         window.location.reload();
       }, 1000);
   
-      // Puedes redirigir al usuario a la página de inicio de sesión o realizar otras acciones necesarias
+      
       window.location.href = '/';
     };
 

@@ -108,14 +108,14 @@ const EditarPunto = () => {
           />
         </div>
         <div className="divBotonPunto">
-          <button className="btnGuardarPunto" type="submit">
-            Guardar
-          </button> 
-        </div>
-        <div className="center-button-EditPuntos">
         <button type="button" onClick={() => navigate('/dashboard/listaPuntos')}>
             Volver
           </button>
+        </div>
+        <div className="center-button-EditPuntos">
+          <button className="btnGuardarPunto" type="submit">
+            Guardar
+          </button> 
         </div>
       </form>
       <ToastContainer />

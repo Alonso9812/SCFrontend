@@ -25,7 +25,8 @@ import "./Styles/Puntos.css";
 import "./Styles/Reservaciones.css";
 import './Styles/table.css';
 import './Styles/loginJWT.css';
-import './Styles/card.css'
+import './Styles/Cards.css'
+
 //Rutas
 import { Layout } from "./pages/_layout/Layout";
 //import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -56,6 +57,7 @@ import EditarVOluntariado from "./pages/voluntariados/editarVoluntariado";
 import ListaVOluntariados from "./pages/voluntariados/listaVOluntariados";
 import ListaSolicitudes from './pages/solicitudes/listaSolicitudes'
 
+
 import "bootstrap/scss/bootstrap.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logout from "./pages/Login/logout";
@@ -85,7 +87,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Route path="/access-denied" element={<AccessDeniedPage />} />
         
     <Route path="/dashboard/*" element={<Layout />}>
-      <Route index element={<Home />} />
+      <Route path="home" element={<Home />} />
       <Route path="campañas" element={<Campañas />} />
       <Route path="listUsuarios" element={<ListUsuarios />} />
       <Route path="ListRoles" element={<ListaRoles />} />

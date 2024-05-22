@@ -1,11 +1,11 @@
 /* Estilos para el Sidebar */
 .sidebar {
   width: 14rem;
-  height: calc(100vh - 56px); /* Resta la altura de la barra de navegación */
-  border-right: 1px solid #e7e9eb; /* Cambiado a un color más genérico */
+  height: calc(100vh - 56px); 
+  border-right: 1px solid #e7e9eb; 
   position: fixed;
   z-index: 10;
-  background-color: #fff; /* Color de fondo del Sidebar */
+  background-color: #fff; 
   transition: all 0.3s; /* Efecto de desplazamiento suave */
 }
 
@@ -101,7 +101,7 @@ ul {
       text-decoration: none;
 
       &.active {
-        background-color: gray;
+        background-color: rgb(175, 2, 2);
       }
     }
   }

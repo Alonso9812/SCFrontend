@@ -7,21 +7,21 @@ import * as FaIconsc from 'react-icons/md';
 import * as FaIconscs from 'react-icons/ai';
 import * as FaIconsci from 'react-icons/md';
 import * as FaIconsce from 'react-icons/bs';
-import Icon from '../../../assets/img/SENDERO-CORNIZUELO.webp';
+
 
 const Sidebar = ({ children }) => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Verificar si hay un token en el localStorage al cargar el componente
+    
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
     }
-  }, []); // Se ejecuta solo cuando el componente se monta
+  }, []); 
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -32,16 +32,16 @@ const Sidebar = ({ children }) => {
     { to: '/dashboard/listUsuarios', text: 'Usuarios', icon: <FaIconsd.FaUserFriends className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaCampanas', text: 'Campañas', icon: <FaIconsc.MdLocalLibrary className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaReservaciones', text: 'Reservaciones', icon: <FaIconscs.AiOutlineSchedule className="icon" />, visible: isAuthenticated },
-    { to: '/dashboard/listaTipos', text: 'Tipos', icon: <FaIconsci.MdCardMembership className="icon" />, visible: isAuthenticated },
+    { to: '/dashboard/listaTipos', text: 'Categoria de Campaña/Voluntariado', icon: <FaIconsci.MdCardMembership className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaVoluntariados', text: 'Voluntariados', icon: <FaIconsce.BsPeopleFill className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaPuntos', text: 'Puntos De Interés', icon: <FaIconsce.BsFillMapFill className="icon" />, visible: isAuthenticated },
-    { to: '/dashboard/listaSolicitudes', text: 'Solicitudes', icon: <FaIconsce.BsEnvelopeFill className="me-2" />, visible: isAuthenticated },
+    { to: '/dashboard/listaSolicitudes', text: 'Solicitudes de Campaña/Voluntariado', icon: <FaIconsce.BsEnvelopeFill className="me-2" />, visible: isAuthenticated },
     { to: '/dashboard/login', text: 'Inicio de Sesión', icon: <FaIconsd.FaSignInAlt className="me-2" />, visible: !isAuthenticated },
   ];
 
   return (
     <div className="containerSidebar">
-      <div className="sidebar" style={{ width: sidebarVisible ? '224px' : '40px', height: '780px' }}>
+     <div className="sidebar" style={{  width: sidebarVisible ? '240px' : '40px', height: '780px',boxShadow: sidebarVisible ? '2px 2px 5px rgba(0, 0, 0, 0.2)' : 'none'}}>
         <div className="top_section">
           <div className="bars" onClick={toggleSidebar}>
             {sidebarVisible ? (
@@ -53,9 +53,10 @@ const Sidebar = ({ children }) => {
         </div>
         {sidebarVisible && (
           <div className="logoContainer">
-            <img src={Icon} alt="icon" className="logo" />
+            <img src="./assets/SENDERO-CORNIZUELO-6398d8d8.webp" alt="icon" className="logo" />
           </div>
         )}
+
 
         {navLinks
           .filter((link) => link.visible === undefined || link.visible)

@@ -102,7 +102,7 @@ const VOluntariados = () => {
         <div>
           <label htmlFor="fecha">Fecha del voluntariado:</label>
           <input
-            type="date"
+            type="datetime-local"
             id="fecha"
             ref={fechaRef}
             required
@@ -154,10 +154,10 @@ const VOluntariados = () => {
           </select>
         </div>
         <div  className="centerr">
-          <button className='btnAddVoluntariado' type="submit">Crear</button>
+        <button onClick={() => navigate('/dashboard/listaVoluntariados')}>Volver</button>
         </div>
         <div className="center-buttonvol">
-        <button onClick={() => navigate('/dashboard/listaVoluntariados')}>Volver</button>
+        <button className='btnAddVoluntariado' type="submit">Crear</button>
       </div>
       </form>
       

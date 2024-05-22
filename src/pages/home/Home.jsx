@@ -1,27 +1,35 @@
-import  { useState, useEffect } from "react";
-import "../../Styles/card.css"; 
-import axios from 'axios';
+import PiesChart from "./PiesChart";
+import BarsChart from "./BarsChart";
+import LinesChart from "./LinesChart";
+//import PiesChartCircle from "./PiesChartCircle";
+import NavbarNav from "../_layout/components/Navbar";
 
-const Home = () => {
+import '../../Styles/Cards.css';
 
-  const [contadorRegistros, setContadorRegistros] = useState(null);
-
-  const obtenerContadorRegistros = async () => {
-    try {
-      const response = await axios.get('/contar-registros');
-      setContadorRegistros(response.data.num_registros);
-    } catch (error) {
-      console.error('Error al obtener el contador de registros:', error);
-    }
-  };
-
-  useEffect(() => {
-    obtenerContadorRegistros();
-  }, []);
-
+function Home() {
   return (
-  <h1>kslkdfjnslkfdnkldsfgnlkdsgnv lkjnvb kjedsnvblk.j</h1>
+    <div>
+      <NavbarNav />
+      <div className="charts-container">
+        <div className="chart-card">
+          <div className="logoContainer">
+            <img src="../../assets/img/LOGOCEMEDE.png" alt="icon" className="logo" />
+          </div>
+        </div>
+        <div className="chart-card">
+          <BarsChart />
+        </div>
+        <div className="chart-card">
+          <PiesChart />
+        </div>
+        <div className="chart-card">
+          <LinesChart />
+        </div>
+      </div>
+    </div>
   );
-};
+}
 
 export default Home;
+
+

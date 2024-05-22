@@ -63,10 +63,10 @@ const EditReservaciones = () => {
             <input type="datetime-local" id="fechaReserva" ref={ReservacionesFechaReserva} required />
           </div>
           <div className="button-EditR">
-            <button type="submit">Guardar</button>
+          <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
           </div>
           <div className="center-button-editar-reservacion">
-            <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
+          <button type="submit">Guardar</button>
           </div>
         </form>
         <ToastContainer />

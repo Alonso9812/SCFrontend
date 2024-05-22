@@ -110,12 +110,12 @@ const ListaTipos = () => {
       width: 150,
       renderCell: params => (
         <div>
-          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminar">
+          <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
             <span style={{ color: 'black' }}>
               <FontAwesomeIcon icon="trash" />
             </span>
           </button>
-          <button onClick={() =>  handleEditTipo(params.row.id)} className="btnModificar">
+          <button onClick={() =>  handleEditTipo(params.row.id)} className="btnModificarPrueba">
             <span style={{ color: 'black' }}>
               <FontAwesomeIcon icon="edit" />
             </span>

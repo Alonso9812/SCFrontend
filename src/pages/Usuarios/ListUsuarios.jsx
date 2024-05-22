@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DataGrid } from '@mui/x-data-grid'; // Importar DataGrid y DataGridColumns de Material-UI
 
+
+
 const ListUsuarios = () => {
   const { data = [], isLoading, isError, refetch } = useQuery('showU', getUsuarios, { enabled: true });
   const navigate = useNavigate();
@@ -26,15 +28,19 @@ const ListUsuarios = () => {
 
   const handleDeleteUsuario = async (id) => {
     try {
-      await ELiminarUsuario(id);
-      await refetch();
-      queryClient.invalidateQueries('deleteUSer');
-      toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
+        await ELiminarUsuario(id);
+        await refetch();
+        queryClient.invalidateQueries('deleteUSer');
+        toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
     } catch (error) {
-      console.error(error);
+        if (error.message === 'Error: Usuario está ligado a otra tabla') {
+        toast.error('¡Usuario está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
+        } else {
+            console.error(error);
+        }
     }
     setDeleteConfirm(null);
-  };
+};
 
   const handleDeleteConfirmation = (id) => {
     setDeleteConfirm(id);
@@ -143,6 +149,7 @@ const ListUsuarios = () => {
 
   return (
     <>
+    
       <div className="user-registration">
         <h4 className="Namelist">Registro de Usuarios</h4>
         <Link to="/dashboard/agregar-usuario-admin" className="btnRegistrarAdmin">Crear Usuario</Link>

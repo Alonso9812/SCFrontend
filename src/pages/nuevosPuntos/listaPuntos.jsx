@@ -134,10 +134,10 @@ const ListaPuntos = () => {
       width: 200,
       renderCell: (params) => (
         <div>
-          <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminar">
+          <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminarPrueba">
             <FontAwesomeIcon icon="trash" />
           </button>
-          <button onClick={() => handleEditPunto(params.row.id)} className="btnModificar">
+          <button onClick={() => handleEditPunto(params.row.id)} className="btnModificarPrueba">
             <FontAwesomeIcon icon="edit" />
           </button>
         </div>

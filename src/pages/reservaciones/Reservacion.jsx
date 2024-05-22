@@ -97,10 +97,10 @@ const Reservacion = () => {
             <input type="email" id="correoVis" ref={emailRef} required />
           </div>
           <div className="centerr-button">
-            <button type="submit">Reservar</button>
+          <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
           </div>
           <div className="center-volver">
-          <button type="button" onClick={() => navigate('/dashboard/listaReservaciones')}>Volver</button>
+          <button type="submit">Reservar</button>
         </div>
         </form>
         

@@ -64,10 +64,10 @@ const EditarTipo = () => {
             <input type="text" id="nombreTipo" ref={NombreTipo} required />
           </div>
           <div className="center-bu">
-            <button type="submit">Guardar</button>
+          <button type="button" onClick={() => navigate('/dashboard/listaTipos')}>Volver</button>
           </div>
           <div className="Editar-button-volver">
-            <button type="button" onClick={() => navigate('/dashboard/listaTipos')}>Volver</button>
+          <button type="submit">Guardar</button>
           </div>
         </form>
         <ToastContainer />

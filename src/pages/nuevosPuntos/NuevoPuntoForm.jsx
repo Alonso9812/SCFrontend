@@ -120,10 +120,11 @@ const NuevoPuntoForm = () => {
             />
           </div>
           <div className="center-buttonn">
-            <button type="submit">Crear</button>
+            
+            <button onClick={() => navigate('/dashboard/listaPuntos')}>Volver</button>
           </div>
           <div className="regresar">
-            <button onClick={() => navigate('/dashboard/listaPuntos')}>Volver</button>
+          <button type="submit">Crear</button>
           </div>
         </form>
         

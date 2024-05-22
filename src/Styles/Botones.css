@@ -235,3 +235,9 @@
 .btnPrint{
   margin-top: 20px;
 }
+
+.btnEliminarPrueba{width: 50px;}
+
+.btnModificarPrueba{
+  width: 50px;
+}

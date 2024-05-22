@@ -176,10 +176,10 @@ const EditarCampaña = () => {
           </select>
         </div>
         <div className="center-buttonCamp">
-          <button type="submit">Modificar</button>
+        <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
         </div>
         <div className="camp-button-volver">
-        <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
+        <button type="submit">Modificar</button>
       </div>
       </form>
       
