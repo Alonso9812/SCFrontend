@@ -96,15 +96,11 @@ const Registro = () => {
             <input type="text" id="ocupacion" ref={UsuarioOcupacion} required />
           </div>
           <div>
-            <div className="lblCorreo">
-               <label htmlFor="correo">Correo:</label>
-            </div>
+            <label htmlFor="correo">Correo:</label>
             <input className="iptCorreo" type="email" id="correo" ref={UsuarioEmail} required />
           </div>
           <div>
-            <div className="labelPass">
-              <label htmlFor="contrasena">Contraseña:</label>
-            </div> 
+            <label htmlFor="contrasena">Contraseña:</label>
             <input className="pswdUsuario"
               type="password"
               id="contrasena"

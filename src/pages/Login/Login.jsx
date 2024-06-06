@@ -51,55 +51,55 @@ const Login = () => {
     }
   };
 
-    return (
-      <div className="login-background">
-        <div className="wrapper">
-          <form onSubmit={handleLogin} action="">
-            <h2>Iniciar Sesión</h2>
-            <div className="input-box">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Correo Electrónico"
-                required
-              />
-              <span className="i">
-                <FontAwesomeIcon icon="user" />
-              </span>
-            </div>
-            <div className="input-box">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Contraseña"
-                required
-              />
-              <span className="i">
-                <FontAwesomeIcon icon="lock" />
-              </span>
-            </div>
-            <div className="remember-forgot">
-              <label>
-                <input type="checkbox" />
-                Recordarme
-              </label>
-            </div>
-            <button type="submit" className="btn">
-              Iniciar Sesión
-            </button>
-            <div className="register-link">
-              <p>
-                Inicio de Sesión para la
-                <a href="#"> Gestion de Modulos</a>
-              </p>
-            </div>
-          </form>
-          {error && <div className="error-message">{error}</div>}
-        </div>
+  return (
+    <div className="login-background">
+      <div className="wrapper">
+        <form onSubmit={handleLogin}>
+          <h2>Iniciar Sesión</h2>
+          <div className="input-box">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Correo Electrónico"
+              required
+            />
+            <span className="i">
+              <FontAwesomeIcon icon="user" />
+            </span>
+          </div>
+          <div className="input-box">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Contraseña"
+              required
+            />
+            <span className="i">
+              <FontAwesomeIcon icon="lock" />
+            </span>
+          </div>
+          <div className="remember-forgot">
+            <label>
+              <input type="checkbox" />
+              Recordarme
+            </label>
+          </div>
+          <button type="submit" className="btn">
+            Iniciar Sesión
+          </button>
+          <div className="register-link">
+            <p>
+              Inicio de Sesión para la
+              <a href="#"> Gestión de Módulos</a>
+            </p>
+          </div>
+        </form>
+        {error && <div className="error-message">{error}</div>}
       </div>
-    );
+    </div>
+  );
 };
 
 

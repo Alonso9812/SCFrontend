@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
-import { getUsuarios, ELiminarUsuario, actualizarEstadoUsuario, actualizarRolUsuario  } from '../../services/UsuariosServicios';
+import { getUsuarios, ELiminarUsuario, actualizarEstadoUsuario, actualizarRolUsuario } from '../../services/UsuariosServicios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TextField from "@mui/material/TextField";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DataGrid } from '@mui/x-data-grid'; // Importar DataGrid y DataGridColumns de Material-UI
-
-
+import { DataGrid } from '@mui/x-data-grid';
 
 const ListUsuarios = () => {
   const { data = [], isLoading, isError, refetch } = useQuery('showU', getUsuarios, { enabled: true });
@@ -40,7 +38,7 @@ const ListUsuarios = () => {
         }
     }
     setDeleteConfirm(null);
-};
+  };
 
   const handleDeleteConfirmation = (id) => {
     setDeleteConfirm(id);
@@ -88,7 +86,6 @@ const ListUsuarios = () => {
   const filteredData = Array.isArray(data) ? data.filter(user => user.cedula.toLowerCase().includes(searchTerm.toLowerCase())) : [];
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
   
-  // Definir las columnas para la tabla DataGrid
   const columns = [
     { field: 'id', headerName: 'ID Usuario', width: 150 },
     { field: 'name', headerName: 'Nombre', width: 150 },
@@ -133,7 +130,7 @@ const ListUsuarios = () => {
       renderCell: (params) => (
         <div>
           <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
-            <span style={{ color: 'black', alignItems: 'center', height: '50px', width: '50px'  }}>
+            <span style={{ color: 'black', alignItems: 'center', height: '50px', width: '50px' }}>
               <FontAwesomeIcon icon="trash" />
             </span>
           </button>
@@ -149,7 +146,6 @@ const ListUsuarios = () => {
 
   return (
     <>
-    
       <div className="user-registration">
         <h4 className="Namelist">Registro de Usuarios</h4>
         <Link to="/dashboard/agregar-usuario-admin" className="btnRegistrarAdmin">Crear Usuario</Link>
@@ -163,10 +159,9 @@ const ListUsuarios = () => {
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
-
         </div>
 
-        <div style={{ height: 400, width: '100%' }}>
+        <div className="scrollable-table" style={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={currentData}
             columns={columns}

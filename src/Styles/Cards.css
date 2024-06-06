@@ -1,12 +1,9 @@
-/* Cards.css */
 .charts-container {
+  margin-top: 20px;
   display: grid;
   grid-template-columns: 1.5fr 1.2fr;
   grid-gap: 20px;
-  /*margin-top: 25px;*/
-  padding: 0 300px;
-
-  
+  padding: 0 250px;
 }
 
 .chart-card {
@@ -22,20 +19,20 @@
   width: 500px;
 }
 
-.chart-card {
+.chart-card1 {
   background-color: #f8f9fa;
   padding: 16px;
   border: 2px solid #dee2e6;
   box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
   border-radius: 2%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 275px;
+  height: auto; 
   width: 500px;
 }
 
-.logoContainer {
+.logoUNA {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,6 +41,18 @@
 .logo {
   max-width: 100%;
   height: auto;
+  margin: 0 10px; 
+}
+
+.justified-text {
+  margin-top: 20px;
+  text-align: justify;
+  
+}
+
+.justified-text p {
+  margin: 0;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* Media Query for smaller screens */
@@ -51,9 +60,19 @@
   .charts-container {
     grid-template-columns: 1fr;
     grid-gap: 20px;
+    padding: 0 50px; 
   }
 
-  .chart-card {
-    width: 100%;
+  .chart-card, .chart-card1 {
+    width: 60%;
+  }
+
+  .logoUNA {
+    flex-direction: column;
+  }
+
+  .logo {
+    width: 25%;
+    margin: 10px 0;
   }
 }

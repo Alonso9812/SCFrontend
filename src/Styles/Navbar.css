@@ -1,29 +1,16 @@
-.containerSidebar {
-    display: flex;
-  }
-  
-  .main {
-    transition: margin-left 0.3s;
-    flex-grow: 1;
-  }
-  
-  .sidebar-open .main {
-    margin-left: 240px;
-  }
-  
-  .sidebar-closed .main {
-    margin-left: 40px;
-  }
-  
-  .home-container {
-    padding: 20px;
-    transition: padding-left 0.3s;
-  }
-  
-  .sidebar-open .home-container {
-    padding-left: 260px; /* 240px for sidebar + 20px padding */
-  }
-  
-  .sidebar-closed .home-container {
-    padding-left: 60px; /* 40px for sidebar + 20px padding */
-  }
+/* Navbar.css */
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.navbar-brand,
+.nav-item {
+  text-align: center;
+}

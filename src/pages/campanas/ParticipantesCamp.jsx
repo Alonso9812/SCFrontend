@@ -71,15 +71,15 @@ const ParticipantesCamp = () => {
   const columns = [
     { field: 'campaña_id', headerName: 'ID Campaña', flex: 1 },
     { field: 'cedula', headerName: 'Cedula', width: 150, renderCell: params => {
-      const usuario = users.find(user => user.id === params.row.usuario_id);
+      const usuario = users.find(user => user.id === params.row.user_id);
       return usuario ? usuario.cedula : "CedulaNoEncontrada";
     }},
     { field: 'nombre', headerName: 'Nombre', width: 150, renderCell: params => {
-      const usuario = users.find(user => user.id === params.row.usuario_id);
+      const usuario = users.find(user => user.id === params.row.user_id);
       return usuario ? usuario.name : "CedulaNoEncontrada";
     }},
     { field: 'apellido', headerName: 'Apellido', width: 150, renderCell: params => {
-      const usuario = users.find(user => user.id === params.row.usuario_id);
+      const usuario = users.find(user => user.id === params.row.user_id);
       return usuario ? usuario.apell1 : "CedulaNoEncontrada";
     }},
     {

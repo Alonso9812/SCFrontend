@@ -2,7 +2,7 @@
 .TableUsuarios,
 .TableReservaciones,
 .TableTipo,
-.TableCampaña,.TableVoluntariado {
+.TableCampaña, .TableVoluntariado {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
@@ -41,7 +41,6 @@
 /* Estilos para los botones de acción */
 .btnEliminar,
 .btnModificar {
-  
   color: #fff;
   border: none;
   padding: 0px 0px;
@@ -51,12 +50,9 @@
 }
 
 .btnModificar {
- 
   padding-left: 8px;
   padding-right: 8px;
 }
-
-
 
 /* Estilos para el contenedor principal */
 .user-registration,
@@ -76,6 +72,11 @@
     margin-left: 0; /* Elimina el margen izquierdo en dispositivos pequeños */
     max-width: 100%; /* Establece el ancho máximo al 100% en dispositivos pequeños */
     padding: 0 20px; /* Añade un relleno izquierdo y derecho para mantener el contenido legible */
+  }
+
+  /* Habilitar barra de desplazamiento horizontal para tablas en dispositivos móviles */
+  .scrollable-table {
+    overflow-x: auto;
   }
 }
 
@@ -154,31 +155,24 @@
   background-color: #0056b3;
 }
 
-
-/* Agrega esta regla CSS para la barra de desplazamiento */
+/* Estilos para la barra de desplazamiento */
 .scrollable-table {
-  overflow-y: auto;
+  overflow-x: auto;
 }
 
- 
 .Namelist {
-  font-size: 1.5rem; 
-  font-weight:bolder; 
-  color: #5a5e5c; 
-  text-transform: uppercase; 
-  margin-bottom: 20px; 
-  border-bottom: 2px solid #ccc; 
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: #5a5e5c;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
 }
 
 .Nameli {
-  font-size: 1.2rem; 
-  font-weight:bolder; 
-  color: #041688; 
-  text-transform: uppercase; 
+  font-size: 1.2rem;
+  font-weight: bolder;
+  color: #041688;
+  text-transform: uppercase;
   display: flex;
 }
-
-
-
-
-

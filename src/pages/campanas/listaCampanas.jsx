@@ -56,9 +56,9 @@ const ListaCampanas = () => {
     setIsEditConfirmationOpen(false);
   };
 
-const handleDeleteCampaña = async (id) => {
+const handleDeleteCampaña = async () => {
   try {
-      await  eliminarCampana(id);
+      await  eliminarCampana(deleteConfirm);
       await refetch();
       queryClient.invalidateQueries('deleteCampana');
       toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });

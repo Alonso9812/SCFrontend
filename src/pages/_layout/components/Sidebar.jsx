@@ -8,25 +8,41 @@ import * as FaIconscs from 'react-icons/ai';
 import * as FaIconsci from 'react-icons/md';
 import * as FaIconsce from 'react-icons/bs';
 
-
 const Sidebar = ({ children }) => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
     }
-  }, []); 
+
+   
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setSidebarVisible(false);
+      } else {
+        setSidebarVisible(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); 
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
+    if (window.innerWidth <= 768) {
+      setSidebarVisible(!sidebarVisible);
+    }
   };
-  
+
   const navLinks = [
     { to: '/dashboard/home', text: 'Inicio', icon: <FaIcons.ImHome className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listUsuarios', text: 'Usuarios', icon: <FaIconsd.FaUserFriends className="icon" />, visible: isAuthenticated },
@@ -41,7 +57,7 @@ const Sidebar = ({ children }) => {
 
   return (
     <div className="containerSidebar">
-     <div className="sidebar" style={{  width: sidebarVisible ? '240px' : '40px', height: '780px',boxShadow: sidebarVisible ? '2px 2px 5px rgba(0, 0, 0, 0.2)' : 'none'}}>
+      <div className="sidebar" style={{ width: sidebarVisible ? '240px' : '40px', height: '780px', boxShadow: sidebarVisible ? '2px 2px 5px rgba(0, 0, 0, 0.2)' : 'none' }}>
         <div className="top_section">
           <div className="bars" onClick={toggleSidebar}>
             {sidebarVisible ? (
@@ -56,7 +72,6 @@ const Sidebar = ({ children }) => {
             <img src="./assets/SENDERO-CORNIZUELO-6398d8d8.webp" alt="icon" className="logo" />
           </div>
         )}
-
 
         {navLinks
           .filter((link) => link.visible === undefined || link.visible)
@@ -87,7 +102,7 @@ const Sidebar = ({ children }) => {
           <NavLink to="ParticipantesEnVoluntariados" className="link" activeClassName="active">
             <div className="icon" style={{ color: 'Green' }}><FaIconsce.BsPeopleFill /></div>
             <div style={{ display: sidebarVisible ? 'block' : 'none', color: 'black' }} className="link_text">
-            Participantes en Voluntariados
+              Participantes en Voluntariados
             </div>
           </NavLink>
         )}

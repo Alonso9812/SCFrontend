@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 //estilos
 import "./index.css";
 import "./Styles/SidebarC.scss";
+//import "./Styles/Sidebar.css";
 import "./Styles/Home.scss";
 import "./Styles/Editar.css";
 import "./Styles/EditCamp.css";

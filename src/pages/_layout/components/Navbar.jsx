@@ -1,60 +1,39 @@
 import React from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-} from 'reactstrap';
+import '../../../Styles/Navbar.css';
 import Logout from '../../Login/logout';
 
-
-export default class NavbarNav extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
-  
-  render() {
-    return (
-      <div>
-        <Navbar color="lbg-light" light expand="md" className="mb-3" style={{ height: '60px', boxShadow:  '2px 2px 5px rgba(0, 0, 0, 0.2)'}}>
-          <Nav className='Nameli' href="/home" style={{ marginLeft: "275px"}}>Sendero El Cornizuelo</Nav>  
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ms-auto" navbar>
-              <NavItem>
-                <NavLink className='comp' href="https://senderocornizuelo.xyz/info/">Inicio</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink className='comp' href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/login">naadaaa</NavLink>
-              </NavItem>
-            </Nav>
-            <NavItem>
-              <Logout />
-            </NavItem>
-          </Collapse>
-        </Navbar>
+function Navbar() {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">Navbar</a>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Features</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Pricing</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+            <div className='UbiC'>
+          <Logout/>
+          </div>
+          </ul>
+          
+        </div>
       </div>
-    );
-  }
+    </nav>
+  );
 }
+
+export default Navbar;
+

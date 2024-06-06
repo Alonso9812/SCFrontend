@@ -1,26 +1,43 @@
-/* Estilos para el Sidebar */
-.sidebar {
-  width: 14rem;
-  height: calc(100vh - 56px); 
-  border-right: 1px solid #e7e9eb; 
-  position: fixed;
-  z-index: 10;
-  background-color: #fff; 
-  transition: all 0.3s; /* Efecto de desplazamiento suave */
+.containerSidebar {
+  display: flex;
+  transition: all 0.3s ease;
 }
 
-/* Estilos para dispositivos móviles */
+.containerSidebar.sidebar-visible main {
+  margin-left: 240px; 
+}
+
+.containerSidebar.sidebar-hidden main {
+  margin-left: 40px; 
+}
+
+
+.sidebar {
+  width: 14rem;
+  height: calc(100vh - 56px);
+  border-right: 1px solid #e7e9eb;
+  position: fixed;
+  z-index: 10;
+  background-color: #fff;
+  transition: all 0.3s; 
+}
+
+
 @media only screen and (max-width: 768px) {
   .sidebar {
-    width: 100%; /* Ancho completo en dispositivos móviles */
-    height: 100vh; /* Ajusta la altura para cubrir toda la pantalla */
-    border-right: none; /* Quita el borde derecho en dispositivos móviles */
-    
+    width: 100%; 
+    height: 100vh; 
+    border-right: none; 
   }
 
-  /* Muestra el Sidebar al hacer clic en el botón */
+ 
   .sidebar.show-sidebar {
     transform: translateX(0);
+  }
+
+  .containerSidebar.sidebar-visible main,
+  .containerSidebar.sidebar-hidden main {
+    margin-left: 0; 
   }
 }
 
@@ -37,99 +54,4 @@
   }
 }
 
-/* Estilos para la lista de elementos del Sidebar */
-ul {
-  list-style: none;
-  padding: 200px 2rem; /* Ajusta el padding en dispositivos grandes */
-  margin-top: -140px; /* Ajusta el margen en dispositivos grandes */
 
-  @media only screen and (max-width: 768px) {
-    padding: 2rem; /* Ajusta el padding en dispositivos móviles */
-    margin-top: 0; /* Elimina el margen en dispositivos móviles */
-  }
-}
-
-/* Estilos para los elementos de la lista del Sidebar */
-ul li {
-  margin-bottom: 10px;
-
-  @media only screen and (max-width: 768px) {
-    margin-bottom: 5px; /* Ajusta el margen en dispositivos móviles */
-  }
-}
-
-/* Estilos para los enlaces del Sidebar */
-ul li a {
-  text-decoration: none;
-
-  &.active {
-    background-color: #e7e9eb; /* Cambiado a un color más genérico */
-  }
-}
-
-/* Estilos para el botón de alternar Sidebar */
-.burgerContainer {
-  position: absolute;
-  right: 0;
-  top: calc(9rem / 1.15);
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.burgerContainer::after {
-  content: "";
-  position: absolute;
-  right: 35px;
-  top: calc(50px / 30);
-  z-index: 0;
-  width: 3.5rem + 10.5rem;
-  background-color: gray;
-  height: 2px;
-}
-
-ul {
-  list-style: none;
-  padding: 200px 2rem;
-  margin-top: -140px;
-
-  li {
-    margin-bottom: 10px;
-
-    a {
-      text-decoration: none;
-
-      &.active {
-        background-color: rgb(175, 2, 2);
-      }
-    }
-  }
-}
-
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.modal-content p {
-  margin-bottom: 20px;
-}
-
-.modal-content button {
-  margin-right: 10px;
-}
