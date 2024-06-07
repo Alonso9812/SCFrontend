@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-semi */
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -53,8 +54,10 @@ export function generatePdfReport(data, searchTerm, usuarios) {
     doc.autoTable({
       head: [
         [
-          "ID Campaña",
-          "Cedula Participante",
+          "ID Voluntariado",
+          "Cédula Participante",
+          "Nombre Participante",
+          "Apellido Participante",
         ],
       ],
       body: tableData,

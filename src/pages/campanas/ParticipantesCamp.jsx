@@ -7,7 +7,8 @@ import { getUsuarios } from "../../services/UsuariosServicios";
 import TextField from "@mui/material/TextField";
 import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { generatePdfReport } from "../../pages/campanas/pdfCampañas";
+import { FaFilePdf } from "react-icons/fa6";
 
 const ParticipantesCamp = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -110,6 +111,11 @@ const ParticipantesCamp = () => {
             onChange={e => setSearchTerm(e.target.value)}
           />
 
+        </div>
+        <div className="button-container">
+          <button onClick={generatePdfReport} className="btnPrint">
+            <FaFilePdf /> Imprimir Reporte
+          </button>
         </div>
         <div style={{ height: 400, width: '100%' }}>
           {users.length > 0 && (

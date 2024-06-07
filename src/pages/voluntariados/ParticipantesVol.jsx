@@ -126,16 +126,18 @@ const ParticipantesVol = () => {
         <div style={{ height: 400, width: '100%' }}>
           {users.length > 0 && (
             <DataGrid
-              rows={currentData}
-              columns={columns}
-              page={currentPage}
-              pagination
-              onPageChange={handlePageChange}
-              pageSize={itemsPerPage}
-              rowCount={filteredData.length}
-              pageSizeOptions={[5, 10]}
-              key={currentData.id}
-              checkboxSelection
+            rows={currentData}
+            columns={columns}
+            page={currentPage}
+            pagination
+            onPageChange={handlePageChange}
+            checkboxSelection
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 20 },
+              },
+            }}
+            pageSizeOptions={[20, 25]}
             />
           )}
         </div>

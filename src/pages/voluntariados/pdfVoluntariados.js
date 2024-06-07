@@ -12,9 +12,6 @@ export function generatePdfReport(data, searchTerm, usuarios) {
     }
     localStorage.setItem("consecutivo", consecutivo);
 
-    // Encabezado
-    //const imgData = "/src/assets/img/SENDERO-CORNIZUELO.webp";
-    //doc.addImage(imgData, "PNG", 230, 5, 60, 30);
 
     doc.setTextColor(8, 117, 119); // Color verde para el encabezado
     doc.setFont("helvetica", "bold"); // Fuente y estilo para el encabezado
@@ -53,7 +50,9 @@ export function generatePdfReport(data, searchTerm, usuarios) {
       head: [
         [
           "ID Voluntariado",
-          "Cedula Participante",
+          "Cédula Participante",
+          "Nombre Participante",
+          "Apellido Participante",
         ],
       ],
       body: tableData,

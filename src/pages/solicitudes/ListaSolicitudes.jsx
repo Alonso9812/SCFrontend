@@ -8,7 +8,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { FaFilePdf } from "react-icons/fa6";
-import { generatePdfReport } from "../../pages/reservaciones/pdfReservaciones"; 
+import { generatePdfReport } from"../../pages/solicitudes/pdfSolicitudes";
 
 const ListaSolicitudes = () => {
   const queryClient = useQueryClient();
@@ -17,7 +17,7 @@ const ListaSolicitudes = () => {
     getSolicitudes,
     { enabled: true }
   );
-  const navigate = useNavigate();
+  
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const itemsPerPage = 10;
 
@@ -47,10 +47,6 @@ const ListaSolicitudes = () => {
   };
   const handleDeleteConfirmation = (id) => {
     setDeleteConfirm(id);
-  };
-
-  const handleEditTipo = (id) => {
-    navigate(`/update-tipo/${id}`);
   };
 
 	const handlePrintReport = () => {

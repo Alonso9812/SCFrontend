@@ -96,7 +96,7 @@ const ListaReservaciones = () => {
   if (isError) return <div className="error">Error</div>;
 
   const offset = currentPage * itemsPerPage;
-  const filteredData = Array.isArray(data) ? data.filter(reservacion => reservacion.id.toString().toLowerCase().includes(searchTerm.toLowerCase())) : [];
+  const filteredData = Array.isArray(data) ? data.filter(reservacion => reservacion.cedulaVis.toString().toLowerCase().includes(searchTerm.toLowerCase())) : [];
 
   const currentData = filteredData.slice(offset, offset + itemsPerPage);
 
@@ -159,7 +159,7 @@ const ListaReservaciones = () => {
         <div className="filter-container">
         <TextField
             id="filled-search"
-            label="Buscar por Nombre..."
+            label="Buscar por Cédula..."
             type="search"
             variant="filled"
             value={searchTerm}
