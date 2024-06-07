@@ -46,10 +46,11 @@ export const eliminarVOluntariado = async (id) => {
       if (error.response && error.response.status === 500) {
           throw new Error('Error: Usuario está ligado a otra tabla');
       } else {
-          console.error(error);
+          throw error; // Lanza otros errores para que puedan ser manejados adecuadamente
       }
-  } 
+  }
 };
+
 
 export const actualizarEstadoVoluntariado = async (id, newStatus) => {
     try {

@@ -1,5 +1,5 @@
 import  { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import { getVOluntariado, eliminarVOluntariado, actualizarEstadoVoluntariado } from '../../services/VOluntariadosServicios';
@@ -21,12 +21,7 @@ const ListaVoluntariados = () => {
   const queryClient = useQueryClient();
   const [tipos, setTipos] = useState([]);
 
-  const { mutate: eliminarVOluntariadoMutation } = useMutation(eliminarVOluntariado, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('Voluntariado');
-    },
-  });
-
+ 
   useEffect(() => {
     const fetchTipos = async () => {
       try {
@@ -80,20 +75,28 @@ const ListaVoluntariados = () => {
   };
   */
 
+
   const handleDeleteVOluntariado = async () => {
     try {
-        await eliminarVOluntariadoMutation(deleteConfirm);
+        await eliminarVOluntariado(deleteConfirm);
         await refetch();
         queryClient.invalidateQueries('deleteVolun');
         toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
     } catch (error) {
-        if (error.message === 'Error: Usuario está ligado a otra tabla') {
-        toast.error('¡Usuario está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
+        // Verificar la estructura del error
+        console.error('Error capturado:', error);
+
+        // Extraer el mensaje de error correcto
+        const errorMessage = error.message || error.toString();
+        
+        if (errorMessage.includes('Usuario está ligado a otra tabla')) {
+            toast.error('¡No se puede eliminar, está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
         } else {
-            console.error(error);
+            toast.error('¡Ocurrió un error inesperado!', { position: toast.POSITION.TOP_RIGHT });
         }
+    } finally {
+        setIsConfirmationOpen(false);
     }
-    setIsConfirmationOpen(false);
 };
 
   const handleShowEditConfirmation = (id) => {

@@ -12,7 +12,8 @@ const ListaCampanas = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError, refetch } = useQuery('campana', getCampaña, { enabled: true });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  const [ setIsConfirmationOpen] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 25;
@@ -55,21 +56,27 @@ const ListaCampanas = () => {
   const handleHideEditConfirmation = () => {
     setIsEditConfirmationOpen(false);
   };
+  const handleDeleteCampaña = async () => {
+    try {
+        await eliminarCampana(deleteConfirm);
+        await refetch();
+        queryClient.invalidateQueries('deleteCamp');
+        toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
+    } catch (error) {
+        // Verificar la estructura del error
+        console.error('Error capturado:', error);
 
-const handleDeleteCampaña = async () => {
-  try {
-      await  eliminarCampana(deleteConfirm);
-      await refetch();
-      queryClient.invalidateQueries('deleteCampana');
-      toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
-  } catch (error) {
-      if (error.message === 'Error: Usuario está ligado a otra tabla') {
-      toast.error('¡Usuario está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
-      } else {
-          console.error(error);
-      }
-  }
-  setDeleteConfirm(null);
+        // Extraer el mensaje de error correcto
+        const errorMessage = error.message || error.toString();
+        
+        if (errorMessage.includes('La campaña está ligada a otra tabla')) {
+            toast.error('¡No se puede eliminar, está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
+        } else {
+            toast.error('¡Ocurrió un error inesperado!', { position: toast.POSITION.TOP_RIGHT });
+        }
+    } finally {
+        setIsConfirmationOpen(false);
+    }
 };
 
 const handleDeleteConfirmation = (id) => {
@@ -188,8 +195,7 @@ const handleDeleteConfirmation = (id) => {
 
 
 
-      {/* Modal de confirmación */}
-      {deleteConfirm !== null && (
+      {isConfirmationOpen && (
         <div className="overlay">
           <div className="delete-confirm">
             <p>¿Estás seguro de que deseas eliminar esta campaña?</p>
@@ -198,6 +204,7 @@ const handleDeleteConfirmation = (id) => {
           </div>
         </div>
       )}
+
 
 
         {/* Modal de confirmación para editar */}

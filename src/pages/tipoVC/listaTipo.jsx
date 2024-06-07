@@ -29,7 +29,7 @@ const ListaTipos = () => {
     setCurrentPage(value - 1);
   };
 
-  const handleDeleteCandidate = async (id) => {
+  const handleDeleteTipo = async (id) => {
     try {
       await eliminarTipo(id);
       await refetch();
@@ -37,9 +37,21 @@ const ListaTipos = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     } catch (error) {
-      console.error("Error en la solicitud Axios:", error);
+      console.error('Error capturado:', error);
+  
+      const errorMessage = error.message || error.toString();
+      if (errorMessage.includes('Usuario está ligado a otra tabla')) {
+        toast.error('¡Categoria ligada a otra tabla!', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        toast.error('¡Ocurrió un error inesperado!', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    } finally {
+      setDeleteConfirm(null);
     }
-    setDeleteConfirm(null);
   };
 
   const handleDeleteConfirmation = (id) => {
@@ -167,7 +179,7 @@ const ListaTipos = () => {
         <div className="overlay">
           <div className="delete-confirm">
             <p>¿Estás seguro de que quieres eliminar este tipo?</p>
-            <button onClick={() => handleDeleteCandidate(deleteConfirm)}>Sí</button>
+            <button onClick={() => handleDeleteTipo(deleteConfirm)}>Sí</button>
             <button onClick={() => setDeleteConfirm(null)}>No</button>
           </div>
         </div>

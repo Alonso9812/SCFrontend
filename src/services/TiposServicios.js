@@ -30,16 +30,19 @@ export const actualizarEstadoTipo = async (id, newStatus) => {
     }
   }
 
-export const eliminarTipo= async (id) => {
+  export const eliminarTipo = async (id) => {
     try {
-        const response = await api.delete(`delete-tipo/${id}`);
-        console.log(response.data);
+      const response = await api.delete(`delete-tipo/${id}`);
+      console.log(response.data);
     } catch (error) {
-    
-        console.error(error);
-    } 
-};
-
+      if (error.response && error.response.status === 500) {
+        throw new Error('Error: Usuario está ligado a otra tabla');
+      } else {
+        throw error; // Lanza otros errores para que puedan ser manejados adecuadamente
+      }
+    }
+  };
+  
 export const updateTipo = async (newData) => { 
     
     console.log(newData);    

@@ -95,7 +95,7 @@ const ParticipantesVol = () => {
       headerName: 'Acciones',
       flex: 1,
       renderCell: (params) => (
-        <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminar">
+        <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
           <span style={{ color: 'black' }}>
             <FontAwesomeIcon icon="trash" />
           </span>
