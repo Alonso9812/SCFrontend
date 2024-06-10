@@ -6,7 +6,7 @@ export const getVOluntariado = async () => {
 };
 
 
-
+/*
 export const getTotalVoluntariados = async () => {
   try {
       const voluntariados = await getVOluntariado(); 
@@ -17,6 +17,19 @@ export const getTotalVoluntariados = async () => {
       return 0; 
   }
 };
+*/
+
+export const getTotalVoluntariados = async () => {
+  try {
+      const voluntariados = await getVOluntariado();
+      const voluntariadosNuevas = voluntariados.filter(voluntariados => voluntariados.status === 'Activo');
+      const total = voluntariadosNuevas.length;
+      return total;
+  } catch (error) {
+      console.error(error);
+      return 0; 
+  }
+}
 
 
 export const getVOluntariadoID = async (id) => { 

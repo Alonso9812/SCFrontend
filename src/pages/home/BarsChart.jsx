@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts';
 import { getCampaña } from '../../services/CampanasServicios';
+import { getVOluntariado } from '../../services/VOluntariadosServicios';
 
 const chartSetting = {
-  width: 500,
-  height: 300,
+  width: 700,
+  height: 365,
   sx: {
     [`.${axisClasses.left} .${axisClasses.label}`]: {
       transform: 'translate(-20px, 0)',
@@ -19,25 +20,28 @@ export default function BarsDataset() {
   const [dataset, setDataset] = useState([]);
 
   useEffect(() => {
-    async function fetchCampañas() {
+    async function fetchData() {
       try {
-        const campanas = await getCampaña(); 
-        const contadorPorMes = contarCampañasPorMes(campanas); 
-        const nuevoDataset = convertirContadorADataset(contadorPorMes); 
-        setDataset(nuevoDataset); 
+        const [campanas, voluntariados] = await Promise.all([getCampaña(), getVOluntariado()]);
+
+        const contadorCampanas = contarPorMes(campanas);
+        const contadorVoluntariados = contarPorMes(voluntariados);
+
+        const nuevoDataset = convertirContadorADataset(contadorCampanas, contadorVoluntariados);
+        setDataset(nuevoDataset);
       } catch (error) {
-        console.error('Error al obtener las campañas:', error);
+        console.error('Error al obtener los datos:', error);
       }
     }
 
-    fetchCampañas();
+    fetchData();
   }, []);
 
-  function contarCampañasPorMes(campanas) {
+  function contarPorMes(datos) {
     const contadorPorMes = {};
 
-    campanas.forEach(campana => {
-      const fecha = new Date(campana.fecha); 
+    datos.forEach(dato => {
+      const fecha = new Date(dato.fecha);
       const mes = fecha.getMonth() + 1;
       contadorPorMes[mes] = (contadorPorMes[mes] || 0) + 1;
     });
@@ -45,13 +49,16 @@ export default function BarsDataset() {
     return contadorPorMes;
   }
 
-  function convertirContadorADataset(contadorPorMes) {
+  function convertirContadorADataset(contadorCampanas, contadorVoluntariados) {
     const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    
-    const nuevoDataset = Object.entries(contadorPorMes).map(([mes, cantidad]) => ({
-      campañas: cantidad,
-      month: nombresMeses[parseInt(mes) - 1], 
-    }));
+    const nuevoDataset = nombresMeses.map((mes, index) => {
+      const mesIndex = index + 1;
+      return {
+        month: mes,
+        campañas: contadorCampanas[mesIndex] || 0,
+        voluntariados: contadorVoluntariados[mesIndex] || 0,
+      };
+    });
 
     return nuevoDataset;
   }
@@ -59,9 +66,12 @@ export default function BarsDataset() {
   return (
     <BarChart
       dataset={dataset}
-      xAxis={[{ scaleType: 'band', dataKey: 'month' }]} 
-      series={[{ dataKey: 'campañas', label: 'Cantidad de Campañas por mes', valueFormatter }]}
-      colors={['purple']}
+      xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
+      series={[
+        { dataKey: 'campañas', label: 'Campañas', valueFormatter },
+        { dataKey: 'voluntariados', label: 'Voluntariados', valueFormatter },
+      ]}
+      colors={['#084081', '#FF5733']} 
       {...chartSetting}
     />
   );

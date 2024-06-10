@@ -5,6 +5,18 @@ export const getCampaña = async () => {
     return data;
 };
 
+export const getTotalCampanas = async () => {
+  try {
+      const campanas = await getCampaña();
+      const campanasNuevas = campanas.filter(campanas => campanas.status === 'Activo');
+      const total = campanasNuevas.length;
+      return total;
+  } catch (error) {
+      console.error(error);
+      return 0; 
+  }
+}
+
 export const getCampañaID = async (id) => { 
     let data = await api.get(`campana/${id}`).then(result => result.data);
     return data;

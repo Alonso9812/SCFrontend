@@ -147,7 +147,7 @@ const ParticipantesVol = () => {
       {deleteConfirm !== null && (
         <div className="overlay">
           <div className="delete-confirm">
-            <p>¿Estás seguro de que quieres eliminar este tipo?</p>
+            <p>¿Estás seguro de que quieres eliminar este participante?</p>
             <button onClick={() => handleDeleteCandidate(deleteConfirm)}>Sí</button>
             <button onClick={() => setDeleteConfirm(null)}>No</button>
           </div>

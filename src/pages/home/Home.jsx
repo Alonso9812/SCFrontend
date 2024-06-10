@@ -1,6 +1,6 @@
 import PiesChart from "./PiesChart";
 import BarsChart from "./BarsChart";
-import LinesChart from "./LinesChart";
+//import LinesChart from "./LinesChart";
 // import PiesChartCircle from "./PiesChartCircle";
 import Navbar from "../_layout/components/Navbar";
 
@@ -25,13 +25,10 @@ function Home() {
           </div>
         </div>
         <div className="chart-card">
-          <BarsChart />
-        </div>
-        <div className="chart-card">
           <PiesChart />
         </div>
-        <div className="chart-card">
-          <LinesChart />
+        <div className="chart-card3">
+          <BarsChart /> 
         </div>
       </div>
     </div>

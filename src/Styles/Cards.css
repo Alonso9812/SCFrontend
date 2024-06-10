@@ -3,10 +3,12 @@
   display: grid;
   grid-template-columns: 1.5fr 1.2fr;
   grid-gap: 20px;
-  padding: 0 250px;
+  padding: 0 345px;
 }
 
 .chart-card {
+  position: relative;
+  right: 290px;
   background-color: #f8f9fa;
   padding: 16px;
   border: 2px solid #dee2e6;
@@ -30,6 +32,21 @@
   justify-content: center;
   height: auto; 
   width: 500px;
+}
+
+.chart-card3 {
+  position: relative;
+  left: 115px;
+  background-color: #f8f9fa;
+  padding: 16px;
+  border: 2px solid #dee2e6;
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
+  border-radius: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 340px;
+  width: 800px;
 }
 
 .logoUNA {
