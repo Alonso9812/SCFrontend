@@ -130,12 +130,12 @@ const ListUsuarios = () => {
       renderCell: (params) => (
         <div>
           <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
-            <span style={{ color: 'black', alignItems: 'center', height: '50px', width: '50px' }}>
+            <span style={{ color: 'white', alignItems: 'center', height: '50px', width: '50px' }}>
               <FontAwesomeIcon icon="trash" />
             </span>
           </button>
           <button onClick={() => handleEditUsuario(params.row.id)} className="btnModificarPrueba">
-            <span style={{ color: 'black', textAlign: 'center', height: '50px', width: '50px' }}>
+            <span style={{ color: 'white', textAlign: 'center', height: '50px', width: '50px' }}>
               <FontAwesomeIcon icon="edit" />
             </span>
           </button>
@@ -153,7 +153,7 @@ const ListUsuarios = () => {
         <div className="filter-container">
           <TextField
             id="filled-search"
-            label="Buscar por Cedula..."
+            label="Buscar por Cédula..."
             type="search"
             variant="filled"
             value={searchTerm}

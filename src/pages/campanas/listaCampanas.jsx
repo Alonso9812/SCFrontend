@@ -133,12 +133,12 @@ const handleDeleteConfirmation = (id) => {
       renderCell: params => (
         <div>
           <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
-            <span style={{ color: 'black' }}>
+            <span style={{ color: 'white' }}>
               <FontAwesomeIcon icon="trash" />
             </span>
           </button>
           <button onClick={() => handleShowEditConfirmation(params.row.id)} className="btnModificarPrueba">
-            <span style={{ color: 'black' }}>
+            <span style={{ color: 'white' }}>
               <FontAwesomeIcon icon="edit" />
             </span>
           </button>

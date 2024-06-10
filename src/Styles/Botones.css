@@ -236,8 +236,22 @@
   margin-top: 20px;
 }
 
-.btnEliminarPrueba{width: 50px;}
+.btnEliminarPrueba{
+  width: 50px;
+  background-color: #CD1719;
+  border-radius: 10px;
+  height: 50px;
+}
 
 .btnModificarPrueba{
   width: 50px;
+  background-color: #034991;
+  border-radius: 10px;
+  height:50px;
+}
+
+.btnPrint{
+  border-radius: 10px;
+  background-color: #CD1719;
+  color: white;
 }

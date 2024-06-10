@@ -123,12 +123,12 @@ const ListaTipos = () => {
       renderCell: params => (
         <div>
           <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
-            <span style={{ color: 'black' }}>
+            <span style={{ color: 'white' }}>
               <FontAwesomeIcon icon="trash" />
             </span>
           </button>
           <button onClick={() =>  handleEditTipo(params.row.id)} className="btnModificarPrueba">
-            <span style={{ color: 'black' }}>
+            <span style={{ color: 'white' }}>
               <FontAwesomeIcon icon="edit" />
             </span>
           </button>
@@ -142,7 +142,7 @@ const ListaTipos = () => {
       <div className="type-registration">
         <h1 className="Namelist">Registro de tipos para campañas y voluntariados</h1>
         <Link to="/dashboard/agregar-tipo-admin">
-          <button className="btnRegistrarAdmin">Crear Tipo</button>
+          <button className="btnRegistrarAdmin">Crear Categoría</button>
         </Link>
         <div className="filter-container">
         <TextField

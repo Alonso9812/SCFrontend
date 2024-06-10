@@ -130,12 +130,12 @@ const ListaReservaciones = () => {
     { field: 'actions', headerName: 'Acciones', width: 150, renderCell: params => (
         <div>
         <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminarPrueba">
-          <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a rojo */}
+          <span style={{ color: 'white' }}> {/* Esto cambiará el color del icono a rojo */}
             <FontAwesomeIcon icon="trash" />
           </span>
         </button>
         <button onClick={() =>  handleEditReservaciones(params.row.id)} className="btnModificarPrueba">
-          <span style={{ color: 'black' }}> {/* Esto cambiará el color del icono a amarillo */}
+          <span style={{ color: 'white' }}> {/* Esto cambiará el color del icono a amarillo */}
             <FontAwesomeIcon icon="edit" />
           </span>
         </button>
@@ -149,11 +149,11 @@ const ListaReservaciones = () => {
       <div className="user-reservations">
         <h1 className="Namelist">Reservaciones</h1>
         <Link to="/dashboard/crear-reservacion-admin">
-          <button className="btnRegistrarAdmin">Crear Reservacion</button>
+          <button className="btnRegistrarAdmin">Crear Reservación</button>
         </Link>
         <div className="button-container">
                     <button onClick={handlePrintReport} className="btnPrint">
-                        <FaFilePdf /> Imprimir Reporte
+                        <FaFilePdf /> Imprimir
                     </button>
                 </div>
         <div className="filter-container">

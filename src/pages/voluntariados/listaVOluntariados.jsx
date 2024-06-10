@@ -156,10 +156,14 @@ const ListaVoluntariados = () => {
     { field: 'actions', headerName: 'Acciones', width: 150, renderCell: params => (
         <div>
           <button onClick={() => handleShowConfirmation(params.row.id)} className="btnEliminarPrueba">
+          <span style={{ color: 'white' }}>
             <FontAwesomeIcon icon="trash" />
+            </span>
           </button>
           <button onClick={() => handleShowEditConfirmation(params.row.id)} className="btnModificarPrueba">
+          <span style={{ color: 'white' }}>
             <FontAwesomeIcon icon="edit" />
+          </span>
           </button>
         </div>
       )

@@ -7,8 +7,8 @@ import { getUsuarios } from "../../services/UsuariosServicios";
 import TextField from "@mui/material/TextField";
 import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { generatePdfReport } from "../../pages/campanas/pdfCampañas";
-import { FaFilePdf } from "react-icons/fa6";
+// import { generatePdfReport } from "../../pages/campanas/pdfCampañas";
+// import { FaFilePdf } from "react-icons/fa6";
 
 const ParticipantesCamp = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -72,15 +72,15 @@ const ParticipantesCamp = () => {
   const columns = [
     { field: 'campaña_id', headerName: 'ID Campaña', flex: 1 },
     { field: 'cedula', headerName: 'Cedula', width: 150, renderCell: params => {
-      const usuario = users.find(user => user.id === params.row.user_id);
+      const usuario = users.find(user => user.id === params.row.users_id);
       return usuario ? usuario.cedula : "CedulaNoEncontrada";
     }},
     { field: 'nombre', headerName: 'Nombre', width: 150, renderCell: params => {
-      const usuario = users.find(user => user.id === params.row.user_id);
+      const usuario = users.find(user => user.id === params.row.users_id);
       return usuario ? usuario.name : "CedulaNoEncontrada";
     }},
     { field: 'apellido', headerName: 'Apellido', width: 150, renderCell: params => {
-      const usuario = users.find(user => user.id === params.row.user_id);
+      const usuario = users.find(user => user.id === params.row.users_id);
       return usuario ? usuario.apell1 : "CedulaNoEncontrada";
     }},
     {
@@ -89,7 +89,7 @@ const ParticipantesCamp = () => {
       flex: 1,
       renderCell: (params) => (
         <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
-          <span style={{ color: 'black' }}>
+          <span style={{ color: 'white' }}>
             <FontAwesomeIcon icon="trash" />
           </span>
         </button>
@@ -112,11 +112,11 @@ const ParticipantesCamp = () => {
           />
 
         </div>
-        <div className="button-container">
+        {/* <div className="button-container">
           <button onClick={generatePdfReport} className="btnPrint">
             <FaFilePdf /> Imprimir Reporte
           </button>
-        </div>
+        </div> */}
         <div style={{ height: 400, width: '100%' }}>
           {users.length > 0 && (
             <DataGrid

@@ -158,7 +158,10 @@ const Campanas = () => {
           </select>
         </div>
         <div className="center-buttonn">
-        <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
+          
+          <button type="button" onClick={() => navigate('/dashboard/listaCampanas')}>Volver</button>
+      
+        
         </div>
         <div className="center-button-volver">
         <button type="submit">Crear</button>

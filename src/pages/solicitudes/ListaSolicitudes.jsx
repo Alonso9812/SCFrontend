@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getSolicitudes, eliminarSolicitud, actualizarEstadoSolicitud } from "../../services/SolicitudServicio";
@@ -95,7 +95,9 @@ const ListaSolicitudes = () => {
       renderCell: (params) => (
         <div>
           <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
+          <span style={{ color: 'white' }}>
             <FontAwesomeIcon icon="trash" />
+          </span>
           </button>
         </div>
       ),
@@ -108,7 +110,7 @@ const ListaSolicitudes = () => {
         <h1 className="Namelist">Registro de solicitudes</h1>
 	<div className="button-container">
                     <button onClick={handlePrintReport} className="btnPrint">
-                        <FaFilePdf /> Imprimir Reporte
+                        <FaFilePdf /> Imprimir
                     </button>
                 </div>
         <div style={{ height: 400, width: '100%' }}>

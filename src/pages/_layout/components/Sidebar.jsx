@@ -48,11 +48,10 @@ const Sidebar = ({ children }) => {
     { to: '/dashboard/listUsuarios', text: 'Usuarios', icon: <FaIconsd.FaUserFriends className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaCampanas', text: 'Campañas', icon: <FaIconsc.MdLocalLibrary className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaReservaciones', text: 'Reservaciones', icon: <FaIconscs.AiOutlineSchedule className="icon" />, visible: isAuthenticated },
-    { to: '/dashboard/listaTipos', text: 'Categoria de Campaña/Voluntariado', icon: <FaIconsci.MdCardMembership className="icon" />, visible: isAuthenticated },
+    { to: '/dashboard/listaTipos', text: 'Categoría de Campaña/Voluntariado', icon: <FaIconsci.MdCardMembership className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaVoluntariados', text: 'Voluntariados', icon: <FaIconsce.BsPeopleFill className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaPuntos', text: 'Puntos De Interés', icon: <FaIconsce.BsFillMapFill className="icon" />, visible: isAuthenticated },
     { to: '/dashboard/listaSolicitudes', text: 'Solicitudes de Campaña/Voluntariado', icon: <FaIconsce.BsEnvelopeFill className="me-2" />, visible: isAuthenticated },
-    { to: '/dashboard/login', text: 'Inicio de Sesión', icon: <FaIconsd.FaSignInAlt className="me-2" />, visible: !isAuthenticated },
   ];
 
   return (

@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DataGrid } from '@mui/x-data-grid';
 import TextField from "@mui/material/TextField";
 
-import { generatePdfReport } from "../../pages/voluntariados/pdfVoluntariados";
-import { FaFilePdf } from "react-icons/fa6";
+// import { generatePdfReport } from "../../pages/voluntariados/pdfVoluntariados";
+// import { FaFilePdf } from "react-icons/fa6";
 
 const ParticipantesVol = () => {
   const { data, isLoading, isError, refetch } = useQuery(
@@ -61,9 +61,9 @@ const ParticipantesVol = () => {
     setDeleteConfirm(id);
   };
 
-  const handlePrintReport = () => {
-    generatePdfReport(data, searchTerm, users); 
-  };
+  // const handlePrintReport = () => {
+  //   generatePdfReport(data, searchTerm, users); 
+  // };
 
   if (isLoading) return <div className="loading">Loading...</div>;
 
@@ -96,7 +96,7 @@ const ParticipantesVol = () => {
       flex: 1,
       renderCell: (params) => (
         <button onClick={() => handleDeleteConfirmation(params.row.id)} className="btnEliminarPrueba">
-          <span style={{ color: 'black' }}>
+          <span style={{ color: 'white' }}>
             <FontAwesomeIcon icon="trash" />
           </span>
         </button>
@@ -118,11 +118,11 @@ const ParticipantesVol = () => {
             onChange={e => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="button-container">
+        {/* <div className="button-container">
           <button onClick={handlePrintReport} className="btnPrint">
             <FaFilePdf /> Imprimir Reporte
           </button>
-        </div>
+        </div> */}
         <div style={{ height: 400, width: '100%' }}>
           {users.length > 0 && (
             <DataGrid
