@@ -17,7 +17,6 @@ import './Styles/Voluntariado.css'
 import "./Styles/Botones.css";
 import "./Styles/Campanas.css";
 import "./Styles/Tablas.css";
-import "./Styles/Login.css";
 import "./Styles/Registro.css";
 import "./Styles/Confirmacion.css";
 import "./Styles/EditarTipo.css";
@@ -26,6 +25,7 @@ import "./Styles/Puntos.css";
 import "./Styles/Reservaciones.css";
 import './Styles/table.css';
 import './Styles/loginJWT.css';
+//import './Styles/LoginDashboard.css'
 import './Styles/Cards.css'
 
 //Rutas
@@ -34,7 +34,6 @@ import { Layout } from "./pages/_layout/Layout";
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Campañas from "./pages/campanas/campanas";
 import Home from "./pages/home/Home";
-// import ListaVoluntarios from './pages/voluntarios/listaVoluntarios'
 import ListUsuarios from "./pages/Usuarios/ListUsuarios";
 import ListaRoles from "./pages/Roles/listRoles";
 import Login from "./pages/Login/Login";

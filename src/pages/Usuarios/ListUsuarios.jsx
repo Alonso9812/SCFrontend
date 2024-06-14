@@ -15,7 +15,6 @@ const ListUsuarios = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const itemsPerPage = 25;
   const queryClient = useQueryClient();
   const [editConfirm, setEditConfirm] = useState(null);
   const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
@@ -82,9 +81,9 @@ const ListUsuarios = () => {
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div className="error">Error</div>;
 
-  const offset = currentPage * itemsPerPage;
+  const offset = currentPage;
   const filteredData = Array.isArray(data) ? data.filter(user => user.cedula.toLowerCase().includes(searchTerm.toLowerCase())) : [];
-  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+  const currentData = filteredData.slice(offset);
   
   const columns = [
     { field: 'id', headerName: 'ID Usuario', width: 150 },

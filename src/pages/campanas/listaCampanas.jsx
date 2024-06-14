@@ -12,10 +12,10 @@ const ListaCampanas = () => {
   const navigate = useNavigate();
   const { data, isLoading, isError, refetch } = useQuery('campana', getCampaña, { enabled: true });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  const [ setIsConfirmationOpen] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const itemsPerPage = 25;
+
   const queryClient = useQueryClient();
   const [editConfirm, setEditConfirm] = useState(null);
   const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
@@ -38,11 +38,11 @@ const ListaCampanas = () => {
     setCurrentPage(selectedPage.selected);
   };
 
-  /*const handleShowConfirmation = (id) => {
+  const handleShowConfirmation = (id) => {
     setDeleteConfirm(id);
     setIsConfirmationOpen(true);
   };
-*/
+
   const handleHideConfirmation = () => {
     setIsConfirmationOpen(false);
   };
@@ -56,26 +56,28 @@ const ListaCampanas = () => {
     setIsEditConfirmationOpen(false);
   };
 
-const handleDeleteCampaña = async (id) => {
-  try {
-      await  eliminarCampana(id);
+  const handleDeleteCampaña = async () => {
+    try {
+      await eliminarCampana(deleteConfirm);
       await refetch();
       queryClient.invalidateQueries('deleteCampana');
       toast.success('¡Eliminado Exitosamente!', { position: toast.POSITION.TOP_RIGHT });
-  } catch (error) {
-      if (error.message === 'Error: Usuario está ligado a otra tabla') {
-      toast.error('¡Usuario está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
+    } catch (error) {
+      console.error('Error capturado:', error);
+      const errorMessage = error.message || error.toString();
+      if (errorMessage.includes('La campaña está ligada a otra tabla')) {
+        toast.error('¡No se puede eliminar, está ligado a otra tabla!', { position: toast.POSITION.TOP_RIGHT });
       } else {
-          console.error(error);
+        toast.error('¡Ocurrió un error inesperado!', { position: toast.POSITION.TOP_RIGHT });
       }
-  }
-  setDeleteConfirm(null);
-};
-
-const handleDeleteConfirmation = (id) => {
-  setDeleteConfirm(id);
+    } finally {
+      setIsConfirmationOpen(false);
+    }
   };
 
+  const handleDeleteConfirmation = (id) => {
+    handleShowConfirmation(id);
+  };
 
   const handleStatusChange = async (id, newStatus) => {
     try {
@@ -91,11 +93,10 @@ const handleDeleteConfirmation = (id) => {
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div className="error">Error</div>;
 
-  const offset = currentPage * itemsPerPage;
+  const offset = currentPage ;
   const filteredData = data.filter(camp => camp.nombre.toLowerCase().includes(searchTerm.toLowerCase()));
-  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+  const currentData = filteredData.slice(offset,);
 
-  // Definir las columnas para la tabla DataGrid
   const columns = [
     { field: 'id', headerName: 'ID Campaña', width: 150 },
     { field: 'nombre', headerName: 'Nombre', width: 150 },
@@ -185,10 +186,7 @@ const handleDeleteConfirmation = (id) => {
         <ToastContainer />
       </div>
 
-
-
-      {/* Modal de confirmación */}
-      {deleteConfirm !== null && (
+      {isConfirmationOpen && (
         <div className="overlay">
           <div className="delete-confirm">
             <p>¿Estás seguro de que deseas eliminar esta campaña?</p>
@@ -198,25 +196,18 @@ const handleDeleteConfirmation = (id) => {
         </div>
       )}
 
-
-        {/* Modal de confirmación para editar */}
-        {isEditConfirmationOpen && (
-          <div className="overlay">
-            <div className="edit-confirm">
-              <p>¿Estás seguro de que deseas editar esta campaña?</p>
-              <button onClick={() => {
-                handleHideEditConfirmation();
-                navigate(`/dashboard/campana-update/${editConfirm}`);
-              }} className="btn-confirm btn-yes">Sí</button>
-              <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
-            </div>
+      {isEditConfirmationOpen && (
+        <div className="overlay">
+          <div className="edit-confirm">
+            <p>¿Estás seguro de que deseas editar esta campaña?</p>
+            <button onClick={() => {
+              handleHideEditConfirmation();
+              navigate(`/dashboard/campana-update/${editConfirm}`);
+            }} className="btn-confirm btn-yes">Sí</button>
+            <button onClick={handleHideEditConfirmation} className="btn-confirm btn-no">No</button>
           </div>
-        )}
-
-      {/* Estilos en línea */}
-      <style>
-        
-      </style>
+        </div>
+      )}
     </>
   );
 };

@@ -17,7 +17,6 @@ const ListaVoluntariados = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const itemsPerPage = 25;
   const queryClient = useQueryClient();
   const [tipos, setTipos] = useState([]);
 
@@ -116,12 +115,12 @@ const ListaVoluntariados = () => {
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div className="error">Error</div>;
 
-  const offset = currentPage * itemsPerPage;
+  const offset = currentPage;
   //const pageCount = Math.ceil(data.length / itemsPerPage);
   const filteredData = data.filter(camp =>
     camp.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+  const currentData = filteredData.slice(offset);
 
   const columns = [
     { field: 'id', headerName: 'ID Voluntariado', width: 150 },

@@ -112,7 +112,7 @@ const Registro = () => {
             <button type="button" onClick={handleVolver}>Volver</button>
           </div>
           <div className="center-button-registro">
-          <button type="submit" >Registrar</button>
+          <button type="submit" >guardar</button>
           </div>
         </form>
         <ToastContainer />

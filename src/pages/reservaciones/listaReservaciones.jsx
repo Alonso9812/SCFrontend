@@ -28,7 +28,6 @@ const ListaReservaciones = () => {
   const [reservacionToDelete, setReservacionToDelete] = useState(null);
   const [confirmarVisible, setConfirmarVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
   const [searchTerm, setSearchTerm] = useState('');
 
   const handlePageChange = (selectedPage) => {
@@ -95,10 +94,10 @@ const ListaReservaciones = () => {
 
   if (isError) return <div className="error">Error</div>;
 
-  const offset = currentPage * itemsPerPage;
+  const offset = currentPage;
   const filteredData = Array.isArray(data) ? data.filter(reservacion => reservacion.cedulaVis.toString().toLowerCase().includes(searchTerm.toLowerCase())) : [];
 
-  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+  const currentData = filteredData.slice(offset);
 
   const columns = [
     { field: 'id', headerName: 'ID Reservaciones', width: 150 },

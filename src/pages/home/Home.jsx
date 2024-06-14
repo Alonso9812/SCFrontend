@@ -9,18 +9,20 @@ import '../../Styles/Cards.css';
 function Home() {
   return (
     <div>
-       <Navbar />
+      <Navbar />
       <div className="charts-container">
         <div className="chart-card1">
           <div className="logoUNA">
-            <img src="../../../public/WhatsApp Image 2024-03-20 at 4.43.03 PM.jpeg" alt="icon" className="logo" />
-            <img src="../../../public/LOGOCEMEDE.png" alt="icon" className="logo" />
-            <img src="../../../public/SENDERO-CORNIZUELO.webp" alt="icon" className="logo" />
+            <img src="./assets/UNA.webp" alt="icon" className="logo logo-una" />
+            <img src="./assets/LOGOCEMEDE.png" alt="icon" className="logo logo-cemede" />
+            <img src="./assets/SENDERO-CORNIZUELO-6398d8d8.webp" alt="icon" className="logo logo-sendero" />
           </div>
           <div className="justified-text">
             <p>
-              Sistema de administracion web senderoconizuelo donde se llevara acabo las gestiones de los diferentes modulos,
-              Aceptar solicitudes de campañas, reservaciones para la visita del senderon así tambien gestionar sus voluntarios.
+              Sistema web para gestionar reservaciones de citas, campañas y voluntariados
+              optimiza la organización, mejora la eficiencia, y facilita la comunicación.
+              Permite a los usuarios agendar citas, inscribirse en campañas y coordinar
+              voluntariados de manera sencilla y centralizada.
             </p>
           </div>
         </div>
@@ -28,7 +30,7 @@ function Home() {
           <PiesChart />
         </div>
         <div className="chart-card3">
-          <BarsChart /> 
+          <BarsChart />
         </div>
       </div>
     </div>
@@ -36,4 +38,3 @@ function Home() {
 }
 
 export default Home;
-

@@ -20,7 +20,6 @@ const ListaTipos = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const itemsPerPage = 30;
   const queryClient = useQueryClient();
   const [editConfirm, setEditConfirm] = useState(null);
   const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
@@ -90,12 +89,12 @@ const ListaTipos = () => {
 
   if (isError) return <div className="error">Error</div>;
 
-  const offset = currentPage * itemsPerPage;
-  const pageCount = Math.ceil(data.length / itemsPerPage);
+  const offset = currentPage ;
+  const pageCount = Math.ceil(data.length);
   const filteredData = data.filter(tipo =>
     tipo.nombreTipo.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+  const currentData = filteredData.slice(offset);
 
   // Definir las columnas para la tabla DataGrid
   const columns = [

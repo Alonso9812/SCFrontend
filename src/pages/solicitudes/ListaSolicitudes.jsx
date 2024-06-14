@@ -19,7 +19,7 @@ const ListaSolicitudes = () => {
   );
   
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  const itemsPerPage = 10;
+
 
   const handleDeleteSolicitud = async (id) => {
     try {
@@ -117,7 +117,7 @@ const ListaSolicitudes = () => {
           <DataGrid
             rows={data}
             columns={columns}
-            rowsPerPageOptions={[itemsPerPage]}
+            rowsPerPageOptions={[]}
             checkboxSelection
             pagination
             initialState={{
