@@ -88,7 +88,7 @@ const Registro = () => {
             <input type="text" id="cedula" ref={UsuarioCedula} required />
           </div>
           <div>
-            <label htmlFor="numero">Telefono:</label>
+            <label htmlFor="numero">Teléfono:</label>
             <input type="text" id="numero" ref={UsuarioNumero} required />
           </div>
           <div>

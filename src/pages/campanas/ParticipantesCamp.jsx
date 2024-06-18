@@ -71,17 +71,25 @@ const ParticipantesCamp = () => {
 
   const columns = [
     { field: 'campaña_id', headerName: 'ID Campaña', flex: 1 },
-    { field: 'cedula', headerName: 'Cedula', width: 150, renderCell: params => {
+    { field: 'cedula', headerName: 'Cédula', width: 150, renderCell: params => {
       const usuario = users.find(user => user.id === params.row.users_id);
-      return usuario ? usuario.cedula : "CedulaNoEncontrada";
+      return usuario ? usuario.cedula : "Cédula no encontrada";
     }},
     { field: 'nombre', headerName: 'Nombre', width: 150, renderCell: params => {
       const usuario = users.find(user => user.id === params.row.users_id);
-      return usuario ? usuario.name : "CedulaNoEncontrada";
+      return usuario ? usuario.name : "Nombre no encontrado";
     }},
     { field: 'apellido', headerName: 'Apellido', width: 150, renderCell: params => {
       const usuario = users.find(user => user.id === params.row.users_id);
-      return usuario ? usuario.apell1 : "CedulaNoEncontrada";
+      return usuario ? usuario.apell1 : "Apellido no encontrado";
+    }},
+    { field: 'numero', headerName: 'Número', width: 150, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.users_id);
+      return usuario ? usuario.numero : "Número no encontrado";
+    }},
+    { field: 'email', headerName: 'Correo', width: 268, renderCell: params => {
+      const usuario = users.find(user => user.id === params.row.users_id);
+      return usuario ? usuario.email : "Email no encontrado";
     }},
     {
       field: 'acciones',

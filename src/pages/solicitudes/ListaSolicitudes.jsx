@@ -62,7 +62,7 @@ const ListaSolicitudes = () => {
     { field: 'nomSoli', headerName: 'Nombre Solicitante', width: 200 },
     { field: 'apellSoli1', headerName: 'Primer Apellido', width: 200 },
     { field: 'apellSoli2', headerName: 'Segundo Apellido', width: 200 },
-    { field: 'numSoli', headerName: 'Numero', width: 150 },
+    { field: 'numSoli', headerName: 'Número', width: 150 },
     { field: 'email', headerName: 'Correo', width: 200 },
     { field: 'tituloVC', headerName: 'Titulo Solicitud', width: 200 },
     { field: 'descripVC', headerName: 'Descripción', width: 200 },

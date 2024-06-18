@@ -106,14 +106,6 @@ const Sidebar = ({ children }) => {
           </NavLink>
         )}
 
-        {isAuthenticated && (
-          <NavLink to="/logout" className="link" activeClassName="active">
-            <div className="icon" style={{ color: 'red' }}><FaIconsd.FaSignOutAlt /></div>
-            <div style={{ display: sidebarVisible ? 'flex' : 'none', color: 'darkred', marginTop: "" }} className="link_text">
-              Cerrar sesión
-            </div>
-          </NavLink>
-        )}
       </div>
       <main>{children}</main>
     </div>

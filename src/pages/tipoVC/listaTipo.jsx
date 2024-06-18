@@ -98,9 +98,9 @@ const ListaTipos = () => {
 
   // Definir las columnas para la tabla DataGrid
   const columns = [
-    { field: 'id', headerName: 'ID Tipo', width: 150 },
-    { field: 'nombreTipo', headerName: 'Nombre', width: 200 },
-    { field: 'statusVC', headerName: 'Estado', width: 150, renderCell: params => (
+    { field: 'id', headerName: 'ID Tipo', width: 223 },
+    { field: 'nombreTipo', headerName: 'Nombre', width: 277 },
+    { field: 'statusVC', headerName: 'Estado', width: 220, renderCell: params => (
         <select
           value={params.value}
           onChange={(e) => handleStatusChange(params.row.id, e.target.value)}

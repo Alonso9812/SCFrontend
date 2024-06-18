@@ -84,11 +84,11 @@ const Reservacion = () => {
             />
           </div>
           <div>
-            <label htmlFor="cupo">Cupo:</label>
+            <label htmlFor="cupo">Capacidad:</label>
             <input type="text" id="cupo" ref={cupoRef} required />
           </div>
           <div>
-            <label htmlFor="telefonoVis">Telefono:</label>
+            <label htmlFor="telefonoVis">Teléfono:</label>
             <input type="text" id="telefonoVis" ref={telefonoRef} required />
           </div>
 

@@ -60,7 +60,7 @@
 .type-registration,
 .campaign-registration {
   margin-left: 250px;
-  max-width: 1080px;
+  max-width: 80%;
 }
 
 /* Media query para dispositivos pequeños */

@@ -106,7 +106,7 @@ const ListaReservaciones = () => {
     { field: 'apell2Vis', headerName: 'Segundo Apellido', width: 200 },
     { field: 'cedulaVis', headerName: 'Cédula Visitante', width: 180 },
     { field: 'fechaReserva', headerName: 'Fecha de Reserva', width: 200 },
-    { field: 'cupo', headerName: 'Cupo', width: 120 },
+    { field: 'cupo', headerName: 'Capacidad', width: 120 },
     { field: 'telefonoVis', headerName: 'Teléfono Visitante', width: 200 },
     { field: 'email', headerName: 'Email', width: 200 },
     {
