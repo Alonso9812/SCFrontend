@@ -13,9 +13,9 @@ function Home() {
       <div className="charts-container">
         <div className="chart-card1">
           <div className="logoUNA">
-            <img src="./assets/UNA.webp" alt="icon" className="logo logo-una" />
-            <img src="./assets/LOGOCEMEDE.png" alt="icon" className="logo logo-cemede" />
-            <img src="./assets/SENDERO-CORNIZUELO-6398d8d8.webp" alt="icon" className="logo logo-sendero" />
+            <img src="../../../public/UNA.webp" alt="icon" className="logo logo-una" />
+            <img src="../../../public/LOGOCEMEDE.png" alt="icon" className="logo logo-cemede" />
+            <img src="../../../public/SENDERO-CORNIZUELO-6398d8d8.webp" alt="icon" className="logo logo-sendero" />
           </div>
           <div className="justified-text">
             <p>

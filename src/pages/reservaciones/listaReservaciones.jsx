@@ -119,7 +119,7 @@ const ListaReservaciones = () => {
           value={params.value}
           onChange={(e) => handleStatusChange(params.id, e.target.value)}
         >
-          <option value="Nueva">Nueva</option>
+          <option value="nueva">Nueva</option>
           <option value="En Proceso">En Proceso</option>
           <option value="Cancelada">Cancelada</option>
           <option value="Terminada">Terminada</option>

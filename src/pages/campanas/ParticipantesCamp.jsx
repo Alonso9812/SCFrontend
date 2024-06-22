@@ -20,7 +20,6 @@ const ParticipantesCamp = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-  const itemsPerPage = 10;
   const [users, setUsuarios] = useState([]);
 
   useEffect(() => {
@@ -65,9 +64,9 @@ const ParticipantesCamp = () => {
     ? data.filter((UsuCamp) => UsuCamp.campaña_id.toString().includes(searchTerm))
     : data;
 
-  const offset = currentPage * itemsPerPage;
+  const offset = currentPage;
 
-  const currentData = filteredData.slice(offset, offset + itemsPerPage);
+  const currentData = filteredData.slice(offset);
 
   const columns = [
     { field: 'campaña_id', headerName: 'ID Campaña', flex: 1 },

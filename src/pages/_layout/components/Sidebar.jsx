@@ -68,7 +68,7 @@ const Sidebar = ({ children }) => {
         </div>
         {sidebarVisible && (
           <div className="logoContainer">
-            <img src="./assets/SENDERO-CORNIZUELO-6398d8d8.webp" alt="icon" className="logo" />
+            <img src="../../../../public/SENDERO-CORNIZUELO-6398d8d8.webp" alt="icon" className="logo" />
           </div>
         )}
 

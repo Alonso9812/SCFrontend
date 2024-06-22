@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 
 const ListaVoluntariados = () => {
   const navigate = useNavigate();
-  const { data, isLoading, isError, refetch } = useQuery('mostrar-voluntariado', getVOluntariado, { enabled: true });
+  const {data, isLoading, isError, refetch } = useQuery('mostrar-voluntariado', getVOluntariado, { enabled: true });
   const [editConfirm, setEditConfirm] = useState(null);
   const [isEditConfirmationOpen, setIsEditConfirmationOpen] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(null);

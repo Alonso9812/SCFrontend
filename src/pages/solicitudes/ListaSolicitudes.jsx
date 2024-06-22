@@ -50,7 +50,7 @@ const ListaSolicitudes = () => {
   };
 
 	const handlePrintReport = () => {
-    generatePdfReport(data); // Llamar al método de generación de PDF
+    generatePdfReport(data); 
   };
 
   if (isLoading) return <div className="loading">Loading...</div>;

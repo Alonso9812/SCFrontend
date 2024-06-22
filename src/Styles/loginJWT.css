@@ -21,7 +21,7 @@ body{
     backdrop-filter: blur(10px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     border-radius: 10px;
-    background-color: rgba(134, 5, 5, 0.4);
+    background-color: rgba(128, 82, 82, 0.4);
     display: flex;
     flex-direction: column;
     padding: 30px 40px;
@@ -127,9 +127,11 @@ body{
   }
 
   .login-background {
-    background-image: url('./assets/Imagen-Final-db077213.webp');
+    background-image: url('../../public/Imagen-Final.webp');
     background-size: cover;
     background-position: center;
     min-height: 100vh; 
+    justify-content: center; 
+    align-items: center;
   }
   

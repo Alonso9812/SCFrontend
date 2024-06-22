@@ -8,7 +8,7 @@ export const getReservaciones = async () => {
 export const getTotalReservaciones = async () => {
     try {
         const reservaciones = await getReservaciones();
-        const reservacionesNuevas = reservaciones.filter(reservacion => reservacion.status === 'Nueva');
+        const reservacionesNuevas = reservaciones.filter(reservacion => reservacion.status === 'nueva');
         const total = reservacionesNuevas.length;
         return total;
     } catch (error) {

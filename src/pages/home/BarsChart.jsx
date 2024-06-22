@@ -62,14 +62,15 @@ export default function BarsDataset() {
 
     return nuevoDataset;
   }
+  
 
   return (
     <BarChart
       dataset={dataset}
       xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
       series={[
-        { dataKey: 'campañas', label: 'Campañas', valueFormatter },
-        { dataKey: 'voluntariados', label: 'Voluntariados', valueFormatter },
+        { dataKey: 'campañas', label: 'Camp', valueFormatter },
+        { dataKey: 'voluntariados', label: 'Volun', valueFormatter },
       ]}
       colors={['#084081', '#FF5733']} 
       {...chartSetting}

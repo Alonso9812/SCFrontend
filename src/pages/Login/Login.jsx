@@ -39,7 +39,7 @@ const Login = () => {
           toast.success('Inicio de sesión exitoso');
           // Redirigir al usuario a la página de inicio después de un inicio de sesión exitoso
           navigate('/dashboard/home', { replace: true });
-          // Recargar la página después de un inicio de sesión exitoso
+          
           window.location.reload();
         }
       } else {
